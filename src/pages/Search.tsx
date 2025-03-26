@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
-import PostCard from '@/components/shared/PostCard';
-import UserCard from '@/components/shared/UserCard';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search as SearchIcon, X } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import UserCard from '@/components/shared/UserCard';
+import PostCard from '@/components/home/PostCard';
 
-// Sample data - would come from API in real app
 const samplePosts = [
   {
     id: 1,
@@ -110,7 +109,6 @@ const Search = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
   useEffect(() => {
-    // Combine and filter both posts and users
     const combinedResults = [...samplePosts, ...sampleUsers];
     const filteredResults = combinedResults.filter(item => {
       if (item.userName) {
@@ -125,26 +123,24 @@ const Search = () => {
     setSearchResults(filteredResults);
   }, [searchTerm]);
 
-  // Clear search term
   const clearSearchTerm = () => {
     setSearchTerm('');
   };
 
-  // Make sure all post objects have properly typed userType and type properties
   const getSearchResults = () => {
     return searchResults.map(result => {
-      if (result.userType === 'business' || result.userType === 'individual') {
+      if ('avatar' in result) {
         return {
           ...result,
-          userType: result.userType,
-          type: result.type as 'text' | 'product' | 'video' | 'story'
+          userType: result.userType as 'business' | 'individual',
+          isUser: true
         };
       } else {
-        // Ensure proper typing for any items that might not have explicit types
         return {
           ...result,
-          userType: 'business' as 'business',
-          type: 'product' as 'product'
+          userType: result.userType as 'business' | 'individual',
+          type: result.type as 'text' | 'product' | 'video' | 'story',
+          isUser: false
         };
       }
     });
@@ -153,7 +149,6 @@ const Search = () => {
   return (
     <Layout>
       <div className="container py-8">
-        {/* Search Input */}
         <div className="relative mb-6">
           <Input
             type="text"
@@ -178,12 +173,11 @@ const Search = () => {
           <Button className="absolute inset-y-0 right-12 px-4 rounded-full bg-naija-green hover:bg-naija-green/90 text-white">Search</Button>
         </div>
 
-        {/* Search Results */}
         {searchResults.length > 0 ? (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold mb-4">Search Results</h2>
             {getSearchResults().map((result, index) => {
-              if (result.userName && result.userType) {
+              if (result.isUser) {
                 return (
                   <UserCard
                     key={index}
@@ -198,19 +192,22 @@ const Search = () => {
                 return (
                   <PostCard
                     key={index}
-                    id={result.id}
-                    userId={result.userId}
-                    userName={result.userName}
-                    userType={result.userType}
-                    isVerified={result.isVerified}
-                    type={result.type}
-                    content={result.content}
-                    productName={result.productName}
-                    productImage={result.productImage}
-                    isPromoted={result.isPromoted}
-                    createdAt={result.createdAt}
-                    likesCount={result.likesCount}
-                    commentsCount={result.commentsCount}
+                    post={{
+                      id: result.id,
+                      userId: result.userId,
+                      userName: result.userName,
+                      userType: result.userType,
+                      userAvatar: result.userAvatar,
+                      isVerified: result.isVerified,
+                      type: result.type,
+                      content: result.content,
+                      productName: result.productName,
+                      productImage: result.productImage,
+                      isPromoted: result.isPromoted,
+                      createdAt: result.createdAt,
+                      likesCount: result.likesCount,
+                      commentsCount: result.commentsCount,
+                    }}
                   />
                 );
               }
