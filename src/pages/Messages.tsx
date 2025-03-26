@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -74,7 +73,7 @@ const sampleMessages = [
     id: 1,
     senderId: 201, // current user
     receiverId: 101, // Lagos Cosmetics
-    content: 'Hi, I'm interested in your shea butter face cream. Is it good for sensitive skin?',
+    content: "Hi, I'm interested in your shea butter face cream. Is it good for sensitive skin?", // Fixed: Changed to double quotes
     timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
     isRead: true,
   },
@@ -82,7 +81,7 @@ const sampleMessages = [
     id: 2,
     senderId: 101, // Lagos Cosmetics
     receiverId: 201, // current user
-    content: 'Hello! Yes, our shea butter cream is perfect for sensitive skin. It's made with 100% natural ingredients and has no added fragrances.',
+    content: "Hello! Yes, our shea butter cream is perfect for sensitive skin. It's made with 100% natural ingredients and has no added fragrances.", // Fixed: Changed to double quotes
     timestamp: new Date(Date.now() - 1000 * 60 * 25).toISOString(),
     isRead: true,
   },
@@ -114,7 +113,7 @@ const sampleMessages = [
     id: 6,
     senderId: 201, // current user
     receiverId: 101, // Lagos Cosmetics
-    content: 'That's a great deal! I'd like to order 2 shea butter creams then.',
+    content: "That's a great deal! I'd like to order 2 shea butter creams then.", // Fixed: Changed to double quotes
     timestamp: new Date(Date.now() - 1000 * 60 * 10).toISOString(),
     isRead: true,
   },
@@ -122,7 +121,7 @@ const sampleMessages = [
     id: 7,
     senderId: 101, // Lagos Cosmetics
     receiverId: 201, // current user
-    content: 'Excellent choice! Please provide your delivery address and phone number, and we'll process your order.',
+    content: "Excellent choice! Please provide your delivery address and phone number, and we'll process your order.", // Fixed: Changed to double quotes
     timestamp: new Date(Date.now() - 1000 * 60 * 8).toISOString(),
     isRead: true,
   },
@@ -138,7 +137,7 @@ const sampleMessages = [
     id: 9,
     senderId: 101, // Lagos Cosmetics
     receiverId: 201, // current user
-    content: 'Thank you for your interest in our shea butter cream! Your order has been processed. You'll receive it within 1-2 business days. Payment will be on delivery (₦10,000 for 2 creams).',
+    content: "Thank you for your interest in our shea butter cream! Your order has been processed. You'll receive it within 1-2 business days. Payment will be on delivery (₦10,000 for 2 creams).", // Fixed: Changed to double quotes
     timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
     isRead: false,
   },
@@ -214,7 +213,6 @@ const Messages = () => {
   return (
     <Layout>
       <div className="flex h-[calc(100vh-170px)] md:h-[calc(100vh-56px)]">
-        {/* Conversations List - Hidden on mobile if conversation is active */}
         <div className={cn(
           "w-full md:w-80 border-r overflow-hidden flex flex-col",
           activeConversation && "hidden md:flex"
@@ -277,7 +275,6 @@ const Messages = () => {
           </ScrollArea>
         </div>
         
-        {/* Chat Area - Full width on mobile when conversation is active */}
         {activeConversation ? (
           <div className={cn(
             "flex flex-col flex-1 h-full",

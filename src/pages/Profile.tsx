@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -66,7 +65,7 @@ const samplePosts = [
     userType: 'business',
     isVerified: true,
     type: 'product',
-    content: 'New arrival! Our Hibiscus Facial Toner helps balance your skin\'s pH and reduce inflammation.',
+    content: "New arrival! Our Hibiscus Facial Toner helps balance your skin's pH and reduce inflammation.",
     productName: 'Hibiscus Facial Toner (200ml)',
     productImage: 'https://images.unsplash.com/photo-1596952954288-16862d37405b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGNvc21ldGljc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60',
     isPromoted: true,
@@ -85,7 +84,7 @@ const sampleReviews = [
     reviewerType: 'individual',
     reviewerImage: '',
     rating: 5,
-    comment: 'Amazing products! I love the shea butter face cream, it's made my skin so much smoother.',
+    comment: "Amazing products! I love the shea butter face cream, it's made my skin so much smoother.",
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
   },
   {
@@ -105,7 +104,6 @@ const Profile = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [activeTab, setActiveTab] = useState('products');
   
-  // In a real app, we would fetch user data based on the userId
   const user = sampleUser;
   const isOwnProfile = !userId || userId === user.id.toString();
   
@@ -121,7 +119,6 @@ const Profile = () => {
   return (
     <Layout>
       <div className="flex flex-col w-full">
-        {/* Hero/Cover Section */}
         <div className="h-48 md:h-64 bg-gradient-to-r from-naija-green/90 to-naija-green relative">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute inset-0 bg-black opacity-20"></div>
@@ -129,10 +126,8 @@ const Profile = () => {
           </div>
         </div>
         
-        {/* Profile Info Section */}
         <div className="px-4 md:px-8 relative">
           <div className="flex flex-col md:flex-row gap-4 -mt-16 md:-mt-20">
-            {/* Avatar */}
             <div className="z-10">
               <UserAvatar 
                 name={user.name}
@@ -144,7 +139,6 @@ const Profile = () => {
               />
             </div>
             
-            {/* Profile Info */}
             <div className="flex-1 flex flex-col pt-2 md:pt-0">
               <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-4">
                 <div>
@@ -246,7 +240,6 @@ const Profile = () => {
           </div>
         </div>
         
-        {/* Tabs Section */}
         <div className="px-4 md:px-8 mt-6">
           <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="w-full justify-start border-b rounded-none bg-transparent h-auto p-0">

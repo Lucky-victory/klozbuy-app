@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Store, ArrowRight } from 'lucide-react';
@@ -12,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 const sampleBusinesses = [
   {
     id: 201,
-    name: 'Mama's Kitchen',
+    name: "Mama's Kitchen",
     type: 'restaurant',
     distance: 1.2,
     isVerified: true,
