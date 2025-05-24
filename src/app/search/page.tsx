@@ -1,8 +1,5 @@
+import { Layout } from "lucide-react";
 import { Metadata } from "next";
-import { JsonLd } from "react-jsonld";
-import Layout from "@/components/layout/Layout";
-import SearchBar from "@/components/search/SearchBar";
-import SearchResults from "@/components/search/SearchResults";
 
 export const metadata: Metadata = {
   title: "Search - NaijaNeighborhood",
@@ -24,11 +21,10 @@ export default function SearchPage({
 
   return (
     <>
-      <JsonLd data={jsonLd} />
       <Layout>
         <div className="container py-8">
-          <SearchBar defaultValue={searchParams.q} />
-          <SearchResults query={searchParams.q} />
+          {/* <SearchBar defaultValue={searchParams.q} />
+          <SearchResults query={searchParams.q} /> */}
         </div>
       </Layout>
     </>

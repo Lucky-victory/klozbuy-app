@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   Heart,
   MessageCircle,
@@ -9,7 +8,7 @@ import {
   Clock,
   Heart as HeartFilled,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatTimestamp } from "@/lib/utils";
 import UserAvatar from "@/components/shared/UserAvatar";
 import LocationBadge from "@/components/shared/LocationBadge";
 import { Button } from "@/components/ui/button";
@@ -21,27 +20,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import Link from "next/link";
-
+import { Posts } from "@/types";
 interface PostCardProps {
-  post: {
-    id: number;
-    userId: number;
-    userName: string;
-    userType: "individual" | "business";
-    userAvatar?: string;
-    isVerified: boolean;
-    type: "text" | "product" | "video" | "story";
-    content?: string;
-    productName?: string;
-    productImage?: string;
-    videoUrl?: string;
-    distance?: number;
-    landmark?: string;
-    isPromoted: boolean;
-    createdAt: string;
-    likesCount: number;
-    commentsCount: number;
-  };
+  post: Posts;
   className?: string;
 }
 
@@ -52,25 +33,6 @@ const PostCard = ({ post, className }: PostCardProps) => {
   const toggleLike = () => {
     setIsLiked(!isLiked);
     setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
-  };
-
-  const formatTimestamp = (timestamp: string) => {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffInMinutes = Math.floor(
-      (now.getTime() - date.getTime()) / (1000 * 60)
-    );
-
-    if (diffInMinutes < 1) return "Just now";
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-
-    const diffInHours = Math.floor(diffInMinutes / 60);
-    if (diffInHours < 24) return `${diffInHours}h ago`;
-
-    const diffInDays = Math.floor(diffInHours / 24);
-    if (diffInDays < 7) return `${diffInDays}d ago`;
-
-    return date.toLocaleDateString();
   };
 
   return (
@@ -86,22 +48,22 @@ const PostCard = ({ post, className }: PostCardProps) => {
       {/* Post Header */}
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-3">
-          <Link to={`/profile/${post.userId}`}>
+          <Link href={`/profile/${post.owner.id}`}>
             <UserAvatar
-              name={post.userName}
-              src={post.userAvatar}
+              name={post.owner?.name || ""}
+              src={post.owner?.profilePicture || ""}
               size="md"
-              userType={post.userType}
-              isVerified={post.isVerified}
+              userType={post.owner?.userType || "individual"}
+              isVerified={post.owner?.isVerified || false}
             />
           </Link>
 
           <div className="flex flex-col">
             <Link
-              to={`/profile/${post.userId}`}
+              href={`/profile/${post.owner.id}`}
               className="font-medium hover:underline"
             >
-              {post.userName}
+              {post.owner?.name || ""}
             </Link>
 
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -110,10 +72,10 @@ const PostCard = ({ post, className }: PostCardProps) => {
                 {formatTimestamp(post.createdAt)}
               </span>
 
-              {(post.distance !== undefined || post.landmark) && (
+              {(post.owner.distance !== undefined || post.owner.landmark) && (
                 <LocationBadge
-                  distance={post.distance}
-                  landmark={post.landmark}
+                  distance={post.owner.distance}
+                  landmark={post.owner.landmark}
                   size="sm"
                   variant="subtle"
                 />
