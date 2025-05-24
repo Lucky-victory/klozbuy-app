@@ -55,7 +55,7 @@ const Sidebar = ({ className }: SidebarProps) => {
           className={cn(
             "w-full justify-start gap-2 mb-1 text-base",
             isActive 
-              ? "bg-naija-green text-white hover:bg-naija-green/90" 
+              ? "bg-klozui-green text-white hover:bg-klozui-green/90" 
               : "hover:bg-muted"
           )}
         >
@@ -125,7 +125,7 @@ const Sidebar = ({ className }: SidebarProps) => {
           
           {user.type === 'individual' && (
             <Link to="/onboarding?type=business">
-              <Button variant="outline" className="w-full border-dashed border-naija-orange/50 text-naija-orange hover:bg-naija-orange/5 hover:border-naija-orange/80">
+              <Button variant="outline" className="w-full border-dashed border-klozui-orange/50 text-klozui-orange hover:bg-klozui-orange/5 hover:border-klozui-orange/80">
                 <Store size={16} className="mr-2" />
                 Create Business
               </Button>
@@ -134,7 +134,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         </div>
       ) : (
         <div className="mt-auto pt-4 border-t border-border space-y-2">
-          <Button className="w-full bg-naija-green hover:bg-naija-green/90 text-white">
+          <Button className="w-full bg-klozui-green hover:bg-klozui-green/90 text-white">
             Sign up
           </Button>
           <Button variant="outline" className="w-full">

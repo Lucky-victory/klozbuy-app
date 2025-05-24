@@ -31,9 +31,9 @@ const LocationBadge = ({
   };
 
   const variantClasses = {
-    outline: 'border border-naija-orange/50 text-naija-orange bg-transparent',
-    filled: 'bg-naija-orange/90 text-white',
-    subtle: 'bg-naija-orange/10 text-naija-orange',
+    outline: 'border border-klozui-orange/50 text-klozui-orange bg-transparent',
+    filled: 'bg-klozui-orange/90 text-white',
+    subtle: 'bg-klozui-orange/10 text-klozui-orange',
   };
 
   return (

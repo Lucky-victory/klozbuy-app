@@ -170,7 +170,7 @@ const Search = () => {
               <X className="h-4 w-4" />
             </Button>
           )}
-          <Button className="absolute inset-y-0 right-12 px-4 rounded-full bg-naija-green hover:bg-naija-green/90 text-white">Search</Button>
+          <Button className="absolute inset-y-0 right-12 px-4 rounded-full bg-klozui-green hover:bg-klozui-green/90 text-white">Search</Button>
         </div>
 
         {searchResults.length > 0 ? (

@@ -76,7 +76,7 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
         <Link to="/messages">
           <Button variant="ghost" size="icon" className="hidden md:flex relative">
             <MessageSquare size={20} />
-            <span className="absolute top-0 right-0 h-2 w-2 bg-naija-orange rounded-full" />
+            <span className="absolute top-0 right-0 h-2 w-2 bg-klozui-orange rounded-full" />
           </Button>
         </Link>
         
@@ -142,7 +142,7 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
               Log in
             </Button>
             <Button 
-              className="bg-naija-green hover:bg-naija-green/90 text-white text-sm"
+              className="bg-klozui-green hover:bg-klozui-green/90 text-white text-sm"
               onClick={() => setIsAuthenticated(true)}
             >
               Sign up

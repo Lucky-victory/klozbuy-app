@@ -65,7 +65,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
         <CardHeader className="pb-2">
           <CardTitle className="text-lg flex items-center justify-between">
             <span>Nearby Businesses</span>
-            <Link to="/search" className="text-sm font-normal text-naija-green flex items-center hover:underline">
+            <Link to="/search" className="text-sm font-normal text-klozui-green flex items-center hover:underline">
               See all <ArrowRight size={14} className="ml-1" />
             </Link>
           </CardTitle>
@@ -101,7 +101,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
       </Card>
       
       {/* Create Business Card */}
-      <Card className="bg-gradient-to-br from-naija-green/90 to-naija-green text-white animate-fade-in">
+      <Card className="bg-gradient-to-br from-klozui-green/90 to-klozui-green text-white animate-fade-in">
         <CardContent className="p-4">
           <div className="flex flex-col items-center text-center gap-3 py-2">
             <div className="bg-white/20 p-3 rounded-full">
@@ -112,7 +112,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
               Create a business profile to reach more customers in your area
             </p>
             <Link to="/onboarding?type=business">
-              <Button className="mt-1 bg-white text-naija-green hover:bg-white/90 hover:text-naija-green">
+              <Button className="mt-1 bg-white text-klozui-green hover:bg-white/90 hover:text-klozui-green">
                 Create Business
               </Button>
             </Link>
@@ -140,7 +140,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
           <Button 
             variant="outline" 
             size="sm" 
-            className="mt-3 w-full border-naija-orange text-naija-orange hover:bg-naija-orange/5"
+            className="mt-3 w-full border-klozui-orange text-klozui-orange hover:bg-klozui-orange/5"
           >
             Learn More
           </Button>

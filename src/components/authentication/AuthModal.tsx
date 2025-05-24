@@ -103,7 +103,7 @@ const AuthModal = ({ open, onOpenChange, defaultTab = 'login' }: AuthModalProps)
                 </div>
               </div>
               
-              <Button type="submit" className="w-full mt-6 bg-naija-green hover:bg-naija-green/90">
+              <Button type="submit" className="w-full mt-6 bg-klozui-green hover:bg-klozui-green/90">
                 Log In
               </Button>
             </form>
@@ -122,7 +122,7 @@ const AuthModal = ({ open, onOpenChange, defaultTab = 'login' }: AuthModalProps)
                     className={cn(
                       "flex flex-col items-center gap-3 p-4 rounded-lg border-2 transition-all hover:bg-muted/30",
                       userType === 'individual' 
-                        ? "border-naija-green bg-naija-green/5" 
+                        ? "border-klozui-green bg-klozui-green/5" 
                         : "border-muted"
                     )}
                     onClick={() => setUserType('individual')}
@@ -130,7 +130,7 @@ const AuthModal = ({ open, onOpenChange, defaultTab = 'login' }: AuthModalProps)
                     <div className={cn(
                       "p-3 rounded-full",
                       userType === 'individual' 
-                        ? "bg-naija-green/10 text-naija-green" 
+                        ? "bg-klozui-green/10 text-klozui-green" 
                         : "bg-muted text-muted-foreground"
                     )}>
                       <User size={24} />
@@ -146,7 +146,7 @@ const AuthModal = ({ open, onOpenChange, defaultTab = 'login' }: AuthModalProps)
                     className={cn(
                       "flex flex-col items-center gap-3 p-4 rounded-lg border-2 transition-all hover:bg-muted/30",
                       userType === 'business' 
-                        ? "border-naija-orange bg-naija-orange/5" 
+                        ? "border-klozui-orange bg-klozui-orange/5" 
                         : "border-muted"
                     )}
                     onClick={() => setUserType('business')}
@@ -154,7 +154,7 @@ const AuthModal = ({ open, onOpenChange, defaultTab = 'login' }: AuthModalProps)
                     <div className={cn(
                       "p-3 rounded-full",
                       userType === 'business' 
-                        ? "bg-naija-orange/10 text-naija-orange" 
+                        ? "bg-klozui-orange/10 text-klozui-orange" 
                         : "bg-muted text-muted-foreground"
                     )}>
                       <Store size={24} />
@@ -167,7 +167,7 @@ const AuthModal = ({ open, onOpenChange, defaultTab = 'login' }: AuthModalProps)
                 </div>
                 
                 <Button 
-                  className="w-full mt-6 bg-naija-green hover:bg-naija-green/90"
+                  className="w-full mt-6 bg-klozui-green hover:bg-klozui-green/90"
                   onClick={goToNextStep}
                 >
                   Continue
@@ -258,13 +258,13 @@ const AuthModal = ({ open, onOpenChange, defaultTab = 'login' }: AuthModalProps)
                 <div className="mt-6">
                   <Button 
                     type="submit" 
-                    className="w-full bg-naija-green hover:bg-naija-green/90"
+                    className="w-full bg-klozui-green hover:bg-klozui-green/90"
                   >
                     Create Account
                   </Button>
                   
                   <p className="text-xs text-center mt-4 text-muted-foreground">
-                    By signing up, you agree to our <a href="#" className="text-naija-green hover:underline">Terms of Service</a> and <a href="#" className="text-naija-green hover:underline">Privacy Policy</a>.
+                    By signing up, you agree to our <a href="#" className="text-klozui-green hover:underline">Terms of Service</a> and <a href="#" className="text-klozui-green hover:underline">Privacy Policy</a>.
                   </p>
                 </div>
               </form>

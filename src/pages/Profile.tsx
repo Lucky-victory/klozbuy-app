@@ -119,7 +119,7 @@ const Profile = () => {
   return (
     <Layout>
       <div className="flex flex-col w-full">
-        <div className="h-48 md:h-64 bg-gradient-to-r from-naija-green/90 to-naija-green relative">
+        <div className="h-48 md:h-64 bg-gradient-to-r from-klozui-green/90 to-klozui-green relative">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute inset-0 bg-black opacity-20"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -145,7 +145,7 @@ const Profile = () => {
                   <h1 className="text-2xl font-bold flex items-center gap-2">
                     {user.name}
                     {user.isRegistered && (
-                      <span className="bg-naija-green/10 text-naija-green text-xs px-2 py-0.5 rounded-full flex items-center">
+                      <span className="bg-klozui-green/10 text-klozui-green text-xs px-2 py-0.5 rounded-full flex items-center">
                         <CheckCircle size={12} className="mr-1" />
                         Registered
                       </span>
@@ -186,13 +186,13 @@ const Profile = () => {
                           "text-sm",
                           isFollowing 
                             ? "bg-muted hover:bg-muted/80" 
-                            : "bg-naija-green hover:bg-naija-green/90 text-white"
+                            : "bg-klozui-green hover:bg-klozui-green/90 text-white"
                         )}
                         onClick={toggleFollow}
                       >
                         {isFollowing ? (
                           <>
-                            <Heart size={16} className="mr-2 fill-naija-green text-naija-green" />
+                            <Heart size={16} className="mr-2 fill-klozui-green text-klozui-green" />
                             Following
                           </>
                         ) : (
@@ -246,7 +246,7 @@ const Profile = () => {
               <TabsTrigger 
                 value="products" 
                 className={cn(
-                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-naija-green data-[state=active]:bg-transparent",
+                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green data-[state=active]:bg-transparent",
                   "text-base font-medium"
                 )}
               >
@@ -255,7 +255,7 @@ const Profile = () => {
               <TabsTrigger 
                 value="about" 
                 className={cn(
-                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-naija-green data-[state=active]:bg-transparent",
+                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green data-[state=active]:bg-transparent",
                   "text-base font-medium"
                 )}
               >
@@ -264,7 +264,7 @@ const Profile = () => {
               <TabsTrigger 
                 value="reviews" 
                 className={cn(
-                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-naija-green data-[state=active]:bg-transparent",
+                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green data-[state=active]:bg-transparent",
                   "text-base font-medium"
                 )}
               >
@@ -295,7 +295,7 @@ const Profile = () => {
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Location</h3>
                   <div className="flex items-start gap-2">
-                    <MapPin size={20} className="mt-0.5 flex-shrink-0 text-naija-green" />
+                    <MapPin size={20} className="mt-0.5 flex-shrink-0 text-klozui-green" />
                     <div>
                       <p className="font-medium">{user.landmark}</p>
                       <p className="text-sm text-muted-foreground">{user.address}</p>

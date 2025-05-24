@@ -62,8 +62,8 @@ const UserAvatar = ({
           className={cn(
             'bg-gradient-to-br',
             userType === 'individual' 
-              ? 'from-naija-green/80 to-naija-green' 
-              : 'from-naija-orange/80 to-naija-orange',
+              ? 'from-klozui-green/80 to-klozui-green' 
+              : 'from-klozui-orange/80 to-klozui-orange',
             'text-white font-medium',
             fallbackClassName
           )}
@@ -83,7 +83,7 @@ const UserAvatar = ({
       {isVerified && (
         <div className={cn(
           verifiedBadgeSize[size],
-          'absolute rounded-full bg-naija-green border-2 border-white flex items-center justify-center'
+          'absolute rounded-full bg-klozui-green border-2 border-white flex items-center justify-center'
         )}>
           <svg 
             xmlns="http://www.w3.org/2000/svg" 

@@ -51,7 +51,7 @@ const UserCard = ({ id, userName, userType, isVerified, avatar, bio, className }
             </Button>
           )}
           
-          <Button size="sm" className="h-8 bg-naija-green hover:bg-naija-green/90 text-white">
+          <Button size="sm" className="h-8 bg-klozui-green hover:bg-klozui-green/90 text-white">
             <Heart size={14} className="mr-1" />
             Follow
           </Button>
