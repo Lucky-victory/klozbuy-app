@@ -1,11 +1,11 @@
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  Bell, 
-  MessageSquare, 
-  Search, 
-  Menu, 
+import React, { useState } from "react";
+import Link from "next/link";
+import {
+  Bell,
+  MessageSquare,
+  Search,
+  Menu,
   X,
   User,
   LogOut,
@@ -73,7 +73,7 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
           <Bell size={20} />
         </Button>
         
-        <Link to="/messages">
+        <Link href="/messages">
           <Button variant="ghost" size="icon" className="hidden md:flex relative">
             <MessageSquare size={20} />
             <span className="absolute top-0 right-0 h-2 w-2 bg-klozui-orange rounded-full" />

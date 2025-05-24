@@ -1,56 +1,58 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Store, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import UserAvatar from '@/components/shared/UserAvatar';
-import LocationBadge from '@/components/shared/LocationBadge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React from "react";
+import { Store, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+import UserAvatar from "@/components/shared/UserAvatar";
+import LocationBadge from "@/components/shared/LocationBadge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 // Sample data - would come from API in real app
 const sampleBusinesses = [
   {
     id: 201,
     name: "Mama's Kitchen",
-    type: 'restaurant',
+    type: "restaurant",
     distance: 1.2,
     isVerified: true,
-    avatar: '',
+    avatar: "",
   },
   {
     id: 202,
-    name: 'Smart Electronics',
-    type: 'electronics',
+    name: "Smart Electronics",
+    type: "electronics",
     distance: 2.5,
     isVerified: false,
-    avatar: '',
+    avatar: "",
   },
   {
     id: 203,
-    name: 'Fashion Palace',
-    type: 'clothing',
+    name: "Fashion Palace",
+    type: "clothing",
     distance: 3.7,
     isVerified: true,
-    avatar: '',
+    avatar: "",
   },
   {
     id: 204,
-    name: 'Green Grocers',
-    type: 'grocery',
+    name: "Green Grocers",
+    type: "grocery",
     distance: 1.8,
     isVerified: false,
-    avatar: '',
+    avatar: "",
   },
 ];
 
 // Sample ad data
 const sampleAd = {
   id: 1,
-  advertiserName: 'MTN Nigeria',
-  title: 'New Data Plans',
-  description: 'Get more value with our new data bundles! Enjoy high-speed internet at affordable prices.',
-  imageUrl: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9iaWxlJTIwaW50ZXJuZXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60',
-  link: 'https://example.com',
+  advertiserName: "MTN Nigeria",
+  title: "New Data Plans",
+  description:
+    "Get more value with our new data bundles! Enjoy high-speed internet at affordable prices.",
+  imageUrl:
+    "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9iaWxlJTIwaW50ZXJuZXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+  link: "https://example.com",
 };
 
 interface SuggestionsPanelProps {
@@ -65,21 +67,24 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
         <CardHeader className="pb-2">
           <CardTitle className="text-lg flex items-center justify-between">
             <span>Nearby Businesses</span>
-            <Link to="/search" className="text-sm font-normal text-klozui-green flex items-center hover:underline">
+            <Link
+              href="/search"
+              className="text-sm font-normal text-klozui-green flex items-center hover:underline"
+            >
               See all <ArrowRight size={14} className="ml-1" />
             </Link>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {sampleBusinesses.map(business => (
-              <Link 
-                key={business.id} 
-                to={`/profile/${business.id}`}
+            {sampleBusinesses.map((business) => (
+              <Link
+                key={business.id}
+                href={`/profile/${business.id}`}
                 className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
               >
-                <UserAvatar 
-                  name={business.name} 
+                <UserAvatar
+                  name={business.name}
                   size="sm"
                   userType="business"
                   isVerified={business.isVerified}
@@ -87,7 +92,9 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
                 />
                 <div className="flex-1 min-w-0">
                   <div className="font-medium truncate">{business.name}</div>
-                  <div className="text-xs text-muted-foreground capitalize">{business.type}</div>
+                  <div className="text-xs text-muted-foreground capitalize">
+                    {business.type}
+                  </div>
                 </div>
                 <LocationBadge
                   distance={business.distance}
@@ -99,7 +106,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
           </div>
         </CardContent>
       </Card>
-      
+
       {/* Create Business Card */}
       <Card className="bg-gradient-to-br from-klozui-green/90 to-klozui-green text-white animate-fade-in">
         <CardContent className="p-4">
@@ -111,7 +118,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
             <p className="text-sm text-white/85">
               Create a business profile to reach more customers in your area
             </p>
-            <Link to="/onboarding?type=business">
+            <Link href="/onboarding?type=business">
               <Button className="mt-1 bg-white text-klozui-green hover:bg-white/90 hover:text-klozui-green">
                 Create Business
               </Button>
@@ -119,14 +126,14 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
           </div>
         </CardContent>
       </Card>
-      
+
       {/* Sponsored Ad */}
       <Card className="overflow-hidden border animate-fade-in">
         <div className="relative">
-          <img 
-            src={sampleAd.imageUrl} 
+          <img
+            src={sampleAd.imageUrl}
             alt={sampleAd.title}
-            className="w-full h-32 object-cover" 
+            className="w-full h-32 object-cover"
           />
           <div className="absolute top-2 right-2 bg-white/80 backdrop-blur-sm text-xs px-2 py-0.5 rounded-full">
             Sponsored
@@ -137,9 +144,9 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
           <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
             {sampleAd.description}
           </p>
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             className="mt-3 w-full border-klozui-orange text-klozui-orange hover:bg-klozui-orange/5"
           >
             Learn More

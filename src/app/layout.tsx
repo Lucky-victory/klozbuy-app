@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
-
+import { Providers } from "@/providers";
+import { ReactNode } from "react";
+import "./globals.css";
 export const metadata: Metadata = {
   title: "NaijaNeighborhood Connector",
   description:
@@ -32,21 +28,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            {children}
-            <Toaster />
-            <Sonner />
-          </TooltipProvider>
-        </QueryClientProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

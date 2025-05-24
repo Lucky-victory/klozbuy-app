@@ -1,20 +1,19 @@
-
-import React from 'react';
-import { MapPin } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { MapPin } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface LogoProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   showText?: boolean;
 }
 
-const Logo = ({ className, size = 'md', showText = true }: LogoProps) => {
+const Logo = ({ className, size = "md", showText = true }: LogoProps) => {
   const sizeClasses = {
-    sm: 'text-lg',
-    md: 'text-xl',
-    lg: 'text-2xl',
+    sm: "text-lg",
+    md: "text-xl",
+    lg: "text-2xl",
   };
 
   const iconSizes = {
@@ -24,20 +23,20 @@ const Logo = ({ className, size = 'md', showText = true }: LogoProps) => {
   };
 
   return (
-    <Link 
-      to="/" 
+    <Link
+      href="/"
       className={cn(
-        'flex items-center gap-1 font-bold text-klozui-dark', 
-        sizeClasses[size], 
+        "flex items-center gap-1 font-bold text-klozui-dark",
+        sizeClasses[size],
         className
       )}
     >
       <div className="relative">
-        <MapPin 
-          size={iconSizes[size]} 
-          className="text-klozui-green" 
-          strokeWidth={3} 
-          fill="#34C759" 
+        <MapPin
+          size={iconSizes[size]}
+          className="text-klozui-green"
+          strokeWidth={3}
+          fill="#34C759"
           color="white"
         />
         <div className="absolute top-[-2px] left-[50%] transform translate-x-[-50%] w-[60%] h-[3px] bg-white rounded-t-full" />

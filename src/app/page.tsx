@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { useLocation } from "@/hooks/useLocation";
 import Layout from "@/components/layout/Layout";

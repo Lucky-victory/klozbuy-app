@@ -1,6 +1,6 @@
-
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Home,
   Search,
@@ -14,48 +14,56 @@ import {
   Megaphone,
   PanelTop,
   BarChart3,
-  LogOut
-} from 'lucide-react';
-import Logo from '@/components/ui/Logo';
-import UserAvatar from '@/components/shared/UserAvatar';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
+  LogOut,
+} from "lucide-react";
+import Logo from "@/components/ui/Logo";
+import UserAvatar from "@/components/shared/UserAvatar";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 interface SidebarProps {
   className?: string;
 }
 
 const Sidebar = ({ className }: SidebarProps) => {
-  const location = useLocation();
-  
+  const pathname = usePathname();
+
   // Mock user data - in a real app this would come from auth context
   const isAuthenticated = true;
   const user = {
-    name: 'Adebayo Olatunji',
-    type: 'individual',
+    name: "Adebayo Olatunji",
+    type: "individual",
     isVerified: false,
-    avatar: '',
+    avatar: "",
   };
 
   const businessUser = {
-    name: 'Lagos Cosmetics',
-    type: 'business',
+    name: "Lagos Cosmetics",
+    type: "business",
     isVerified: true,
-    avatar: '',
+    avatar: "",
   };
 
-  const NavItem = ({ path, icon: Icon, label }: { path: string; icon: React.ElementType; label: string }) => {
-    const isActive = location.pathname === path;
-    
+  const NavItem = ({
+    path,
+    icon: Icon,
+    label,
+  }: {
+    path: string;
+    icon: React.ElementType;
+    label: string;
+  }) => {
+    const isActive = pathname === path;
+
     return (
-      <Link to={path} className="w-full">
+      <Link href={path} className="w-full">
         <Button
           variant={isActive ? "default" : "ghost"}
           className={cn(
             "w-full justify-start gap-2 mb-1 text-base",
-            isActive 
-              ? "bg-klozui-green text-white hover:bg-klozui-green/90" 
+            isActive
+              ? "bg-klozui-green text-white hover:bg-klozui-green/90"
               : "hover:bg-muted"
           )}
         >
@@ -67,12 +75,14 @@ const Sidebar = ({ className }: SidebarProps) => {
   };
 
   return (
-    <div className={cn(
-      "hidden md:flex flex-col w-64 p-4 border-r border-border bg-background h-screen sticky top-0",
-      className
-    )}>
+    <div
+      className={cn(
+        "hidden md:flex flex-col w-64 p-4 border-r border-border bg-background h-screen sticky top-0",
+        className
+      )}
+    >
       <Logo className="mb-6 mt-2" />
-      
+
       <div className="flex-1 overflow-auto py-2">
         <div className="space-y-1">
           <NavItem path="/" icon={Home} label="Home" />
@@ -85,13 +95,19 @@ const Sidebar = ({ className }: SidebarProps) => {
         {isAuthenticated && (
           <>
             <Separator className="my-4" />
-            
-            <p className="text-sm font-medium text-muted-foreground mb-2 px-2">Business</p>
+
+            <p className="text-sm font-medium text-muted-foreground mb-2 px-2">
+              Business
+            </p>
             <div className="space-y-1">
               <NavItem path="/my-business" icon={Store} label="My Business" />
               <NavItem path="/locations" icon={Map} label="Locations" />
               <NavItem path="/promote" icon={Megaphone} label="Promote" />
-              <NavItem path="/subscriptions" icon={Crown} label="Subscriptions" />
+              <NavItem
+                path="/subscriptions"
+                icon={Crown}
+                label="Subscriptions"
+              />
               <NavItem path="/dashboard" icon={BarChart3} label="Dashboard" />
             </div>
 
@@ -101,31 +117,38 @@ const Sidebar = ({ className }: SidebarProps) => {
           </>
         )}
       </div>
-      
+
       {isAuthenticated ? (
         <div className="mt-auto pt-4 border-t border-border">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
-              <UserAvatar 
-                name={user.name} 
-                size="sm" 
+              <UserAvatar
+                name={user.name}
+                size="sm"
                 isVerified={user.isVerified}
-                userType={user.type as 'individual' | 'business'}
+                userType={user.type as "individual" | "business"}
                 src={user.avatar}
               />
               <div className="ml-2">
-                <p className="text-sm font-medium truncate max-w-[120px]">{user.name}</p>
-                <p className="text-xs text-muted-foreground capitalize">{user.type}</p>
+                <p className="text-sm font-medium truncate max-w-[120px]">
+                  {user.name}
+                </p>
+                <p className="text-xs text-muted-foreground capitalize">
+                  {user.type}
+                </p>
               </div>
             </div>
             <Button variant="ghost" size="icon">
               <LogOut size={18} />
             </Button>
           </div>
-          
-          {user.type === 'individual' && (
-            <Link to="/onboarding?type=business">
-              <Button variant="outline" className="w-full border-dashed border-klozui-orange/50 text-klozui-orange hover:bg-klozui-orange/5 hover:border-klozui-orange/80">
+
+          {user.type === "individual" && (
+            <Link href="/onboarding?type=business">
+              <Button
+                variant="outline"
+                className="w-full border-dashed border-klozui-orange/50 text-klozui-orange hover:bg-klozui-orange/5 hover:border-klozui-orange/80"
+              >
                 <Store size={16} className="mr-2" />
                 Create Business
               </Button>
