@@ -62,3 +62,10 @@ export const mimeType = [
   "application/pdf",
 ] as const;
 export type MimeType = (typeof mimeType)[number];
+export const genderEnum = [
+  "male",
+  "female",
+  "other",
+  "prefer_not_to_say",
+] as const;
+export type Gender = (typeof genderEnum)[number];
