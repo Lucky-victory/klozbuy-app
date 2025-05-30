@@ -22,67 +22,9 @@ import {
   uuid,
   id,
 } from "../schema-helper";
+import { media } from "./media-schema";
+import { userProfiles, users } from "./users-schema";
 // Users table - Enhanced with better structure
-export const users = mysqlTable(
-  "users",
-  {
-    id,
-    uuid,
-    type: mysqlEnum("type", ["individual", "business"]).notNull(),
-    username: varchar("username", { length: 50 }).notNull().unique(),
-    email: varchar("email", { length: 255 }).notNull().unique(),
-    emailVerified: boolean("email_verified").default(false),
-    phone: varchar("phone", { length: 20 }),
-    phoneVerified: boolean("phone_verified").default(false),
-    passwordHash: varchar("password_hash", { length: 255 }).notNull(),
-    isOnline: boolean("is_online").default(false),
-    lastLoginAt: timestamp("last_login_at"),
-    status: mysqlEnum("status", ["active", "inactive", "suspended"]).default(
-      "active"
-    ),
-    createdAt: timestamp("created_at").defaultNow(),
-    updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
-  },
-  (table) => [
-    index("users_username_idx").on(table.username),
-    index("users_email_idx").on(table.email),
-    index("users_type_idx").on(table.type),
-    index("users_online_idx").on(table.isOnline),
-  ]
-);
-
-// User profiles - Separate table for profile data
-export const userProfiles = mysqlTable(
-  "user_profiles",
-  {
-    id,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .unique()
-      .references(() => users.id),
-    firstName: varchar("first_name", { length: 50 }),
-    lastName: varchar("last_name", { length: 50 }),
-    displayName: varchar("display_name", { length: 100 }),
-    bio: text("bio"),
-    avatarUrl: varchar("avatar_url", { length: 500 }),
-    coverImageUrl: varchar("cover_image_url", { length: 500 }),
-    website: varchar("website", { length: 255 }),
-    dateOfBirth: timestamp("date_of_birth"),
-    gender: mysqlEnum("gender", genderEnum),
-    createdAt,
-    updatedAt,
-  },
-  (table) => [
-    index("user_profiles_user_id_idx").on(table.userId),
-    index("user_profiles_gender_idx").on(table.gender),
-    index("user_profiles_date_of_birth_idx").on(table.dateOfBirth),
-    index("user_profiles_created_at_idx").on(table.createdAt),
-    index("user_profiles_first_name_idx").on(table.firstName),
-    index("user_profiles_last_name_idx").on(table.lastName),
-    index("user_profiles_display_name_idx").on(table.displayName),
-    index("user_profiles_bio_idx").on(table.bio),
-  ]
-);
 
 // Business profiles - Extended info for businesses
 export const businessProfiles = mysqlTable(
@@ -92,7 +34,7 @@ export const businessProfiles = mysqlTable(
     userId: bigint("user_id", { mode: "number" })
       .notNull()
       .unique()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     businessName: varchar("business_name", { length: 100 }).notNull(),
     businessType: varchar("business_type", { length: 50 }).notNull(),
     description: text("description"),
@@ -129,7 +71,9 @@ export const locations = mysqlTable(
   "locations",
   {
     id,
-    userId: bigint("user_id", { mode: "number" }).references(() => users.id),
+    userId: bigint("user_id", { mode: "number" }).references(() => users.id, {
+      onDelete: "cascade",
+    }),
     type: mysqlEnum("type", ["primary", "business", "delivery"]).default(
       "primary"
     ),
@@ -161,7 +105,7 @@ export const posts = mysqlTable(
     uuid,
     userId: bigint("user_id", { mode: "number" })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     type: mysqlEnum("type", [
       "general",
       "product",
@@ -181,7 +125,8 @@ export const posts = mysqlTable(
       "nearby",
     ]).default("public"),
     locationId: bigint("location_id", { mode: "number" }).references(
-      () => locations.id
+      () => locations.id,
+      { onDelete: "set null" }
     ),
     publishedAt: timestamp("published_at"),
     createdAt,
@@ -204,7 +149,7 @@ export const productDetails = mysqlTable(
     postId: bigint("post_id", { mode: "number" })
       .notNull()
       .unique()
-      .references(() => posts.id),
+      .references(() => posts.id, { onDelete: "cascade" }),
     sku: varchar("sku", { length: 100 }),
     price: decimal("price", { precision: 10, scale: 2 }),
     compareAtPrice: decimal("compare_at_price", { precision: 10, scale: 2 }),
@@ -246,7 +191,7 @@ export const serviceDetails = mysqlTable(
     postId: bigint("post_id", { mode: "number" })
       .notNull()
       .unique()
-      .references(() => posts.id),
+      .references(() => posts.id, { onDelete: "cascade" }),
     serviceType: varchar("service_type", { length: 100 }).notNull(),
     priceType: mysqlEnum("price_type", [
       "fixed",
@@ -282,7 +227,7 @@ export const eventDetails = mysqlTable(
     postId: bigint("post_id", { mode: "number" })
       .notNull()
       .unique()
-      .references(() => posts.id),
+      .references(() => posts.id, { onDelete: "cascade" }),
     eventType: varchar("event_type", { length: 100 }).notNull(),
     startDate: timestamp("start_date").notNull(),
     endDate: timestamp("end_date"),
@@ -292,7 +237,8 @@ export const eventDetails = mysqlTable(
     timezone: varchar("timezone", { length: 50 }).default("Africa/Lagos"),
     venue: varchar("venue", { length: 200 }),
     venueLocationId: bigint("venue_location_id", { mode: "number" }).references(
-      () => locations.id
+      () => locations.id,
+      { onDelete: "set null" }
     ),
     isOnline: boolean("is_online").default(false),
     meetingUrl: varchar("meeting_url", { length: 500 }),
@@ -316,9 +262,12 @@ export const eventAttendees = mysqlTable(
   {
     id,
     eventId: bigint("event_id", { mode: "number" }).references(
-      () => eventDetails.id
+      () => eventDetails.id,
+      { onDelete: "cascade" }
     ),
-    userId: bigint("user_id", { mode: "number" }).references(() => users.id),
+    userId: bigint("user_id", { mode: "number" }).references(() => users.id, {
+      onDelete: "cascade",
+    }),
     createdAt,
     updatedAt,
   },
@@ -327,53 +276,8 @@ export const eventAttendees = mysqlTable(
     index("event_attendees_user_id_idx").on(table.userId),
   ]
 );
-export const eventMedia = mysqlTable(
-  "event_media",
-  {
-    id,
-    eventId: bigint("event_id", { mode: "number" }).references(
-      () => eventDetails.id
-    ),
-    mediaId: bigint("media_id", { mode: "number" }).references(() => media.id),
-    createdAt,
-    updatedAt,
-  },
-  (table) => [
-    index("event_media_event_id_idx").on(table.eventId),
-    index("event_media_media_id_idx").on(table.mediaId),
-  ]
-);
+
 // Media - Separate table for images/videos
-export const media = mysqlTable(
-  "media",
-  {
-    id,
-    type: mysqlEnum("type", ["image", "video", "document", "audio"]).notNull(),
-    uuid,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id),
-    url: varchar("url", { length: 500 }).notNull(),
-    cdnPublicId: varchar("cdn_public_id", { length: 255 }), // For Cloudinary
-    thumbnailUrl: varchar("thumbnail_url", { length: 500 }),
-    fileName: varchar("file_name", { length: 255 }),
-    mimeType: mysqlEnum("mime_type", mimeType),
-    fileSize: int("file_size"),
-    width: int("width"),
-    height: int("height"),
-    duration: int("duration"), // For videos in seconds
-    altText: varchar("alt_text", { length: 255 }),
-    sortOrder: int("sort_order").default(0),
-    createdAt,
-    updatedAt,
-  },
-  (table) => [
-    index("media_type_idx").on(table.type),
-    index("media_uuid_idx").on(table.uuid),
-    index("media_mime_type_idx").on(table.mimeType),
-    index("media_user_id_idx").on(table.userId),
-  ]
-);
 
 export const postMedia = mysqlTable(
   "post_media",
@@ -381,10 +285,10 @@ export const postMedia = mysqlTable(
     id,
     postId: bigint("post_id", { mode: "number" })
       .notNull()
-      .references(() => posts.id),
+      .references(() => posts.id, { onDelete: "cascade" }),
     mediaId: bigint("media_id", { mode: "number" })
       .notNull()
-      .references(() => media.id),
+      .references(() => media.id, { onDelete: "cascade" }),
     isPrimary: boolean("is_primary").default(false),
     createdAt,
     updatedAt,
@@ -401,7 +305,9 @@ export const reactions = mysqlTable(
   "reactions",
   {
     id,
-    userId: bigint("user_id", { mode: "number" }).notNull(),
+    userId: bigint("user_id", { mode: "number" })
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
     targetId: bigint("target_id", { mode: "number" }).notNull(),
     targetType: mysqlEnum("target_type", ["post", "comment"]).notNull(),
     type: mysqlEnum("type", [
@@ -434,16 +340,16 @@ export const postComments = mysqlTable(
     uuid,
     userId: bigint("user_id", { mode: "number" })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     postId: bigint("post_id", { mode: "number" })
       .notNull()
-      .references(() => posts.id),
+      .references(() => posts.id, { onDelete: "cascade" }),
     content: text("content").notNull(),
     parentId: bigint("parent_id", {
       mode: "number",
       unsigned: true,
       //@ts-ignore
-    }).references(() => postComments.id),
+    }).references(() => postComments.id, { onDelete: "cascade" }),
     status: mysqlEnum("status", [
       "pending",
       "approved",
@@ -468,10 +374,10 @@ export const postCommentMedia = mysqlTable(
     id,
     commentId: bigint("comment_id", { mode: "number" })
       .notNull()
-      .references(() => postComments.id),
+      .references(() => postComments.id, { onDelete: "cascade" }),
     mediaId: bigint("media_id", { mode: "number" })
       .notNull()
-      .references(() => media.id),
+      .references(() => media.id, { onDelete: "cascade" }),
   },
   (table) => [
     index("post_comment_media_comment_id_idx").on(table.commentId),
@@ -484,12 +390,8 @@ export const follows = mysqlTable(
   "follows",
   {
     id,
-    followerId: bigint("follower_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    followingId: bigint("following_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+    followerId: bigint("follower_id", { mode: "number" }).notNull(),
+    followingId: bigint("following_id", { mode: "number" }).notNull(),
     createdAt,
   },
   (table) => [
@@ -499,42 +401,20 @@ export const follows = mysqlTable(
       table.followerId,
       table.followingId
     ),
+    foreignKey({
+      columns: [table.followerId],
+      foreignColumns: [users.id],
+      name: "follows_follower_id_fk",
+    }).onDelete("cascade"),
+    foreignKey({
+      columns: [table.followingId],
+      foreignColumns: [users.id],
+      name: "follows_following_id_fk",
+    }).onDelete("cascade"),
   ]
 );
 
 // Reviews table - Enhanced
-export const reviews = mysqlTable(
-  "reviews",
-  {
-    id,
-    uuid,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    businessId: bigint("business_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    postId: bigint("post_id", { mode: "number" }).references(() => posts.id), // Optional: review for specific product/service
-    rating: int("rating").notNull(), // 1-5
-    title: varchar("title", { length: 200 }),
-    content: text("content"),
-    isVerifiedPurchase: boolean("is_verified_purchase").default(false),
-    isRecommended: boolean("is_recommended"),
-    helpfulCount: bigint("helpful_count", { mode: "number" }).default(0),
-    status: mysqlEnum("status", ["pending", "approved", "rejected"]).default(
-      "approved"
-    ),
-    createdAt,
-    updatedAt,
-  },
-  (table) => [
-    index("reviews_user_id_idx").on(table.userId),
-    index("reviews_business_id_idx").on(table.businessId),
-    index("reviews_post_id_idx").on(table.postId),
-    index("reviews_rating_idx").on(table.rating),
-    index("reviews_status_idx").on(table.status),
-  ]
-);
 
 // Subscription plans
 export const subscriptionPlans = mysqlTable(
@@ -574,7 +454,7 @@ export const subscriptions = mysqlTable(
       .references(() => users.id, { onDelete: "cascade" }),
     planId: bigint("plan_id", { mode: "number" })
       .notNull()
-      .references(() => subscriptionPlans.id),
+      .references(() => subscriptionPlans.id, { onDelete: "cascade" }),
     status: mysqlEnum("status", [
       "active",
       "inactive",
@@ -603,7 +483,7 @@ export const postPromotions = mysqlTable(
     id,
     postId: bigint("post_id", { mode: "number" })
       .notNull()
-      .references(() => posts.id),
+      .references(() => posts.id, { onDelete: "cascade" }),
     userId: bigint("user_id", { mode: "number" })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
@@ -661,6 +541,9 @@ export const advertisements = mysqlTable(
     content: text("content").notNull(),
     imageUrl: varchar("image_url", { length: 500 }),
     clickUrl: varchar("click_url", { length: 500 }),
+    userId: bigint("user_id", { mode: "number" })
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
     type: mysqlEnum("type", ["banner", "sidebar", "feed", "popup"]).notNull(),
     placement: varchar("placement", { length: 100 }),
     status: mysqlEnum("status", [
@@ -681,6 +564,7 @@ export const advertisements = mysqlTable(
   (table) => [
     index("advertisements_status_idx").on(table.status),
     index("advertisements_type_idx").on(table.type),
+    index("advertisements_user_id_idx").on(table.userId),
     index("advertisements_placement_idx").on(table.placement),
     index("advertisements_target_gender_idx").on(table.targetGender),
     index("advertisements_target_age_start_idx").on(table.targetAgeStart),
@@ -709,25 +593,26 @@ export const advertisementAttachments = mysqlTable(
   ]
 );
 
-//relations
-export const usersRelations = relations(users, ({ one, many }) => ({
-  profile: one(userProfiles, {
-    fields: [users.id],
-    references: [userProfiles.userId],
-  }),
-  businessProfile: one(businessProfiles, {
-    fields: [users.id],
-    references: [businessProfiles.userId],
-  }),
-  posts: many(posts),
-  comments: many(postComments),
-  reactions: many(reactions),
-  media: many(media),
-  locations: many(locations),
-  // Following relationships
-  following: many(follows, { relationName: "follower" }),
-  followers: many(follows, { relationName: "following" }),
-}));
+        //relations
+        export const usersRelations = relations(users, ({ one, many }) => ({
+        profile: one(userProfiles, {
+            fields: [users.id],
+            references: [userProfiles.userId],
+        }),
+        businessProfile: one(businessProfiles, {
+            fields: [users.id],
+            references: [businessProfiles.userId],
+        }),
+        posts: many(posts),
+        comments: many(postComments),
+        reactions: many(reactions),
+        advertisements: many(advertisements),
+        media: many(media),
+        locations: many(locations),
+        // Following relationships
+        following: many(follows, { relationName: "follower" }),
+        followers: many(follows, { relationName: "following" }),
+        }));
 
 export const postsRelations = relations(posts, ({ one, many }) => ({
   author: one(users, {
@@ -740,6 +625,18 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
   }),
   comments: many(postComments),
   media: many(postMedia),
+  productDetails: one(productDetails, {
+    fields: [posts.id],
+    references: [productDetails.postId],
+  }),
+  eventDetails: one(eventDetails, {
+    fields: [posts.id],
+    references: [eventDetails.postId],
+  }),
+  serviceDetails: one(serviceDetails, {
+    fields: [posts.id],
+    references: [serviceDetails.postId],
+  }),
   // Get reactions through the polymorphic relationship
 }));
 
@@ -766,6 +663,7 @@ export const reactionsRelations = relations(reactions, ({ one }) => ({
     fields: [reactions.userId],
     references: [users.id],
   }),
+
   // Note: Polymorphic relations need special handling in queries
 }));
 

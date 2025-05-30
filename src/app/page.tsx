@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "@/hooks/useLocation";
 import Layout from "@/components/layout/Layout";
 import FeedSection from "@/components/home/FeedSection";
@@ -13,7 +13,7 @@ const Index = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { latitude, longitude, loading, error, setManualLocation } =
     useLocation();
-
+  const [locationName, setLocationName] = useState("");
   // In a real app, this would fetch posts based on the user's location
   const handleLocation = () => {
     if (!loading && latitude && longitude) {
@@ -23,24 +23,28 @@ const Index = () => {
   };
 
   // Simple location-based greeting
-  const getLocationName = () => {
-    // For demo purposes, using hardcoded location names
-    // In a real app, this would use reverse geocoding or the user's saved location
-    if (latitude && longitude) {
-      // Approximate coordinates for Lagos
-      if (
-        latitude >= 6.3 &&
-        latitude <= 6.7 &&
-        longitude >= 3.1 &&
-        longitude <= 3.5
-      ) {
-        return "Lagos";
+  useEffect(() => {
+    const getLocationName = () => {
+      // console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+      // For demo purposes, using hardcoded location names
+      // In a real app, this would use reverse geocoding or the user's saved location
+      if (latitude && longitude) {
+        // Approximate coordinates for Lagos
+        if (
+          latitude >= 6.3 &&
+          latitude <= 6.7 &&
+          longitude >= 3.1 &&
+          longitude <= 3.5
+        ) {
+          return "Lagos";
+        }
+        return "your area";
       }
-      return "your area";
-    }
-    return "Nigeria";
-  };
-
+      return "Nigeria";
+    };
+    setLocationName(getLocationName());
+    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+  }, [latitude, longitude]);
   return (
     <Layout>
       <div className="flex flex-col md:flex-row gap-6 px-4 py-6">
@@ -56,7 +60,7 @@ const Index = () => {
                 ) : error ? (
                   <span className="text-sm italic">Location unavailable</span>
                 ) : (
-                  <p className="text-sm">{getLocationName()}</p>
+                  <p className="text-sm">{locationName}</p>
                 )}
               </div>
             </div>

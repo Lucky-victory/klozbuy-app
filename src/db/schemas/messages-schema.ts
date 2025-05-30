@@ -17,6 +17,10 @@ import {
   messageType,
   conversationType,
   conversationParticipantRole,
+  id,
+  mimeType,
+  createdAt,
+  updatedAt,
 } from "../schema-helper";
 // Users table
 
@@ -24,20 +28,22 @@ import {
 export const conversations = mysqlTable(
   "conversations",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id,
     type: mysqlEnum("type", conversationType).default("direct"),
     name: varchar("name", { length: 100 }),
     description: text("description"),
     isPrivate: boolean("is_private").default(true),
     createdBy: bigint("created_by", { mode: "number" }).references(
-      () => users.id
+      () => users.id,
+      { onDelete: "set null" }
     ),
     lastMessageAt: timestamp("last_message_at"),
-    createdAt: timestamp("created_at").defaultNow(),
-    updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+    createdAt,
+    updatedAt,
   },
   (table) => [
     index("conversations_type_idx").on(table.type),
+
     index("conversations_created_by_idx").on(table.createdBy),
     index("conversations_last_message_idx").on(table.lastMessageAt),
   ]
@@ -47,13 +53,13 @@ export const conversations = mysqlTable(
 export const conversationParticipants = mysqlTable(
   "conversation_participants",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id,
     conversationId: bigint("conversation_id", { mode: "number" })
       .notNull()
-      .references(() => conversations.id),
+      .references(() => conversations.id, { onDelete: "cascade" }),
     userId: bigint("user_id", { mode: "number" })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     role: mysqlEnum("role", conversationParticipantRole).default("member"),
     joinedAt: timestamp("joined_at").defaultNow(),
     leftAt: timestamp("left_at"),
@@ -77,23 +83,33 @@ export const conversationParticipants = mysqlTable(
 );
 
 // Messages table
+//@ts-ignore
 export const messages = mysqlTable(
   "messages",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id: bigint("id", { mode: "number", unsigned: true })
+      .primaryKey()
+      .autoincrement(),
     conversationId: bigint("conversation_id", { mode: "number" })
       .notNull()
-      .references(() => conversations.id),
+      .references(() => conversations.id, { onDelete: "cascade" }),
     senderId: bigint("sender_id", { mode: "number" })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     content: text("content").notNull(), // 4000 char limit for reasonable message size
     messageType: mysqlEnum("message_type", messageType).default("text"),
-    replyToId: bigint("reply_to_id", { mode: "number" }),
+    replyToId: bigint("reply_to_id", {
+      mode: "number",
+      unsigned: true,
+    }).references(
+      //@ts-ignore
+      () => messages.id,
+      { onDelete: "set null" }
+    ),
     isEdited: boolean("is_edited").default(false),
     isDeleted: boolean("is_deleted").default(false),
-    createdAt: timestamp("created_at").defaultNow(),
-    updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+    createdAt,
+    updatedAt,
   },
   (table) => [
     index("messages_conversation_created_idx").on(
@@ -114,16 +130,16 @@ export const messages = mysqlTable(
 export const messageAttachments = mysqlTable(
   "message_attachments",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id,
     messageId: bigint("message_id", { mode: "number" })
       .notNull()
-      .references(() => messages.id),
+      .references(() => messages.id, { onDelete: "cascade" }),
     cdnUrl: varchar("cdn_url", { length: 500 }).notNull(), // Cloudinary URL
     cdnPublicId: varchar("cdn_public_id", { length: 255 }).notNull(), // For deletions/transformations
     fileName: varchar("file_name", { length: 255 }).notNull(),
-    mimeType: varchar("mime_type", { length: 100 }).notNull(),
-    fileSize: bigint("file_size", { mode: "number" }).notNull(),
-    createdAt: timestamp("created_at").defaultNow(),
+    mimeType: varchar("mime_type", { length: 100, enum: mimeType }).notNull(),
+    fileSize: int("file_size"),
+    createdAt,
   },
   (table) => [index("message_attachments_message_id_idx").on(table.messageId)]
 );
@@ -132,15 +148,15 @@ export const messageAttachments = mysqlTable(
 export const messageReactions = mysqlTable(
   "message_reactions",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id,
     messageId: bigint("message_id", { mode: "number" })
       .notNull()
-      .references(() => messages.id),
+      .references(() => messages.id, { onDelete: "cascade" }),
     userId: bigint("user_id", { mode: "number" })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     emoji: varchar("emoji", { length: 10 }).notNull(),
-    createdAt: timestamp("created_at").defaultNow(),
+    createdAt,
   },
   (table) => [
     index("message_reactions_message_id_idx").on(table.messageId),
@@ -157,13 +173,13 @@ export const messageReactions = mysqlTable(
 export const messageReadReceipts = mysqlTable(
   "message_read_receipts",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id,
     messageId: bigint("message_id", { mode: "number" })
       .notNull()
-      .references(() => messages.id),
+      .references(() => messages.id, { onDelete: "cascade" }),
     userId: bigint("user_id", { mode: "number" })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     readAt: timestamp("read_at").defaultNow(),
   },
   (table) => [
@@ -180,14 +196,14 @@ export const messageReadReceipts = mysqlTable(
 export const messageMentions = mysqlTable(
   "message_mentions",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id,
     messageId: bigint("message_id", { mode: "number" })
       .notNull()
-      .references(() => messages.id),
+      .references(() => messages.id, { onDelete: "cascade" }),
     mentionedUserId: bigint("mentioned_user_id", { mode: "number" })
       .notNull()
-      .references(() => users.id),
-    createdAt: timestamp("created_at").defaultNow(),
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt,
   },
   (table) => [
     index("message_mentions_message_id_idx").on(table.messageId),
