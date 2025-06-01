@@ -11,7 +11,7 @@ import {
   uniqueIndex,
   foreignKey,
 } from "drizzle-orm/mysql-core";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { users } from "./users-schema";
 import {
   messageType,
@@ -31,7 +31,7 @@ export const conversations = mysqlTable(
     id,
     type: mysqlEnum("type", conversationType).default("direct"),
     name: varchar("name", { length: 100 }),
-    description: text("description"),
+    description: varchar("description", { length: 255 }),
     isPrivate: boolean("is_private").default(true),
     createdBy: bigint("created_by", { mode: "number" }).references(
       () => users.id,
@@ -43,7 +43,8 @@ export const conversations = mysqlTable(
   },
   (table) => [
     index("conversations_type_idx").on(table.type),
-
+    index("conversations_name_idx").on(table.name),
+    index("conversations_description_idx").on(table.description),
     index("conversations_created_by_idx").on(table.createdBy),
     index("conversations_last_message_idx").on(table.lastMessageAt),
   ]
@@ -96,7 +97,7 @@ export const messages = mysqlTable(
     senderId: bigint("sender_id", { mode: "number" })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    content: text("content").notNull(), // 4000 char limit for reasonable message size
+    content: text("content"), // 4000 char limit for reasonable message size
     messageType: mysqlEnum("message_type", messageType).default("text"),
     replyToId: bigint("reply_to_id", {
       mode: "number",
@@ -123,6 +124,7 @@ export const messages = mysqlTable(
       table.isDeleted,
       table.createdAt
     ),
+    sql`FULLTEXT INDEX (content) WITH PARSER MULTILINGUAL`,
   ]
 );
 
@@ -216,14 +218,6 @@ export const messageMentions = mysqlTable(
 );
 
 // Relations
-export const usersRelations = relations(users, ({ many }) => ({
-  sentMessages: many(messages),
-  conversationParticipants: many(conversationParticipants),
-  createdConversations: many(conversations),
-  messageReactions: many(messageReactions),
-  messageReadReceipts: many(messageReadReceipts),
-  messageMentions: many(messageMentions),
-}));
 
 export const conversationsRelations = relations(
   conversations,
