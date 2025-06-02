@@ -2,14 +2,48 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/db"; // your drizzle instance
 import * as schema from "@/db/schemas";
-import { admin, emailOTP, multiSession, username } from "better-auth/plugins";
+import {
+  admin,
+  emailOTP,
+  multiSession,
+  phoneNumber,
+  username,
+} from "better-auth/plugins";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "mysql",
+    usePlural: true,
     schema: schema,
   }),
+  user: {
+    additionalFields: {
+      firstName: {
+        type: "string",
+        required: true,
+        returned: true,
+      },
+      lastName: {
+        type: "string",
+        required: true,
+        returned: true,
+      },
+      bio: {
+        type: "string",
+        required: true,
+        returned: true,
+      },
+
+      coverImageUrl: {
+        type: "string",
+        required: false,
+        returned: true,
+      },
+    },
+  },
   session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+    updateAge: 60 * 60 * 24, // 1 day (every 1 day the session expiration is updated)
     cookieCache: {
       enabled: true,
       maxAge: 5 * 60, // Cache duration in seconds
@@ -17,6 +51,7 @@ export const auth = betterAuth({
   },
   plugins: [
     admin(),
+    phoneNumber(),
     multiSession(),
     username({
       usernameValidator: (username) => {

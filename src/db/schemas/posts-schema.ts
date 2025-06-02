@@ -22,7 +22,7 @@ import {
   userId,
 } from "../schema-helper";
 import { media } from "./media-schema";
-import { locations, userProfiles, users } from "./users-schema";
+import { locations, users } from "./users-schema";
 // Users table - Enhanced with better structure
 
 // Posts table - Enhanced with better structure

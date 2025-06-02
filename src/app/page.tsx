@@ -8,6 +8,7 @@ import AuthModal from "@/components/authentication/AuthModal";
 import { MapPin, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { calculateHaversineDistance } from "@/lib/geolocation/utils";
 
 const Index = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -24,6 +25,21 @@ const Index = () => {
 
   // Simple location-based greeting
   useEffect(() => {
+    // Example usage:
+    const userLatitude = 40.7128; // New York City
+    const userLongitude = -74.006;
+    const postLatitude = 34.0522; // Los Angeles
+    const postLongitude = -118.2437;
+
+    const distanceInKilometers = calculateHaversineDistance(
+      userLatitude,
+      userLongitude,
+      postLatitude,
+      postLongitude
+    );
+
+    console.log(`Distance: ${distanceInKilometers.toFixed(2)} km`);
+
     const getLocationName = () => {
       // console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
       // For demo purposes, using hardcoded location names

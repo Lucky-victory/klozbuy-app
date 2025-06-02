@@ -29,38 +29,12 @@ export const users = mysqlTable(
     id,
     lastSeenAt: timestamp("last_seen_at"),
     type: mysqlEnum("type", ["individual", "business"]).notNull(),
-    username: varchar("username", { length: 50 }).notNull().unique(),
+    username: varchar("username", { length: 50 }).unique(),
     email: varchar("email", { length: 255 }).notNull().unique(),
     emailVerified: boolean("email_verified").default(false),
-    phone: varchar("phone", { length: 20 }),
-    phoneVerified: boolean("phone_verified").default(false),
-    passwordHash: varchar("password_hash", { length: 255 }).notNull(),
+    phoneNumber: varchar("phone_number", { length: 255 }).unique(),
+    phoneNumberVerified: boolean("phone_number_verified"),
     isOnline: boolean("is_online").default(false),
-    lastLoginAt: timestamp("last_login_at"),
-    status: mysqlEnum("status", ["active", "inactive", "suspended"]).default(
-      "active"
-    ),
-    createdAt,
-    updatedAt,
-  },
-  (table) => [
-    index("users_username_idx").on(table.username),
-    index("users_email_idx").on(table.email),
-    index("users_type_idx").on(table.type),
-    index("users_online_idx").on(table.isOnline),
-    index("users_last_login_idx").on(table.lastLoginAt),
-    index("users_status_idx").on(table.status),
-    index("users_created_at_idx").on(table.createdAt),
-    index("users_last_seen_idx").on(table.lastSeenAt),
-  ]
-);
-
-// User profiles - Separate table for profile data
-export const userProfiles = mysqlTable(
-  "user_profiles",
-  {
-    id,
-    userId: userId,
     firstName: varchar("first_name", { length: 50 }),
     lastName: varchar("last_name", { length: 50 }),
     bio: text("bio"),
@@ -69,19 +43,32 @@ export const userProfiles = mysqlTable(
     website: varchar("website", { length: 255 }),
     dateOfBirth: timestamp("date_of_birth"),
     gender: mysqlEnum("gender", genderEnum),
+    role: text("role"),
+    banned: boolean("banned"),
+    banReason: text("ban_reason"),
+    banExpires: timestamp("ban_expires"),
+    displayUsername: text("display_username"),
     createdAt,
     updatedAt,
   },
   (table) => [
-    index("user_profiles_user_id_idx").on(table.userId),
-    index("user_profiles_gender_idx").on(table.gender),
-    index("user_profiles_date_of_birth_idx").on(table.dateOfBirth),
-    index("user_profiles_created_at_idx").on(table.createdAt),
-    index("user_profiles_first_name_idx").on(table.firstName),
-    index("user_profiles_last_name_idx").on(table.lastName),
-    index("user_profiles_bio_idx").on(table.bio),
+    index("users_username_idx").on(table.username),
+    index("users_email_idx").on(table.email),
+    index("users_type_idx").on(table.type),
+    index("users_online_idx").on(table.isOnline),
+    index("users_role_idx").on(table.role),
+    index("users_banned_idx").on(table.banned),
+    index("users_phone_number_idx").on(table.phoneNumber),
+    index("users_created_at_idx").on(table.createdAt),
+    index("users_last_seen_idx").on(table.lastSeenAt),
+    index("users_gender_idx").on(table.gender),
+    index("users_date_of_birth_idx").on(table.dateOfBirth),
+    index("users_first_name_idx").on(table.firstName),
+    index("users_last_name_idx").on(table.lastName),
+    index("users_bio_idx").on(table.bio),
   ]
 );
+
 // Business profiles - Extended info for businesses
 export const businessProfiles = mysqlTable(
   "business_profiles",
@@ -175,10 +162,6 @@ export const follows = mysqlTable(
   ]
 );
 export const usersRelations = relations(users, ({ one, many }) => ({
-  profile: one(userProfiles, {
-    fields: [users.id],
-    references: [userProfiles.userId],
-  }),
   businessProfile: one(businessProfiles, {
     fields: [users.id],
     references: [businessProfiles.userId],
