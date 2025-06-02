@@ -105,6 +105,7 @@ export const productDetails = mysqlTable(
     index("product_details_post_id_idx").on(table.postId),
     index("product_details_sku_idx").on(table.sku),
     index("product_details_price_idx").on(table.price),
+    index("product_details_compare_price_idx").on(table.compareAtPrice),
     index("product_details_availability_idx").on(table.availability),
   ]
 );
@@ -419,6 +420,25 @@ export const advertisementAttachments = mysqlTable(
 
 //relations
 
+export const reactionsRelations = relations(reactions, ({ one }) => ({
+  user: one(users, {
+    fields: [reactions.userId],
+    references: [users.id],
+  }),
+  // Polymorphic relations - conditionally reference based on targetType
+  post: one(posts, {
+    fields: [reactions.targetId],
+    references: [posts.id],
+    relationName: "postReactions",
+  }),
+  comment: one(postComments, {
+    fields: [reactions.targetId],
+    references: [postComments.id],
+    relationName: "commentReactions",
+  }),
+}));
+
+// Also update the posts and comments relations to include reactions
 export const postsRelations = relations(posts, ({ one, many }) => ({
   author: one(users, {
     fields: [posts.userId],
@@ -430,6 +450,9 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
   }),
   comments: many(postComments),
   media: many(postMedia),
+  reactions: many(reactions, {
+    relationName: "postReactions",
+  }),
   productDetails: one(productDetails, {
     fields: [posts.id],
     references: [productDetails.postId],
@@ -442,7 +465,6 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
     fields: [posts.id],
     references: [serviceDetails.postId],
   }),
-  // Get reactions through the polymorphic relationship
 }));
 
 export const commentsRelations = relations(postComments, ({ one, many }) => ({
@@ -461,13 +483,7 @@ export const commentsRelations = relations(postComments, ({ one, many }) => ({
   }),
   replies: many(postComments, { relationName: "parent" }),
   media: many(postCommentMedia),
-}));
-
-export const reactionsRelations = relations(reactions, ({ one }) => ({
-  user: one(users, {
-    fields: [reactions.userId],
-    references: [users.id],
+  reactions: many(reactions, {
+    relationName: "commentReactions",
   }),
-
-  // Note: Polymorphic relations need special handling in queries
 }));

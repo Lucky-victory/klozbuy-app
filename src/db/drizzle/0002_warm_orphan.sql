@@ -1,1 +1,0 @@
-ALTER TABLE `notifications` MODIFY COLUMN `channels` json DEFAULT JSON_ARRAY('in_app');

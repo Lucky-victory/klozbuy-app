@@ -13,7 +13,7 @@ import {
   foreignKey,
 } from "drizzle-orm/mysql-core";
 import { createdAt, genderEnum, id, updatedAt, userId } from "../schema-helper";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { advertisements, postComments, posts, reactions } from "./posts-schema";
 import { media } from "./media-schema";
 import { messages } from "./messages-schema";
@@ -43,7 +43,7 @@ export const users = mysqlTable(
     website: varchar("website", { length: 255 }),
     dateOfBirth: timestamp("date_of_birth"),
     gender: mysqlEnum("gender", genderEnum),
-    role: text("role"),
+    role: varchar("role", { length: 50, enum: ["admin", "user"] }),
     banned: boolean("banned"),
     banReason: text("ban_reason"),
     banExpires: timestamp("ban_expires"),
@@ -65,7 +65,7 @@ export const users = mysqlTable(
     index("users_date_of_birth_idx").on(table.dateOfBirth),
     index("users_first_name_idx").on(table.firstName),
     index("users_last_name_idx").on(table.lastName),
-    index("users_bio_idx").on(table.bio),
+    sql`FULLTEXT INDEX (bio) WITH PARSER MULTILINGUAL`,
   ]
 );
 
@@ -116,8 +116,9 @@ export const locations = mysqlTable(
       "primary"
     ),
     name: varchar("name", { length: 100 }), // e.g., "Main Store", "Home"
-    address: text("address"),
+    address: varchar("address", { length: 255 }),
     city: varchar("city", { length: 100 }),
+    landmark: varchar("landmark", { length: 150 }),
     state: varchar("state", { length: 100 }),
     country: varchar("country", { length: 100 }).default("Nigeria"),
     postalCode: varchar("postal_code", { length: 20 }),

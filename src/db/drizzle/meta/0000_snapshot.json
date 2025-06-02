@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "f4b290b7-2f19-4680-b495-42951b367722",
+  "id": "eb73ff02-3400-43ff-8bd0-c694bda8231e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "business_profiles": {
@@ -293,7 +293,7 @@
         },
         "address": {
           "name": "address",
-          "type": "text",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -301,6 +301,13 @@
         "city": {
           "name": "city",
           "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "landmark": {
+          "name": "landmark",
+          "type": "varchar(150)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -870,7 +877,7 @@
         },
         "role": {
           "name": "role",
-          "type": "text",
+          "type": "varchar(50)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -1010,13 +1017,6 @@
           "name": "users_last_name_idx",
           "columns": [
             "last_name"
-          ],
-          "isUnique": false
-        },
-        "users_bio_idx": {
-          "name": "users_bio_idx",
-          "columns": [
-            "bio"
           ],
           "isUnique": false
         }
@@ -2607,6 +2607,13 @@
           ],
           "isUnique": false
         },
+        "product_details_compare_price_idx": {
+          "name": "product_details_compare_price_idx",
+          "columns": [
+            "compare_at_price"
+          ],
+          "isUnique": false
+        },
         "product_details_availability_idx": {
           "name": "product_details_availability_idx",
           "columns": [
@@ -3846,8 +3853,7 @@
           "type": "json",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "JSON_OBJECT()"
+          "autoincrement": false
         },
         "preferences": {
           "name": "preferences",
@@ -4139,8 +4145,7 @@
           "type": "json",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "('[\"in_app\"]')"
+          "autoincrement": false
         },
         "priority": {
           "name": "priority",

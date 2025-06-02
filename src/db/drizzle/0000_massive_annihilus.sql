@@ -30,8 +30,9 @@ CREATE TABLE `locations` (
 	`user_id` varchar(36) NOT NULL,
 	`type` enum('primary','business','delivery') DEFAULT 'primary',
 	`name` varchar(100),
-	`address` text,
+	`address` varchar(255),
 	`city` varchar(100),
+	`landmark` varchar(150),
 	`state` varchar(100),
 	`country` varchar(100) DEFAULT 'Nigeria',
 	`postal_code` varchar(20),
@@ -92,7 +93,7 @@ CREATE TABLE `users` (
 	`website` varchar(255),
 	`date_of_birth` timestamp,
 	`gender` enum('male','female','other','prefer_not_to_say'),
-	`role` text,
+	`role` varchar(50),
 	`banned` boolean,
 	`ban_reason` text,
 	`ban_expires` timestamp,
@@ -401,7 +402,7 @@ CREATE TABLE `notification_preferences` (
 	`enable_email` boolean DEFAULT true,
 	`enable_push` boolean DEFAULT true,
 	`enable_sms` boolean DEFAULT false,
-	`quiet_hours` json DEFAULT JSON_OBJECT(),
+	`quiet_hours` json,
 	`preferences` json,
 	`created_at` timestamp DEFAULT (now()),
 	`updated_at` timestamp DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
@@ -439,7 +440,7 @@ CREATE TABLE `notifications` (
 	`metadata` json,
 	`is_read` boolean DEFAULT false,
 	`read_at` timestamp,
-	`channels` json DEFAULT ('["in_app"]'),
+	`channels` json,
 	`priority` enum('low','normal','high','urgent') DEFAULT 'normal',
 	`group_key` varchar(100),
 	`scheduled_for` timestamp,
@@ -636,7 +637,6 @@ CREATE INDEX `users_gender_idx` ON `users` (`gender`);--> statement-breakpoint
 CREATE INDEX `users_date_of_birth_idx` ON `users` (`date_of_birth`);--> statement-breakpoint
 CREATE INDEX `users_first_name_idx` ON `users` (`first_name`);--> statement-breakpoint
 CREATE INDEX `users_last_name_idx` ON `users` (`last_name`);--> statement-breakpoint
-CREATE INDEX `users_bio_idx` ON `users` (`bio`);--> statement-breakpoint
 CREATE INDEX `advertisement_attachments_advertisement_id_idx` ON `advertisement_attachments` (`advertisement_id`);--> statement-breakpoint
 CREATE INDEX `advertisement_attachments_media_id_idx` ON `advertisement_attachments` (`media_id`);--> statement-breakpoint
 CREATE INDEX `advertisement_attachments_created_at_idx` ON `advertisement_attachments` (`created_at`);--> statement-breakpoint
@@ -674,6 +674,7 @@ CREATE INDEX `posts_published_at_idx` ON `posts` (`published_at`);--> statement-
 CREATE INDEX `product_details_post_id_idx` ON `product_details` (`post_id`);--> statement-breakpoint
 CREATE INDEX `product_details_sku_idx` ON `product_details` (`sku`);--> statement-breakpoint
 CREATE INDEX `product_details_price_idx` ON `product_details` (`price`);--> statement-breakpoint
+CREATE INDEX `product_details_compare_price_idx` ON `product_details` (`compare_at_price`);--> statement-breakpoint
 CREATE INDEX `product_details_availability_idx` ON `product_details` (`availability`);--> statement-breakpoint
 CREATE INDEX `reactions_user_id_idx` ON `reactions` (`user_id`);--> statement-breakpoint
 CREATE INDEX `reactions_target_idx` ON `reactions` (`target_id`,`target_type`);--> statement-breakpoint
