@@ -9,6 +9,12 @@ export const auth = betterAuth({
     provider: "mysql",
     schema: schema,
   }),
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // Cache duration in seconds
+    },
+  },
   plugins: [
     admin(),
     multiSession(),
@@ -39,10 +45,22 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      mapProfileToUser: (profile) => {
+        return {
+          firstName: profile.given_name,
+          lastName: profile.family_name,
+        };
+      },
     },
     facebook: {
       clientId: process.env.FACEBOOK_CLIENT_ID as string,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
+      mapProfileToUser: (profile) => {
+        return {
+          firstName: profile.name.split(" ")[0],
+          lastName: profile.name.split(" ")[1],
+        };
+      },
     },
   },
 });

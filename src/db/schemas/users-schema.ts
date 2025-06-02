@@ -1,6 +1,5 @@
 import {
   mysqlTable,
-  bigint,
   varchar,
   boolean,
   timestamp,
@@ -13,7 +12,7 @@ import {
   uniqueIndex,
   foreignKey,
 } from "drizzle-orm/mysql-core";
-import { createdAt, genderEnum, id, updatedAt, uuid } from "../schema-helper";
+import { createdAt, genderEnum, id, updatedAt, userId } from "../schema-helper";
 import { relations } from "drizzle-orm";
 import { advertisements, postComments, posts, reactions } from "./posts-schema";
 import { media } from "./media-schema";
@@ -28,7 +27,6 @@ export const users = mysqlTable(
   "users",
   {
     id,
-    uuid,
     lastSeenAt: timestamp("last_seen_at"),
     type: mysqlEnum("type", ["individual", "business"]).notNull(),
     username: varchar("username", { length: 50 }).notNull().unique(),
@@ -62,10 +60,7 @@ export const userProfiles = mysqlTable(
   "user_profiles",
   {
     id,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .unique()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId: userId,
     firstName: varchar("first_name", { length: 50 }),
     lastName: varchar("last_name", { length: 50 }),
     bio: text("bio"),
@@ -92,10 +87,7 @@ export const businessProfiles = mysqlTable(
   "business_profiles",
   {
     id,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .unique()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId: userId,
     businessName: varchar("business_name", { length: 100 }).notNull(),
     businessType: varchar("business_type", { length: 50 }).notNull(),
     description: text("description"),
@@ -132,9 +124,7 @@ export const locations = mysqlTable(
   "locations",
   {
     id,
-    userId: bigint("user_id", { mode: "number" }).references(() => users.id, {
-      onDelete: "cascade",
-    }),
+    userId: userId,
     type: mysqlEnum("type", ["primary", "business", "delivery"]).default(
       "primary"
     ),
@@ -161,8 +151,8 @@ export const follows = mysqlTable(
   "follows",
   {
     id,
-    followerId: bigint("follower_id", { mode: "number" }).notNull(),
-    followingId: bigint("following_id", { mode: "number" }).notNull(),
+    followerId: varchar("follower_id", { length: 36 }).notNull(),
+    followingId: varchar("following_id", { length: 36 }).notNull(),
     createdAt,
   },
   (table) => [
@@ -267,10 +257,8 @@ export const subscriptions = mysqlTable(
   "subscriptions",
   {
     id,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    planId: bigint("plan_id", { mode: "number" })
+    userId: userId,
+    planId: varchar("plan_id", { length: 36 })
       .notNull()
       .references(() => subscriptionPlans.id, { onDelete: "cascade" }),
     status: mysqlEnum("status", [

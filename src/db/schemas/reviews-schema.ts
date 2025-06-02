@@ -1,22 +1,26 @@
-import { users } from "./users-schema";
+import { businessProfiles, users } from "./users-schema";
 
-import { mysqlTable, bigint, int, varchar, text, boolean, mysqlEnum, index } from "drizzle-orm/mysql-core";
-import { createdAt, id, updatedAt, uuid } from "../schema-helper";      
+import {
+  mysqlTable,
+  int,
+  varchar,
+  text,
+  boolean,
+  mysqlEnum,
+  index,
+} from "drizzle-orm/mysql-core";
+import { createdAt, id, updatedAt, userId } from "../schema-helper";
 import { posts } from "./posts-schema";
-
 
 export const reviews = mysqlTable(
   "reviews",
   {
     id,
-    uuid,
-    userId: bigint("user_id", { mode: "number" })
+    userId: userId,
+    businessId: varchar("business_id", { length: 36 })
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    businessId: bigint("business_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    postId: bigint("post_id", { mode: "number" }).references(() => posts.id, {
+      .references(() => businessProfiles.id, { onDelete: "cascade" }),
+    postId: varchar("post_id", { length: 36 }).references(() => posts.id, {
       onDelete: "cascade",
     }), // Optional: review for specific product/service
     rating: int("rating").notNull(), // 1-5
@@ -24,7 +28,7 @@ export const reviews = mysqlTable(
     content: text("content"),
     isVerifiedPurchase: boolean("is_verified_purchase").default(false),
     isRecommended: boolean("is_recommended"),
-    helpfulCount: bigint("helpful_count", { mode: "number" }).default(0),
+    helpfulCount: int("helpful_count").default(0),
     status: mysqlEnum("status", ["pending", "approved", "rejected"]).default(
       "approved"
     ),

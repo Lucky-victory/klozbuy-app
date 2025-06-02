@@ -1,7 +1,6 @@
 import { relations } from "drizzle-orm";
 
 import {
-  bigint,
   mysqlTable,
   mysqlEnum,
   varchar,
@@ -11,16 +10,14 @@ import {
   decimal,
 } from "drizzle-orm/mysql-core";
 import { users } from "./users-schema";
-import { uuid, id, createdAt, updatedAt, mediaType } from "../schema-helper";
+import { id, createdAt, updatedAt, mediaType, userId } from "../schema-helper";
 import { advertisementAttachments, postMedia } from "./posts-schema";
 
 // Base media table with common fields
 export const media = mysqlTable("media", {
   id,
-  uuid,
-  userId: bigint("user_id", { mode: "number" })
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+
+  userId: userId,
   type: mysqlEnum("type", mediaType).notNull(),
   url: varchar("url", { length: 500 }).notNull(),
   fileName: varchar("file_name", { length: 255 }),
@@ -33,7 +30,7 @@ export const media = mysqlTable("media", {
 // Type-specific tables
 export const images = mysqlTable("images", {
   id,
-  mediaId: bigint("media_id", { mode: "number" })
+  mediaId: varchar("media_id", { length: 36 })
     .notNull()
     .references(() => media.id, { onDelete: "cascade" }),
   width: int("width").notNull(),
@@ -46,7 +43,7 @@ export const images = mysqlTable("images", {
 
 export const videos = mysqlTable("videos", {
   id,
-  mediaId: bigint("media_id", { mode: "number" })
+  mediaId: varchar("media_id", { length: 36 })
     .notNull()
     .references(() => media.id, { onDelete: "cascade" }),
   duration: int("duration").notNull(), // seconds
@@ -60,7 +57,7 @@ export const videos = mysqlTable("videos", {
 
 export const documents = mysqlTable("documents", {
   id,
-  mediaId: bigint("media_id", { mode: "number" })
+  mediaId: varchar("media_id", { length: 36 })
     .notNull()
     .references(() => media.id, { onDelete: "cascade" }),
   mimeType: varchar("mime_type", { length: 100 }).notNull(),
@@ -71,7 +68,7 @@ export const documents = mysqlTable("documents", {
 
 export const audio = mysqlTable("audio", {
   id,
-  mediaId: bigint("media_id", { mode: "number" })
+  mediaId: varchar("media_id", { length: 36 })
     .notNull()
     .references(() => media.id, { onDelete: "cascade" }),
   duration: int("duration").notNull(), // seconds

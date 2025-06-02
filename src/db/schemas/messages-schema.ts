@@ -1,6 +1,5 @@
 import {
   mysqlTable,
-  bigint,
   varchar,
   text,
   boolean,
@@ -21,6 +20,7 @@ import {
   mimeType,
   createdAt,
   updatedAt,
+  userId,
 } from "../schema-helper";
 // Users table
 
@@ -33,7 +33,7 @@ export const conversations = mysqlTable(
     name: varchar("name", { length: 100 }),
     description: varchar("description", { length: 255 }),
     isPrivate: boolean("is_private").default(true),
-    createdBy: bigint("created_by", { mode: "number" }).references(
+    createdBy: varchar("created_by", { length: 36 }).references(
       () => users.id,
       { onDelete: "set null" }
     ),
@@ -55,12 +55,10 @@ export const conversationParticipants = mysqlTable(
   "conversation_participants",
   {
     id,
-    conversationId: bigint("conversation_id", { mode: "number" })
+    conversationId: varchar("conversation_id", { length: 36 })
       .notNull()
       .references(() => conversations.id, { onDelete: "cascade" }),
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId: userId,
     role: mysqlEnum("role", conversationParticipantRole).default("member"),
     joinedAt: timestamp("joined_at").defaultNow(),
     leftAt: timestamp("left_at"),
@@ -88,21 +86,16 @@ export const conversationParticipants = mysqlTable(
 export const messages = mysqlTable(
   "messages",
   {
-    id: bigint("id", { mode: "number", unsigned: true })
-      .primaryKey()
-      .autoincrement(),
-    conversationId: bigint("conversation_id", { mode: "number" })
+    id,
+    conversationId: varchar("conversation_id", { length: 36 })
       .notNull()
       .references(() => conversations.id, { onDelete: "cascade" }),
-    senderId: bigint("sender_id", { mode: "number" })
+    senderId: varchar("sender_id", { length: 36 })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     content: text("content"), // 4000 char limit for reasonable message size
     messageType: mysqlEnum("message_type", messageType).default("text"),
-    replyToId: bigint("reply_to_id", {
-      mode: "number",
-      unsigned: true,
-    }).references(
+    replyToId: varchar("reply_to_id", { length: 36 }).references(
       //@ts-ignore
       () => messages.id,
       { onDelete: "set null" }
@@ -133,7 +126,7 @@ export const messageAttachments = mysqlTable(
   "message_attachments",
   {
     id,
-    messageId: bigint("message_id", { mode: "number" })
+    messageId: varchar("message_id", { length: 36 })
       .notNull()
       .references(() => messages.id, { onDelete: "cascade" }),
     cdnUrl: varchar("cdn_url", { length: 500 }).notNull(), // Cloudinary URL
@@ -151,12 +144,10 @@ export const messageReactions = mysqlTable(
   "message_reactions",
   {
     id,
-    messageId: bigint("message_id", { mode: "number" })
+    messageId: varchar("message_id", { length: 36 })
       .notNull()
       .references(() => messages.id, { onDelete: "cascade" }),
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId: userId,
     emoji: varchar("emoji", { length: 10 }).notNull(),
     createdAt,
   },
@@ -176,12 +167,10 @@ export const messageReadReceipts = mysqlTable(
   "message_read_receipts",
   {
     id,
-    messageId: bigint("message_id", { mode: "number" })
+    messageId: varchar("message_id", { length: 36 })
       .notNull()
       .references(() => messages.id, { onDelete: "cascade" }),
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId: userId,
     readAt: timestamp("read_at").defaultNow(),
   },
   (table) => [
@@ -199,10 +188,10 @@ export const messageMentions = mysqlTable(
   "message_mentions",
   {
     id,
-    messageId: bigint("message_id", { mode: "number" })
+    messageId: varchar("message_id", { length: 36 })
       .notNull()
       .references(() => messages.id, { onDelete: "cascade" }),
-    mentionedUserId: bigint("mentioned_user_id", { mode: "number" })
+    mentionedUserId: varchar("mentioned_user_id", { length: 36 })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     createdAt,

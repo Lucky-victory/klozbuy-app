@@ -1,15 +1,13 @@
 import { sql } from "drizzle-orm";
-import { bigint, timestamp, varchar } from "drizzle-orm/mysql-core";
-export const uuid = varchar("id", { length: 36 })
-  .primaryKey()
+import { timestamp, varchar } from "drizzle-orm/mysql-core";
+import { users } from "./schemas";
 
+export const id = varchar("id", { length: 36 })
+  .primaryKey()
   .default(sql`(UUID())`);
-export const id = bigint("id", { mode: "number" }).primaryKey().autoincrement();
-export const userId = (users: any) =>
-  bigint("user_id", { mode: "number" })
-    .notNull()
-    .unique()
-    .references(() => users.id, { onDelete: "cascade" });
+export const userId = varchar("user_id", { length: 36 })
+  .notNull()
+  .references(() => users.id, { onDelete: "cascade" });
 export const createdAt = timestamp("created_at").defaultNow();
 
 export const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
@@ -101,3 +99,42 @@ export const notificationTargetEnum = [
   "message",
 ] as const;
 export type NotificationTargetEnum = (typeof notificationTargetEnum)[number];
+export const notificationPreferencesDefault = {
+  social: {
+    likes: { in_app: true, email: false, push: true },
+    comments: { in_app: true, email: true, push: true },
+    follows: { in_app: true, email: false, push: false },
+  },
+  business: {
+    reviews: { in_app: true, email: true, push: true },
+    orders: { in_app: true, email: true, push: true, sms: true },
+  },
+  messages: {
+    direct: { in_app: true, email: false, push: true },
+    group: { in_app: true, email: false, push: false },
+  },
+  system: {
+    security: { in_app: true, email: true, push: true, sms: true },
+    features: { in_app: true, email: false, push: false },
+  },
+} as const;
+export type NotificationPreferences = {
+  social: {
+    likes: { in_app: boolean; email: boolean; push: boolean };
+    comments: { in_app: boolean; email: boolean; push: boolean };
+    follows: { in_app: boolean; email: boolean; push: boolean };
+    posts: { in_app: boolean; email: boolean; push: boolean };
+  };
+  business: {
+    reviews: { in_app: boolean; email: boolean; push: boolean; sms: boolean };
+    orders: { in_app: boolean; email: boolean; push: boolean; sms: boolean };
+  };
+  messages: {
+    direct: { in_app: boolean; email: boolean; push: boolean };
+    group: { in_app: boolean; email: boolean; push: boolean };
+  };
+  system: {
+    security: { in_app: boolean; email: boolean; push: boolean; sms: boolean };
+    features: { in_app: boolean; email: boolean; push: boolean };
+  };
+};

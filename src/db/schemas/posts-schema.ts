@@ -1,6 +1,5 @@
 import {
   mysqlTable,
-  bigint,
   varchar,
   text,
   boolean,
@@ -19,8 +18,8 @@ import {
   genderEnum,
   mimeType,
   updatedAt,
-  uuid,
   id,
+  userId,
 } from "../schema-helper";
 import { media } from "./media-schema";
 import { locations, userProfiles, users } from "./users-schema";
@@ -31,10 +30,7 @@ export const posts = mysqlTable(
   "posts",
   {
     id,
-    uuid,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId,
     type: mysqlEnum("type", [
       "general",
       "product",
@@ -53,7 +49,7 @@ export const posts = mysqlTable(
       "followers",
       "nearby",
     ]).default("public"),
-    locationId: bigint("location_id", { mode: "number" }).references(
+    locationId: varchar("location_id", { length: 36 }).references(
       () => locations.id,
       { onDelete: "set null" }
     ),
@@ -76,7 +72,7 @@ export const productDetails = mysqlTable(
   "product_details",
   {
     id,
-    postId: bigint("post_id", { mode: "number" })
+    postId: varchar("post_id", { length: 36 })
       .notNull()
       .unique()
       .references(() => posts.id, { onDelete: "cascade" }),
@@ -118,7 +114,7 @@ export const serviceDetails = mysqlTable(
   "service_details",
   {
     id,
-    postId: bigint("post_id", { mode: "number" })
+    postId: varchar("post_id", { length: 36 })
       .notNull()
       .unique()
       .references(() => posts.id, { onDelete: "cascade" }),
@@ -154,7 +150,7 @@ export const eventDetails = mysqlTable(
   "event_details",
   {
     id,
-    postId: bigint("post_id", { mode: "number" })
+    postId: varchar("post_id", { length: 36 })
       .notNull()
       .unique()
       .references(() => posts.id, { onDelete: "cascade" }),
@@ -166,7 +162,7 @@ export const eventDetails = mysqlTable(
     isAllDay: boolean("is_all_day").default(false),
     timezone: varchar("timezone", { length: 50 }).default("Africa/Lagos"),
     venue: varchar("venue", { length: 200 }),
-    venueLocationId: bigint("venue_location_id", { mode: "number" }).references(
+    venueLocationId: varchar("venue_location_id", { length: 36 }).references(
       () => locations.id,
       { onDelete: "set null" }
     ),
@@ -191,13 +187,11 @@ export const eventAttendees = mysqlTable(
   "event_attendees",
   {
     id,
-    eventId: bigint("event_id", { mode: "number" }).references(
+    eventId: varchar("event_id", { length: 36 }).references(
       () => eventDetails.id,
       { onDelete: "cascade" }
     ),
-    userId: bigint("user_id", { mode: "number" }).references(() => users.id, {
-      onDelete: "cascade",
-    }),
+    userId: userId,
     createdAt,
     updatedAt,
   },
@@ -213,10 +207,10 @@ export const postMedia = mysqlTable(
   "post_media",
   {
     id,
-    postId: bigint("post_id", { mode: "number" })
+    postId: varchar("post_id", { length: 36 })
       .notNull()
       .references(() => posts.id, { onDelete: "cascade" }),
-    mediaId: bigint("media_id", { mode: "number" })
+    mediaId: varchar("media_id", { length: 36 })
       .notNull()
       .references(() => media.id, { onDelete: "cascade" }),
     isPrimary: boolean("is_primary").default(false),
@@ -235,10 +229,8 @@ export const reactions = mysqlTable(
   "reactions",
   {
     id,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    targetId: bigint("target_id", { mode: "number" }).notNull(),
+    userId: userId,
+    targetId: varchar("target_id", { length: 36 }).notNull(),
     targetType: mysqlEnum("target_type", ["post", "comment"]).notNull(),
     type: mysqlEnum("type", [
       "like",
@@ -267,17 +259,14 @@ export const postComments = mysqlTable(
   "post_comments",
   {
     id,
-    uuid,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    postId: bigint("post_id", { mode: "number" })
+
+    userId: userId,
+    postId: varchar("post_id", { length: 36 })
       .notNull()
       .references(() => posts.id, { onDelete: "cascade" }),
     content: text("content").notNull(),
-    parentId: bigint("parent_id", {
-      mode: "number",
-      unsigned: true,
+    parentId: varchar("parent_id", {
+      length: 36,
       //@ts-ignore
     }).references(() => postComments.id, { onDelete: "cascade" }),
     status: mysqlEnum("status", [
@@ -287,8 +276,8 @@ export const postComments = mysqlTable(
       "deleted",
     ]).default("approved"),
     isEdited: boolean("is_edited").default(false),
-    reactionCount: bigint("reaction_count", { mode: "number" }).default(0), // Denormalized counter
-    replyCount: bigint("reply_count", { mode: "number" }).default(0),
+    reactionCount: int("reaction_count").default(0), // Denormalized counter
+    replyCount: int("reply_count").default(0),
     createdAt,
     updatedAt,
   },
@@ -302,10 +291,10 @@ export const postCommentMedia = mysqlTable(
   "post_comment_media",
   {
     id,
-    commentId: bigint("comment_id", { mode: "number" })
+    commentId: varchar("comment_id", { length: 36 })
       .notNull()
       .references(() => postComments.id, { onDelete: "cascade" }),
-    mediaId: bigint("media_id", { mode: "number" })
+    mediaId: varchar("media_id", { length: 36 })
       .notNull()
       .references(() => media.id, { onDelete: "cascade" }),
   },
@@ -320,12 +309,10 @@ export const postPromotions = mysqlTable(
   "post_promotions",
   {
     id,
-    postId: bigint("post_id", { mode: "number" })
+    postId: varchar("post_id", { length: 36 })
       .notNull()
       .references(() => posts.id, { onDelete: "cascade" }),
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId: userId,
     type: mysqlEnum("type", [
       "boost",
       "featured",
@@ -349,13 +336,13 @@ export const postPromotions = mysqlTable(
     }).default(0),
     currency: varchar("currency", { length: 3 }).default("NGN"),
     targetRadius: int("target_radius"),
-    targetLocationId: bigint("target_location_id", {
-      mode: "number",
+    targetLocationId: varchar("target_location_id", {
+      length: 36,
     }).references(() => locations.id, { onDelete: "set null" }),
     targetAudience: json("target_audience"),
-    impressions: bigint("impressions", { mode: "number" }).default(0),
-    clicks: bigint("clicks", { mode: "number" }).default(0),
-    conversions: bigint("conversions", { mode: "number" }).default(0),
+    impressions: int("impressions").default(0),
+    clicks: int("clicks").default(0),
+    conversions: int("conversions").default(0),
     startDate: timestamp("start_date").notNull(),
     endDate: timestamp("end_date").notNull(),
     createdAt,
@@ -380,9 +367,7 @@ export const advertisements = mysqlTable(
     content: text("content").notNull(),
     imageUrl: varchar("image_url", { length: 500 }),
     clickUrl: varchar("click_url", { length: 500 }),
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId: userId,
     type: mysqlEnum("type", ["banner", "sidebar", "feed", "popup"]).notNull(),
     placement: varchar("placement", { length: 100 }),
     status: mysqlEnum("status", [
@@ -394,8 +379,8 @@ export const advertisements = mysqlTable(
     targetGender: mysqlEnum("target_gender", genderEnum).notNull(),
     targetAgeStart: int("target_age_start"),
     targetAgeEnd: int("target_age_end"),
-    targetLocationId: bigint("target_location_id", {
-      mode: "number",
+    targetLocationId: varchar("target_location_id", {
+      length: 36,
     }).references(() => locations.id, { onDelete: "set null" }),
     createdAt,
     updatedAt,
@@ -414,10 +399,10 @@ export const advertisementAttachments = mysqlTable(
   "advertisement_attachments",
   {
     id,
-    advertisementId: bigint("advertisement_id", { mode: "number" })
+    advertisementId: varchar("advertisement_id", { length: 36 })
       .notNull()
       .references(() => advertisements.id, { onDelete: "cascade" }),
-    mediaId: bigint("media_id", { mode: "number" })
+    mediaId: varchar("media_id", { length: 36 })
       .notNull()
       .references(() => media.id, { onDelete: "cascade" }),
     createdAt,

@@ -1,6 +1,5 @@
 import {
   mysqlTable,
-  bigint,
   varchar,
   text,
   boolean,
@@ -9,6 +8,7 @@ import {
   json,
   index,
   uniqueIndex,
+  int,
 } from "drizzle-orm/mysql-core";
 import { relations } from "drizzle-orm";
 import { users } from "./users-schema";
@@ -16,21 +16,28 @@ import { posts } from "./posts-schema";
 import { postComments } from "./posts-schema";
 import { conversations, messages } from "./messages-schema";
 import { reviews } from "./reviews-schema";
-import { createdAt, id, updatedAt, uuid } from "../schema-helper";
+import {
+  createdAt,
+  id,
+  NotificationPreferences,
+  notificationPreferencesDefault,
+  updatedAt,
+  userId,
+} from "../schema-helper";
 
 // Main notifications table
 export const notifications = mysqlTable(
   "notifications",
   {
     id,
-    uuid,
-    recipientId: bigint("recipient_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    senderId: bigint("sender_id", { mode: "number" }).references(
+
+    recipientId: varchar("recipient_id", { length: 36 }).references(
       () => users.id,
-      { onDelete: "set null" }
+      { onDelete: "cascade" }
     ), // Null for system notifications
+    senderId: varchar("sender_id", { length: 36 }).references(() => users.id, {
+      onDelete: "set null",
+    }), // Null for system notifications
     type: mysqlEnum("type", [
       // Social interactions
       "like",
@@ -98,7 +105,7 @@ export const notifications = mysqlTable(
       "promotion",
       "advertisement",
     ]),
-    entityId: bigint("entity_id", { mode: "number" }),
+    entityId: varchar("entity_id", { length: 36 }),
 
     // Additional context data (JSON for flexibility)
     metadata: json("metadata"), // { postType, eventDate, amount, etc. }
@@ -158,10 +165,7 @@ export const notificationPreferences = mysqlTable(
   "notification_preferences",
   {
     id,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .unique()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId: userId,
 
     // Global settings
     enableInApp: boolean("enable_in_app").default(true),
@@ -173,7 +177,9 @@ export const notificationPreferences = mysqlTable(
     quietHours: json("quiet_hours"), // { start: "22:00", end: "08:00", timezone: "Africa/Lagos" }
 
     // Category-specific preferences (JSON structure)
-    preferences: json("preferences").default("{}"),
+    preferences: json("preferences")
+      .default(JSON.stringify(notificationPreferencesDefault))
+      .$type<NotificationPreferences>(),
     /* Example structure:
     {
       "social": {
@@ -207,7 +213,7 @@ export const notificationDeliveries = mysqlTable(
   "notification_deliveries",
   {
     id,
-    notificationId: bigint("notification_id", { mode: "number" })
+    notificationId: varchar("notification_id", { length: 36 })
       .notNull()
       .references(() => notifications.id, { onDelete: "cascade" }),
     channel: mysqlEnum("channel", ["in_app", "email", "push", "sms"]).notNull(),
@@ -226,7 +232,7 @@ export const notificationDeliveries = mysqlTable(
     provider: varchar("provider", { length: 50 }), // e.g., "sendgrid", "firebase", "twilio"
 
     // Delivery details
-    attemptCount: bigint("attempt_count", { mode: "number" }).default(1),
+    attemptCount: int("attempt_count").default(1),
     lastAttemptAt: timestamp("last_attempt_at"),
     deliveredAt: timestamp("delivered_at"),
     failureReason: text("failure_reason"),
@@ -337,9 +343,7 @@ export const notificationBatches = mysqlTable(
   "notification_batches",
   {
     id,
-    userId: bigint("user_id", { mode: "number" })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId: userId,
     batchType: mysqlEnum("batch_type", [
       "daily_digest",
       "weekly_digest",
@@ -357,9 +361,7 @@ export const notificationBatches = mysqlTable(
     // Batch content
     title: varchar("title", { length: 255 }),
     content: text("content"), // Generated HTML content
-    notificationCount: bigint("notification_count", { mode: "number" }).default(
-      0
-    ),
+    notificationCount: int("notification_count").default(0),
 
     // Scheduling
     scheduledFor: timestamp("scheduled_for").notNull(),
@@ -382,10 +384,10 @@ export const batchNotifications = mysqlTable(
   "batch_notifications",
   {
     id,
-    batchId: bigint("batch_id", { mode: "number" })
+    batchId: varchar("batch_id", { length: 36 })
       .notNull()
       .references(() => notificationBatches.id, { onDelete: "cascade" }),
-    notificationId: bigint("notification_id", { mode: "number" })
+    notificationId: varchar("notification_id", { length: 36 })
       .notNull()
       .references(() => notifications.id, { onDelete: "cascade" }),
     createdAt,
