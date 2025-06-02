@@ -132,6 +132,12 @@ export const locations = mysqlTable(
     index("locations_lat_lng_idx").on(table.latitude, table.longitude),
     index("locations_city_idx").on(table.city),
     index("locations_active_idx").on(table.isActive),
+    index("locations_created_at_idx").on(table.createdAt),
+    index("locations_country_idx").on(table.country),
+    index("locations_postal_code_idx").on(table.postalCode),
+    index("locations_state_idx").on(table.state),
+    index("locations_name_idx").on(table.name),
+    index("locations_address_idx").on(table.address),
   ]
 );
 export const follows = mysqlTable(

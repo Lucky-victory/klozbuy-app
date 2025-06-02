@@ -1,0 +1,1 @@
+ALTER TABLE `notifications` MODIFY COLUMN `channels` json DEFAULT CAST('["in_app"]' AS JSON);

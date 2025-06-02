@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1748884181884,
+      "tag": "0000_keen_jubilee",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1748884241039,
+      "tag": "0001_chubby_masked_marvel",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1748884527977,
+      "tag": "0002_warm_orphan",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1748885015079,
+      "tag": "0003_clear_siren",
+      "breakpoints": true
+    }
+  ]
+}

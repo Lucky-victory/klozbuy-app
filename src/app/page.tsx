@@ -26,10 +26,10 @@ const Index = () => {
   // Simple location-based greeting
   useEffect(() => {
     // Example usage:
-    const userLatitude = 40.7128; // New York City
-    const userLongitude = -74.006;
-    const postLatitude = 34.0522; // Los Angeles
-    const postLongitude = -118.2437;
+    const userLatitude = 6.5244; // New York City
+    const userLongitude = 3.3792;
+    const postLatitude = 6.2522; // Los Angeles
+    const postLongitude = 2.2437;
 
     const distanceInKilometers = calculateHaversineDistance(
       userLatitude,

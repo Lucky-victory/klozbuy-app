@@ -10,7 +10,7 @@ import {
   uniqueIndex,
   int,
 } from "drizzle-orm/mysql-core";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { users } from "./users-schema";
 import { posts } from "./posts-schema";
 import { postComments } from "./posts-schema";
@@ -115,7 +115,7 @@ export const notifications = mysqlTable(
     readAt: timestamp("read_at"),
 
     // Delivery channels
-    channels: json("channels").default('["in_app"]'), // ["in_app", "email", "push", "sms"]
+    channels: json("channels").$default(() => sql`CAST('["in_app"]' AS JSON)`), // ["in_app", "email", "push", "sms"]
 
     // Priority level
     priority: mysqlEnum("priority", [
@@ -178,7 +178,28 @@ export const notificationPreferences = mysqlTable(
 
     // Category-specific preferences (JSON structure)
     preferences: json("preferences")
-      .default(JSON.stringify(notificationPreferencesDefault))
+      .$default(
+        () =>
+          sql`JSON_OBJECT(
+        'social', JSON_OBJECT(
+            'likes', JSON_OBJECT('in_app', true, 'email', false, 'push', true),
+            'comments', JSON_OBJECT('in_app', true, 'email', true, 'push', true),
+            'follows', JSON_OBJECT('in_app', true, 'email', false, 'push', false)
+        ),
+        'business', JSON_OBJECT(
+            'reviews', JSON_OBJECT('in_app', true, 'email', true, 'push', true),
+            'orders', JSON_OBJECT('in_app', true, 'email', true, 'push', true, 'sms', true)
+        ),
+        'messages', JSON_OBJECT(
+            'direct', JSON_OBJECT('in_app', true, 'email', false, 'push', true),
+            'group', JSON_OBJECT('in_app', true, 'email', false, 'push', false)
+        ),
+        'system', JSON_OBJECT(
+            'security', JSON_OBJECT('in_app', true, 'email', true, 'push', true, 'sms', true),
+            'features', JSON_OBJECT('in_app', true, 'email', false, 'push', false)
+        )
+    )`
+      )
       .$type<NotificationPreferences>(),
     /* Example structure:
     {

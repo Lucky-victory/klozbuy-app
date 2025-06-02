@@ -1,44 +1,69 @@
-import { mysqlTable, varchar, timestamp, text } from "drizzle-orm/mysql-core";
-import { createdAt, id, updatedAt } from "../schema-helper";
-import { users } from "./users-schema";
+import {
+  mysqlTable,
+  varchar,
+  timestamp,
+  text,
+  index,
+} from "drizzle-orm/mysql-core";
+import { createdAt, id, updatedAt, userId } from "../schema-helper";
 
-export const sessions = mysqlTable("sessions", {
-  id,
-  expiresAt: timestamp("expires_at").notNull(),
-  token: varchar("token", { length: 255 }).notNull().unique(),
-  createdAt,
-  updatedAt,
-  ipAddress: text("ip_address"),
-  userAgent: text("user_agent"),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  impersonatedBy: text("impersonated_by"),
-});
+export const sessions = mysqlTable(
+  "sessions",
+  {
+    id,
+    expiresAt: timestamp("expires_at").notNull(),
+    token: varchar("token", { length: 255 }).notNull().unique(),
+    createdAt,
+    updatedAt,
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    userId: userId,
+    impersonatedBy: text("impersonated_by"),
+  },
+  (table) => [
+    index("sessions_user_id_idx").on(table.userId),
+    index("sessions_token_idx").on(table.token),
+    index("sessions_expires_at_idx").on(table.expiresAt),
+  ]
+);
 
-export const accounts = mysqlTable("accounts", {
-  id,
-  accountId: text("account_id").notNull(),
-  providerId: text("provider_id").notNull(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  accessToken: text("access_token"),
-  refreshToken: text("refresh_token"),
-  idToken: text("id_token"),
-  accessTokenExpiresAt: timestamp("access_token_expires_at"),
-  refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
-  scope: text("scope"),
-  password: text("password"),
-  createdAt,
-  updatedAt,
-});
+export const accounts = mysqlTable(
+  "accounts",
+  {
+    id,
+    accountId: varchar("account_id", { length: 255 }).notNull(),
+    providerId: varchar("provider_id", { length: 255 }).notNull(),
+    userId: userId,
+    accessToken: text("access_token"),
+    refreshToken: text("refresh_token"),
+    idToken: text("id_token"),
+    accessTokenExpiresAt: timestamp("access_token_expires_at"),
+    refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
+    scope: text("scope"),
+    password: text("password"),
+    createdAt,
+    updatedAt,
+  },
+  (table) => [
+    index("accounts_account_id_idx").on(table.accountId),
+    index("accounts_provider_id_idx").on(table.providerId),
+    index("accounts_user_id_idx").on(table.userId),
+  ]
+);
 
-export const verifications = mysqlTable("verifications", {
-  id,
-  identifier: text("identifier").notNull(),
-  value: text("value").notNull(),
-  expiresAt: timestamp("expires_at").notNull(),
-  createdAt,
-  updatedAt,
-});
+export const verifications = mysqlTable(
+  "verifications",
+  {
+    id,
+    identifier: varchar("identifier", { length: 512 }).notNull(),
+    value: varchar("value", { length: 512 }).notNull(),
+    expiresAt: timestamp("expires_at").notNull(),
+    createdAt,
+    updatedAt,
+  },
+  (table) => [
+    index("verifications_identifier_idx").on(table.identifier),
+    index("verifications_value_idx").on(table.value),
+    index("verifications_expires_at_idx").on(table.expiresAt),
+  ]
+);

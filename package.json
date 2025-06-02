@@ -7,7 +7,11 @@
     "dev": "next dev --port=3300",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "create-db": "tsx src/scripts/create-db.ts",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:gen": "drizzle-kit generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -78,6 +82,7 @@
     "drizzle-kit": "^0.31.1",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.11",
+    "tsx": "^4.19.4",
     "typescript": "^5.5.3"
   }
 }
