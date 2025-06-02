@@ -733,3 +733,6 @@ CREATE INDEX `reviews_business_id_idx` ON `reviews` (`business_id`);--> statemen
 CREATE INDEX `reviews_post_id_idx` ON `reviews` (`post_id`);--> statement-breakpoint
 CREATE INDEX `reviews_rating_idx` ON `reviews` (`rating`);--> statement-breakpoint
 CREATE INDEX `reviews_status_idx` ON `reviews` (`status`);
+ALTER TABLE `users` ADD FULLTEXT INDEX (bio) WITH PARSER MULTILINGUAL ADD_COLUMNAR_REPLICA_ON_DEMAND;
+ALTER TABLE `posts` ADD FULLTEXT INDEX (content) WITH PARSER MULTILINGUAL ADD_COLUMNAR_REPLICA_ON_DEMAND;
+ALTER TABLE `post_comments` ADD FULLTEXT INDEX (content) WITH PARSER MULTILINGUAL ADD_COLUMNAR_REPLICA_ON_DEMAND;
