@@ -16,7 +16,6 @@ import { advertisementAttachments, postMedia } from "./posts-schema";
 // Base media table with common fields
 export const media = mysqlTable("media", {
   id,
-
   userId: userId,
   type: mysqlEnum("type", mediaType).notNull(),
   url: varchar("url", { length: 500 }).notNull(),
