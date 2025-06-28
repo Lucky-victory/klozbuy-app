@@ -41,7 +41,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
         "bg-white rounded-xl shadow-sm border border-border overflow-hidden",
         "transition-all duration-300 hover:shadow-md",
         "animate-scale-in",
-        post.isPromoted && "ring-2 ring-klozui-orange/50",
+        post.isPromoted && "ring-2 ring-klozui-orange-500/50",
         className
       )}
     >
@@ -59,13 +59,22 @@ const PostCard = ({ post, className }: PostCardProps) => {
           </Link>
 
           <div className="flex flex-col">
-            <Link
-              href={`/profile/${post.owner.id}`}
-              className="font-medium hover:underline"
-            >
-              {post.owner?.name || ""}
-            </Link>
+            <div className="flex items-center">
+              <Link
+                href={`/profile/${post.owner.id}`}
+                className="font-medium hover:underline"
+              >
+                {post.owner?.name || ""}
+              </Link>
 
+              <Button
+                // variant={"ghost"}
+                className="text-klozui-dark-500 rounded-full"
+                size={"sm"}
+              >
+                Follow
+              </Button>
+            </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="flex items-center gap-1">
                 <Clock size={12} />
@@ -86,7 +95,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
 
         <div className="flex items-center gap-2">
           {post.isPromoted && (
-            <span className="text-xs bg-klozui-orange/10 text-klozui-orange px-2 py-0.5 rounded-full">
+            <span className="text-xs bg-klozui-orange-500/10 text-klozui-orange-500 px-2 py-0.5 rounded-full">
               Promoted
             </span>
           )}
@@ -182,7 +191,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
         {post.type === "product" && (
           <Button
             size="sm"
-            className="bg-klozui-green hover:bg-klozui-green/90 text-white"
+            className="bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white"
           >
             <ShoppingBag size={16} className="mr-1" />
             Buy Now

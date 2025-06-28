@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import Logo from "@/components/ui/Logo";
+import Logo from "@/components/shared/Logo";
 
 interface AuthModalProps {
   open: boolean;
@@ -133,7 +133,7 @@ const AuthModal = ({
 
               <Button
                 type="submit"
-                className="w-full mt-6 bg-klozui-green hover:bg-klozui-green/90"
+                className="w-full mt-6 bg-klozui-green-500 hover:bg-klozui-green-500/90"
               >
                 Log In
               </Button>
@@ -155,7 +155,7 @@ const AuthModal = ({
                     className={cn(
                       "flex flex-col items-center gap-3 p-4 rounded-lg border-2 transition-all hover:bg-muted/30",
                       userType === "individual"
-                        ? "border-klozui-green bg-klozui-green/5"
+                        ? "border-klozui-green-500 bg-klozui-green-500/5"
                         : "border-muted"
                     )}
                     onClick={() => setUserType("individual")}
@@ -164,7 +164,7 @@ const AuthModal = ({
                       className={cn(
                         "p-3 rounded-full",
                         userType === "individual"
-                          ? "bg-klozui-green/10 text-klozui-green"
+                          ? "bg-klozui-green-500/10 text-klozui-green-500"
                           : "bg-muted text-muted-foreground"
                       )}
                     >
@@ -181,7 +181,7 @@ const AuthModal = ({
                     className={cn(
                       "flex flex-col items-center gap-3 p-4 rounded-lg border-2 transition-all hover:bg-muted/30",
                       userType === "business"
-                        ? "border-klozui-orange bg-klozui-orange/5"
+                        ? "border-klozui-orange-500 bg-klozui-orange-500/5"
                         : "border-muted"
                     )}
                     onClick={() => setUserType("business")}
@@ -190,7 +190,7 @@ const AuthModal = ({
                       className={cn(
                         "p-3 rounded-full",
                         userType === "business"
-                          ? "bg-klozui-orange/10 text-klozui-orange"
+                          ? "bg-klozui-orange-500/10 text-klozui-orange-500"
                           : "bg-muted text-muted-foreground"
                       )}
                     >
@@ -204,7 +204,7 @@ const AuthModal = ({
                 </div>
 
                 <Button
-                  className="w-full mt-6 bg-klozui-green hover:bg-klozui-green/90"
+                  className="w-full mt-6 bg-klozui-green-500 hover:bg-klozui-green-500/90"
                   onClick={goToNextStep}
                 >
                   Continue
@@ -312,18 +312,24 @@ const AuthModal = ({
                 <div className="mt-6">
                   <Button
                     type="submit"
-                    className="w-full bg-klozui-green hover:bg-klozui-green/90"
+                    className="w-full bg-klozui-green-500 hover:bg-klozui-green-500/90"
                   >
                     Create Account
                   </Button>
 
                   <p className="text-xs text-center mt-4 text-muted-foreground">
                     By signing up, you agree to our{" "}
-                    <a href="#" className="text-klozui-green hover:underline">
+                    <a
+                      href="#"
+                      className="text-klozui-green-500 hover:underline"
+                    >
                       Terms of Service
                     </a>{" "}
                     and{" "}
-                    <a href="#" className="text-klozui-green hover:underline">
+                    <a
+                      href="#"
+                      className="text-klozui-green-500 hover:underline"
+                    >
                       Privacy Policy
                     </a>
                     .

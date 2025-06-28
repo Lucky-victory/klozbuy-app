@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -12,11 +11,11 @@ import {
   Settings,
   Store,
   Heart,
-  Clock
-} from 'lucide-react';
-import Logo from '@/components/ui/Logo';
-import UserAvatar from '@/components/shared/UserAvatar';
-import { Button } from '@/components/ui/button';
+  Clock,
+} from "lucide-react";
+import Logo from "@/components/shared/Logo";
+import UserAvatar from "@/components/shared/UserAvatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,8 +24,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -35,21 +34,21 @@ interface NavbarProps {
 
 const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+
   // Mock user data - in a real app this would come from auth context
   const user = {
-    name: 'Adebayo Olatunji',
-    type: 'individual',
+    name: "Adebayo Olatunji",
+    type: "individual",
     isVerified: false,
-    avatar: '',
+    avatar: "",
   };
 
   return (
     <div className="navbar-glass sticky top-0 z-50 w-full px-4 py-2 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
           className="md:hidden"
           onClick={onMobileMenuToggle}
         >
@@ -58,47 +57,59 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
         <Logo size="md" showText className="hidden md:flex" />
         <Logo size="sm" showText={false} className="md:hidden" />
       </div>
-      
+
       <div className="hidden md:flex items-center bg-muted rounded-full px-3 py-1.5 flex-1 max-w-md mx-4">
         <Search size={16} className="text-muted-foreground mr-2" />
-        <input 
-          type="text" 
-          placeholder="Search businesses, products..." 
+        <input
+          type="text"
+          placeholder="Search businesses, products..."
           className="bg-transparent border-none outline-none w-full text-sm"
         />
       </div>
-      
+
       <div className="flex items-center gap-1 md:gap-2">
         <Button variant="ghost" size="icon" className="hidden md:flex">
           <Bell size={20} />
         </Button>
-        
+
         <Link href="/messages">
-          <Button variant="ghost" size="icon" className="hidden md:flex relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hidden md:flex relative"
+          >
             <MessageSquare size={20} />
-            <span className="absolute top-0 right-0 h-2 w-2 bg-klozui-orange rounded-full" />
+            <span className="absolute top-0 right-0 h-2 w-2 bg-klozui-orange-500 rounded-full" />
           </Button>
         </Link>
-        
+
         {isAuthenticated ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                <UserAvatar 
-                  name={user.name} 
-                  size="sm" 
+                <UserAvatar
+                  name={user.name}
+                  size="sm"
                   isVerified={user.isVerified}
-                  userType={user.type as 'individual' | 'business'}
+                  userType={user.type as "individual" | "business"}
                   src={user.avatar}
                 />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 mr-2 mt-1" align="end" forceMount>
+            <DropdownMenuContent
+              className="w-56 mr-2 mt-1"
+              align="end"
+              forceMount
+            >
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">{user.name}</p>
+                  <p className="text-sm font-medium leading-none">
+                    {user.name}
+                  </p>
                   <p className="text-xs leading-none text-muted-foreground">
-                    {user.type === 'individual' ? 'Individual Account' : 'Business Account'}
+                    {user.type === "individual"
+                      ? "Individual Account"
+                      : "Business Account"}
                   </p>
                 </div>
               </DropdownMenuLabel>
@@ -134,15 +145,15 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
           </DropdownMenu>
         ) : (
           <div className="flex items-center gap-2">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               className="text-sm hidden md:block"
               onClick={() => setIsAuthenticated(true)}
             >
               Log in
             </Button>
-            <Button 
-              className="bg-klozui-green hover:bg-klozui-green/90 text-white text-sm"
+            <Button
+              className="bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white text-sm"
               onClick={() => setIsAuthenticated(true)}
             >
               Sign up

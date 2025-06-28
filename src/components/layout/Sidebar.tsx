@@ -16,7 +16,7 @@ import {
   BarChart3,
   LogOut,
 } from "lucide-react";
-import Logo from "@/components/ui/Logo";
+import Logo from "@/components/shared/Logo";
 import UserAvatar from "@/components/shared/UserAvatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -63,7 +63,7 @@ const Sidebar = ({ className }: SidebarProps) => {
           className={cn(
             "w-full justify-start gap-2 mb-1 text-base",
             isActive
-              ? "bg-klozui-green text-white hover:bg-klozui-green/90"
+              ? "bg-klozui-green-500 text-white hover:bg-klozui-green-500/90"
               : "hover:bg-muted"
           )}
         >
@@ -147,7 +147,7 @@ const Sidebar = ({ className }: SidebarProps) => {
             <Link href="/onboarding?type=business">
               <Button
                 variant="outline"
-                className="w-full border-dashed border-klozui-orange/50 text-klozui-orange hover:bg-klozui-orange/5 hover:border-klozui-orange/80"
+                className="w-full border-dashed border-klozui-orange-500/50 text-klozui-orange-500 hover:bg-klozui-orange-500/5 hover:border-klozui-orange-500/80"
               >
                 <Store size={16} className="mr-2" />
                 Create Business
@@ -157,7 +157,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         </div>
       ) : (
         <div className="mt-auto pt-4 border-t border-border space-y-2">
-          <Button className="w-full bg-klozui-green hover:bg-klozui-green/90 text-white">
+          <Button className="w-full bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white">
             Sign up
           </Button>
           <Button variant="outline" className="w-full">

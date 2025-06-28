@@ -69,7 +69,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
             <span>Nearby Businesses</span>
             <Link
               href="/search"
-              className="text-sm font-normal text-klozui-green flex items-center hover:underline"
+              className="text-sm font-normal text-klozui-green-500 flex items-center hover:underline"
             >
               See all <ArrowRight size={14} className="ml-1" />
             </Link>
@@ -108,7 +108,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
       </Card>
 
       {/* Create Business Card */}
-      <Card className="bg-gradient-to-br from-klozui-green/90 to-klozui-green text-white animate-fade-in">
+      <Card className="bg-gradient-to-br from-klozui-green-500/90 to-klozui-green-500 text-white animate-fade-in">
         <CardContent className="p-4">
           <div className="flex flex-col items-center text-center gap-3 py-2">
             <div className="bg-white/20 p-3 rounded-full">
@@ -119,7 +119,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
               Create a business profile to reach more customers in your area
             </p>
             <Link href="/onboarding?type=business">
-              <Button className="mt-1 bg-white text-klozui-green hover:bg-white/90 hover:text-klozui-green">
+              <Button className="mt-1 bg-white text-klozui-green-500 hover:bg-white/90 hover:text-klozui-green-500">
                 Create Business
               </Button>
             </Link>
@@ -147,7 +147,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
           <Button
             variant="outline"
             size="sm"
-            className="mt-3 w-full border-klozui-orange text-klozui-orange hover:bg-klozui-orange/5"
+            className="mt-3 w-full border-klozui-orange-500 text-klozui-orange-500 hover:bg-klozui-orange-500/5"
           >
             Learn More
           </Button>

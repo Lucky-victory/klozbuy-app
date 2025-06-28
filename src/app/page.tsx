@@ -82,7 +82,7 @@ const Index = () => {
             </div>
 
             <Button
-              className="bg-klozui-green hover:bg-klozui-green/90 text-white flex-shrink-0"
+              className="bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white flex-shrink-0"
               onClick={handleLocation}
               disabled={loading}
             >

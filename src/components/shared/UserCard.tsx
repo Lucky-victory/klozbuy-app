@@ -64,7 +64,7 @@ const UserCard = ({
 
           <Button
             size="sm"
-            className="h-8 bg-klozui-green hover:bg-klozui-green/90 text-white"
+            className="h-8 bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white"
           >
             <Heart size={14} className="mr-1" />
             Follow

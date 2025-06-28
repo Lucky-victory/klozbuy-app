@@ -44,7 +44,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
   return (
     <div>
       {" "}
-      <div className="h-48 md:h-64 bg-gradient-to-r from-klozui-green/90 to-klozui-green relative">
+      <div className="h-48 md:h-64 bg-gradient-to-r from-klozui-green-500/90 to-klozui-green-500 relative">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-20"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -69,7 +69,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                 <h1 className="text-2xl font-bold flex items-center gap-2">
                   {user.name}
                   {user.isRegistered && (
-                    <span className="bg-klozui-green/10 text-klozui-green text-xs px-2 py-0.5 rounded-full flex items-center">
+                    <span className="bg-klozui-green-500/10 text-klozui-green-500 text-xs px-2 py-0.5 rounded-full flex items-center">
                       <CheckCircle size={12} className="mr-1" />
                       Registered
                     </span>
@@ -110,7 +110,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                         "text-sm",
                         isFollowing
                           ? "bg-muted hover:bg-muted/80"
-                          : "bg-klozui-green hover:bg-klozui-green/90 text-white"
+                          : "bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white"
                       )}
                       onClick={toggleFollow}
                     >
@@ -118,7 +118,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                         <>
                           <Heart
                             size={16}
-                            className="mr-2 fill-klozui-green text-klozui-green"
+                            className="mr-2 fill-klozui-green-500 text-klozui-green-500"
                           />
                           Following
                         </>

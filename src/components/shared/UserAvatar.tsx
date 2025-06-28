@@ -1,14 +1,13 @@
-
-import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, Store } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { User, Store } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface UserAvatarProps {
   src?: string;
   name: string;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  userType?: 'individual' | 'business';
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  userType?: "individual" | "business";
   isVerified?: boolean;
   className?: string;
   fallbackClassName?: string;
@@ -17,25 +16,25 @@ interface UserAvatarProps {
 const UserAvatar = ({
   src,
   name,
-  size = 'md',
-  userType = 'individual',
+  size = "md",
+  userType = "individual",
   isVerified = false,
   className,
   fallbackClassName,
 }: UserAvatarProps) => {
   const initials = name
-    .split(' ')
-    .map(n => n[0])
-    .join('')
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
     .toUpperCase()
     .substring(0, 2);
 
   const sizeClass = {
-    xs: 'h-6 w-6 text-xs',
-    sm: 'h-8 w-8 text-sm',
-    md: 'h-10 w-10 text-base',
-    lg: 'h-12 w-12 text-lg',
-    xl: 'h-16 w-16 text-xl',
+    xs: "h-6 w-6 text-xs",
+    sm: "h-8 w-8 text-sm",
+    md: "h-10 w-10 text-base",
+    lg: "h-12 w-12 text-lg",
+    xl: "h-16 w-16 text-xl",
   };
 
   const iconSize = {
@@ -47,29 +46,35 @@ const UserAvatar = ({
   };
 
   const verifiedBadgeSize = {
-    xs: 'h-3 w-3 right-0 bottom-0',
-    sm: 'h-3.5 w-3.5 right-0 bottom-0',
-    md: 'h-4 w-4 right-0 bottom-0',
-    lg: 'h-5 w-5 right-0 bottom-0',
-    xl: 'h-6 w-6 right-0 bottom-0',
+    xs: "h-3 w-3 right-0 bottom-0",
+    sm: "h-3.5 w-3.5 right-0 bottom-0",
+    md: "h-4 w-4 right-0 bottom-0",
+    lg: "h-5 w-5 right-0 bottom-0",
+    xl: "h-6 w-6 right-0 bottom-0",
   };
 
   return (
     <div className="relative inline-flex">
-      <Avatar className={cn(sizeClass[size], 'border-2 border-white shadow-sm', className)}>
+      <Avatar
+        className={cn(
+          sizeClass[size],
+          "border-2 border-white shadow-sm",
+          className
+        )}
+      >
         <AvatarImage src={src} alt={name} className="object-cover" />
-        <AvatarFallback 
+        <AvatarFallback
           className={cn(
-            'bg-gradient-to-br',
-            userType === 'individual' 
-              ? 'from-klozui-green/80 to-klozui-green' 
-              : 'from-klozui-orange/80 to-klozui-orange',
-            'text-white font-medium',
+            "bg-gradient-to-br",
+            userType === "individual"
+              ? "from-klozui-green-500/80 to-klozui-green-500"
+              : "from-klozui-orange-500/80 to-klozui-orange-500",
+            "text-white font-medium",
             fallbackClassName
           )}
         >
           {src ? (
-            userType === 'individual' ? (
+            userType === "individual" ? (
               <User size={iconSize[size]} />
             ) : (
               <Store size={iconSize[size]} />
@@ -79,20 +84,22 @@ const UserAvatar = ({
           )}
         </AvatarFallback>
       </Avatar>
-      
+
       {isVerified && (
-        <div className={cn(
-          verifiedBadgeSize[size],
-          'absolute rounded-full bg-klozui-green border-2 border-white flex items-center justify-center'
-        )}>
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="h-[60%] w-[60%]" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="3" 
-            strokeLinecap="round" 
+        <div
+          className={cn(
+            verifiedBadgeSize[size],
+            "absolute rounded-full bg-klozui-green-500 border-2 border-white flex items-center justify-center"
+          )}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-[60%] w-[60%]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
             strokeLinejoin="round"
           >
             <polyline points="20 6 9 17 4 12" className="text-white" />

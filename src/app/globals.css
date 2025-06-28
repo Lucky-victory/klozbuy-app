@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -118,27 +117,27 @@
   .glass-card {
     @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg;
   }
-  
+
   .glass-input {
-    @apply bg-white/50 backdrop-blur-sm border border-white/30 focus:border-klozui-green;
+    @apply bg-white/50 backdrop-blur-sm border border-white/30 focus:border-klozui-green-500;
   }
-  
+
   .klozui-button {
-    @apply bg-klozui-green text-white font-medium px-4 py-2 rounded-lg transition-all hover:bg-klozui-green/90 hover:shadow-md active:scale-95;
+    @apply bg-klozui-green-500 text-white font-medium px-4 py-2 rounded-lg transition-all hover:bg-klozui-green-500/90 hover:shadow-md active:scale-95;
   }
-  
+
   .klozui-button-secondary {
-    @apply bg-klozui-orange text-white font-medium px-4 py-2 rounded-lg transition-all hover:bg-klozui-orange/90 hover:shadow-md active:scale-95;
+    @apply bg-klozui-orange-500 text-white font-medium px-4 py-2 rounded-lg transition-all hover:bg-klozui-orange-500/90 hover:shadow-md active:scale-95;
   }
-  
+
   .klozui-button-outline {
-    @apply border-2 border-klozui-green text-klozui-green font-medium px-4 py-2 rounded-lg transition-all hover:bg-klozui-green/10 active:scale-95;
+    @apply border-2 border-klozui-green-500 text-klozui-green-500 font-medium px-4 py-2 rounded-lg transition-all hover:bg-klozui-green-500/10 active:scale-95;
   }
-  
+
   .navbar-glass {
     @apply bg-white/70 backdrop-blur-md border-b border-white/20 shadow-sm;
   }
-  
+
   .card-hover {
     @apply transition-all duration-300 hover:shadow-md hover:translate-y-[-2px];
   }

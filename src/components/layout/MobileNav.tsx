@@ -45,13 +45,13 @@ const NavItem = ({ path, icon: Icon, label, isActive }: NavItemProps) => {
       href={path}
       className={cn(
         "flex flex-col items-center justify-center w-full py-1",
-        isActive ? "text-klozui-green" : "text-gray-500"
+        isActive ? "text-klozui-green-500" : "text-gray-500"
       )}
     >
       <div
         className={cn(
           "flex items-center justify-center rounded-full w-10 h-10 mb-1 transition-all",
-          isActive ? "bg-klozui-green/10" : "hover:bg-muted"
+          isActive ? "bg-klozui-green-500/10" : "hover:bg-muted"
         )}
       >
         <Icon size={20} />

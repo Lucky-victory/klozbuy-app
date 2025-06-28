@@ -132,7 +132,7 @@ const Profile = () => {
   return (
     <Layout>
       <div className="flex flex-col w-full">
-        <div className="h-48 md:h-64 bg-gradient-to-r from-klozui-green/90 to-klozui-green relative">
+        <div className="h-48 md:h-64 bg-gradient-to-r from-klozui-green-500/90 to-klozui-green-500 relative">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute inset-0 bg-black opacity-20"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -158,7 +158,7 @@ const Profile = () => {
                   <h1 className="text-2xl font-bold flex items-center gap-2">
                     {user.name}
                     {user.isRegistered && (
-                      <span className="bg-klozui-green/10 text-klozui-green text-xs px-2 py-0.5 rounded-full flex items-center">
+                      <span className="bg-klozui-green-500/10 text-klozui-green-500 text-xs px-2 py-0.5 rounded-full flex items-center">
                         <CheckCircle size={12} className="mr-1" />
                         Registered
                       </span>
@@ -199,7 +199,7 @@ const Profile = () => {
                           "text-sm",
                           isFollowing
                             ? "bg-muted hover:bg-muted/80"
-                            : "bg-klozui-green hover:bg-klozui-green/90 text-white"
+                            : "bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white"
                         )}
                         onClick={toggleFollow}
                       >
@@ -207,7 +207,7 @@ const Profile = () => {
                           <>
                             <Heart
                               size={16}
-                              className="mr-2 fill-klozui-green text-klozui-green"
+                              className="mr-2 fill-klozui-green-500 text-klozui-green-500"
                             />
                             Following
                           </>
@@ -266,7 +266,7 @@ const Profile = () => {
               <TabsTrigger
                 value="products"
                 className={cn(
-                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green data-[state=active]:bg-transparent",
+                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green-500 data-[state=active]:bg-transparent",
                   "text-base font-medium"
                 )}
               >
@@ -275,7 +275,7 @@ const Profile = () => {
               <TabsTrigger
                 value="about"
                 className={cn(
-                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green data-[state=active]:bg-transparent",
+                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green-500 data-[state=active]:bg-transparent",
                   "text-base font-medium"
                 )}
               >
@@ -284,7 +284,7 @@ const Profile = () => {
               <TabsTrigger
                 value="reviews"
                 className={cn(
-                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green data-[state=active]:bg-transparent",
+                  "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green-500 data-[state=active]:bg-transparent",
                   "text-base font-medium"
                 )}
               >
@@ -319,7 +319,7 @@ const Profile = () => {
                   <div className="flex items-start gap-2">
                     <MapPin
                       size={20}
-                      className="mt-0.5 flex-shrink-0 text-klozui-green"
+                      className="mt-0.5 flex-shrink-0 text-klozui-green-500"
                     />
                     <div>
                       <p className="font-medium">{user.landmark}</p>

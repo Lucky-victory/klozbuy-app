@@ -276,7 +276,7 @@ const Messages = () => {
                       src={conv.avatar}
                     />
                     {conv.online && (
-                      <div className="absolute bottom-0 right-0 w-3 h-3 bg-klozui-green rounded-full border-2 border-white" />
+                      <div className="absolute bottom-0 right-0 w-3 h-3 bg-klozui-green-500 rounded-full border-2 border-white" />
                     )}
                   </div>
 
@@ -292,7 +292,7 @@ const Messages = () => {
                         {conv.lastMessage}
                       </p>
                       {conv.unread > 0 && (
-                        <span className="bg-klozui-green text-white text-xs font-medium rounded-full w-5 h-5 flex items-center justify-center">
+                        <span className="bg-klozui-green-500 text-white text-xs font-medium rounded-full w-5 h-5 flex items-center justify-center">
                           {conv.unread}
                         </span>
                       )}
@@ -435,7 +435,7 @@ const Messages = () => {
                           className={cn(
                             "rounded-lg p-3 min-w-0",
                             isCurrentUser
-                              ? "bg-klozui-green text-white rounded-br-none"
+                              ? "bg-klozui-green-500 text-white rounded-br-none"
                               : "bg-muted rounded-bl-none"
                           )}
                         >
@@ -480,7 +480,7 @@ const Messages = () => {
                 <Button
                   type="submit"
                   size="icon"
-                  className="bg-klozui-green hover:bg-klozui-green/90 text-white"
+                  className="bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white"
                 >
                   <Send size={18} />
                 </Button>

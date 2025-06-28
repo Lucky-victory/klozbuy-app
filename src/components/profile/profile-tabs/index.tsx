@@ -20,7 +20,7 @@ export const ProfileTabs = ({ userId, posts }: ProfileTabsProps) => {
         <TabsTrigger
           value="posts"
           className={cn(
-            "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green data-[state=active]:bg-transparent",
+            "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green-500 data-[state=active]:bg-transparent",
             "text-base font-medium"
           )}
         >
@@ -30,7 +30,7 @@ export const ProfileTabs = ({ userId, posts }: ProfileTabsProps) => {
         <TabsTrigger
           value="shop"
           className={cn(
-            "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green data-[state=active]:bg-transparent",
+            "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green-500 data-[state=active]:bg-transparent",
             "text-base font-medium"
           )}
         >
@@ -39,7 +39,7 @@ export const ProfileTabs = ({ userId, posts }: ProfileTabsProps) => {
         <TabsTrigger
           value="reviews"
           className={cn(
-            "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green data-[state=active]:bg-transparent",
+            "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green-500 data-[state=active]:bg-transparent",
             "text-base font-medium"
           )}
         >
@@ -48,7 +48,7 @@ export const ProfileTabs = ({ userId, posts }: ProfileTabsProps) => {
         <TabsTrigger
           value="about"
           className={cn(
-            "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green data-[state=active]:bg-transparent",
+            "rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-klozui-green-500 data-[state=active]:bg-transparent",
             "text-base font-medium"
           )}
         >
