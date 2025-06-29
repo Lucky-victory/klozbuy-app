@@ -18,7 +18,7 @@ const samplePosts = [
       "Just restocked our bestselling shea butter face cream! Perfect for the dry season. Limited quantities available.",
     productName: "Natural Shea Butter Face Cream",
     productImage:
-      "https://images.unsplash.com/photo-1571875257727-256c39da42af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29zbWV0aWNzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      "https://www.blacklavishessentials.com/cdn/shop/files/Raw-Shea-Butter-Organic-Unrefined-_West-African-Shea_-Black-Lavish-Essentials-1692423836308_460x@2x.jpg?v=1712078728",
     isPromoted: true,
     createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30 mins ago
     likesCount: 24,
@@ -38,7 +38,7 @@ const samplePosts = [
       "Fresh palm oil from the village, just arrived! 100% organic and pure.",
     productName: "Premium Palm Oil (5 Liters)",
     productImage:
-      "https://images.unsplash.com/photo-1597797139492-025c80f31849?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHBhbG0lMjBvaWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      "https://i5.walmartimages.com/seo/Nigerian-Red-Palm-Oil-by-Shepherd-s-Natural-1-9-liter-64-fl-oz_d35b120d-62a8-4c6d-8ba0-31cb0d4943de.4171917b94c07e027ea3d75f10958c66.jpeg",
     isPromoted: false,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(), // 3 hours ago
     likesCount: 15,
@@ -75,7 +75,7 @@ const samplePosts = [
       "New Ankara fabrics just arrived! Premium quality, vibrant colors. Perfect for the upcoming festival season.",
     productName: "Premium Ankara Fabric (6 yards)",
     productImage:
-      "https://images.unsplash.com/photo-1605954835973-8d2a18af5a4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YW5rYXJhfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      "https://agtplaza.com/cdn/shop/files/TCK95a_0811ae44-95bf-4353-8271-4fa354be91d4.png?v=1735099648",
     isPromoted: true,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(), // 1 day ago
     likesCount: 47,
@@ -94,8 +94,7 @@ const samplePosts = [
     content:
       "Fresh meat pies, sausage rolls and cakes available for delivery! Order before 2pm for same-day delivery.",
     productName: "Assorted Pastries Box",
-    productImage:
-      "https://images.unsplash.com/photo-1495147466023-ac2c7914b44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGFzdHJpZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+    productImage: "https://i.ytimg.com/vi/_Q_EZihVo-Q/maxresdefault.jpg",
     isPromoted: false,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(), // 2 days ago
     likesCount: 19,
