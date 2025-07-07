@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User, Store } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { KlozUIVerifiedIcon } from "./verified-icon";
 
 interface UserAvatarProps {
   src?: string;
@@ -89,21 +90,10 @@ const UserAvatar = ({
         <div
           className={cn(
             verifiedBadgeSize[size],
-            "absolute rounded-full bg-klozui-green-500 border-2 border-white flex items-center justify-center"
+            "absolute flex items-center justify-center"
           )}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-[60%] w-[60%]"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12" className="text-white" />
-          </svg>
+          <KlozUIVerifiedIcon className="text-klozui-green-500" />
         </div>
       )}
     </div>

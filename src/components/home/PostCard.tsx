@@ -22,6 +22,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Posts } from "@/types";
 import { DividerDot } from "@/components/ui/divider-dot";
+import { KlozUIVerifiedIcon } from "../shared/verified-icon";
 
 interface PostCardProps {
   post: Posts;
@@ -63,12 +64,18 @@ const PostCard = ({ post, className }: PostCardProps) => {
           <div className="flex flex-col gap-1 w-full ">
             <div className="flex justify-between items-start   w-full">
               <div className="flex items-center flex-wrap gap-1 sm:gap-2 ">
-                <Link
-                  href={`/profile/${post.owner.id}`}
-                  className="font-medium hover:underline mr-1"
-                >
-                  {post.owner?.name || ""}
-                </Link>
+                <div className="flex items-center">
+                  <Link
+                    href={`/profile/${post.owner.id}`}
+                    className="font-medium hover:underline mr-1"
+                  >
+                    {post.owner?.name || ""}
+                  </Link>
+                  <KlozUIVerifiedIcon
+                    className="text-klozui-green-500"
+                    size={20}
+                  />
+                </div>
                 <DividerDot />
                 <Button
                   variant={"ghost"}
