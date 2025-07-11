@@ -72,10 +72,6 @@ const PostCard = ({ post, className }: PostCardProps) => {
                   >
                     {post.owner?.name || ""}
                   </Link>
-                  {/* <VerifiedShieldIcon
-                    className="fill-klozui-green-500"
-                    size={20}
-                  /> */}
                 </div>
                 <DividerDot />
                 <Button

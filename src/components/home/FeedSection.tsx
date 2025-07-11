@@ -105,128 +105,6 @@ const samplePosts = [
 interface FeedSectionProps {
   className?: string;
 }
-// Rosette style
-const VerifiedRosetteIcon = ({ size = 40 }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="#3B82F6"
-    xmlns="http://www.w3.org/2000/svg"
-    className="transition duration-200 hover:brightness-110 hover:drop-shadow-md"
-  >
-    <path
-      d="M12 2l2.4 2 2.8-1 1 2.8 2 2.4-2 2.4 1 2.8-2.8 1-2.4 2-2.4-2-2.8-1 1-2.8-2-2.4 2-2.4-1-2.8 2.8-1 2.4-2z"
-      stroke="#ffffff"
-      strokeWidth="2"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M9 12l2 2 4-4"
-      stroke="#ffffff"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-// Shield style
-const VerifiedShieldIcon = ({ size = 40 }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="#2563eb"
-    xmlns="http://www.w3.org/2000/svg"
-    className="transition duration-200 hover:brightness-110 hover:drop-shadow-md"
-  >
-    <path
-      d="M12 2L20 6V12C20 17 16 20 12 22C8 20 4 17 4 12V6L12 2Z"
-      stroke="#ffffff"
-      strokeWidth="2"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M9 12l2 2 4-4"
-      stroke="#ffffff"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-// Diamond style
-const VerifiedDiamondIcon = ({ size = 40 }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="#7c3aed"
-    xmlns="http://www.w3.org/2000/svg"
-    className="transition duration-200 hover:brightness-110 hover:drop-shadow-md"
-  >
-    <path
-      d="M12 2l10 10-10 10L2 12 12 2z"
-      stroke="#ffffff"
-      strokeWidth="2"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M9 12l2 2 4-4"
-      stroke="#ffffff"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-// Circle style
-const VerifiedCircleIcon = ({ size = 40 }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="#1DA1F2"
-    xmlns="http://www.w3.org/2000/svg"
-    className="transition duration-200 hover:brightness-110 hover:drop-shadow-md"
-  >
-    <circle cx="12" cy="12" r="10" stroke="#ffffff" strokeWidth="2" />
-    <path
-      d="M9 12l2 2 4-4"
-      stroke="#ffffff"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-// Badge Set Preview
-export function VerifiedBadgeSet() {
-  return (
-    <div className="p-6 grid grid-cols-2 sm:grid-cols-4 gap-6 bg-gray-100 rounded-2xl shadow-md w-fit">
-      <div className="flex flex-col items-center space-y-2">
-        <VerifiedRosetteIcon />
-        <span className="text-sm font-medium">Rosette</span>
-      </div>
-      <div className="flex flex-col items-center space-y-2">
-        <VerifiedShieldIcon />
-        <span className="text-sm font-medium">Shield</span>
-      </div>
-      <div className="flex flex-col items-center space-y-2">
-        <VerifiedDiamondIcon />
-        <span className="text-sm font-medium">Diamond</span>
-      </div>
-      <div className="flex flex-col items-center space-y-2">
-        <VerifiedCircleIcon />
-        <span className="text-sm font-medium">Circle</span>
-      </div>
-    </div>
-  );
-}
 
 const FeedSection = ({ className }: FeedSectionProps) => {
   return (
@@ -234,7 +112,6 @@ const FeedSection = ({ className }: FeedSectionProps) => {
       <h2 className="text-xl font-semibold ml-1">Nearby Feed</h2>
 
       <div className="space-y-4">
-        <VerifiedBadgeSet />
         {samplePosts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
