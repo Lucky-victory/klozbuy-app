@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { cn, formatJoinDate } from "@/lib/utils";
 import UserAvatar from "@/components/shared/UserAvatar";
 import { useState } from "react";
-import { KlozUIVerifiedIcon } from "../shared/verified-icon";
+import VerifiedBadgeIcon from "../shared/verified-icon";
 
 interface ProfileHeaderProps {
   user: {
@@ -88,7 +88,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                       <span className="flex items-center gap-1">
                         <Star size={14} className="text-yellow-500" />
                         {user.rating} ({user.reviewsCount} reviews)
-                        <KlozUIVerifiedIcon className="text-klozui-green-500" />
+                        <VerifiedBadgeIcon className="text-klozui-green-500" />
                       </span>
                       <span className="flex items-center gap-1">
                         <Users size={14} />

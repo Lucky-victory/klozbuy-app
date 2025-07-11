@@ -2,7 +2,8 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User, Store } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { KlozUIVerifiedIcon } from "./verified-icon";
+import VerifiedBadgeIcon from "./verified-icon";
+import { VerifiedCircleIcon, VerifiedShieldIcon } from "../custom-icons/badges";
 
 interface UserAvatarProps {
   src?: string;
@@ -87,13 +88,20 @@ const UserAvatar = ({
       </Avatar>
 
       {isVerified && (
-        <div
-          className={cn(
-            verifiedBadgeSize[size],
-            "absolute flex items-center justify-center"
-          )}
-        >
-          <KlozUIVerifiedIcon className="text-klozui-green-500" />
+        <div className={cn(verifiedBadgeSize[size], "absolute rounded-full")}>
+          {/* <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-[60%] w-[60%]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="20 6 9 17 4 12" className="text-white" />
+          </svg> */}
+          <VerifiedCircleIcon size={17} className="fill-klozui-green-500" />
         </div>
       )}
     </div>

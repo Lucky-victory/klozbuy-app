@@ -22,7 +22,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Posts } from "@/types";
 import { DividerDot } from "@/components/ui/divider-dot";
-import { KlozUIVerifiedIcon } from "../shared/verified-icon";
+import VerifiedBadgeIcon from "../shared/verified-icon";
+import { VerifiedCircleIcon, VerifiedShieldIcon } from "../custom-icons/badges";
 
 interface PostCardProps {
   post: Posts;
@@ -71,10 +72,10 @@ const PostCard = ({ post, className }: PostCardProps) => {
                   >
                     {post.owner?.name || ""}
                   </Link>
-                  <KlozUIVerifiedIcon
-                    className="text-klozui-green-500"
+                  {/* <VerifiedShieldIcon
+                    className="fill-klozui-green-500"
                     size={20}
-                  />
+                  /> */}
                 </div>
                 <DividerDot />
                 <Button

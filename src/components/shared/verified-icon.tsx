@@ -1,33 +1,37 @@
-export const KlozUIVerifiedIcon = ({
+import React from "react";
+
+const VerifiedBadgeIcon = ({
+  size = 24,
+  color = "#1DA1F2",
+  stroke = "#ffffff",
+  strokeWidth = 2,
   className = "bg-klozui-green-500",
-  size = 32,
 }) => {
   return (
     <svg
+      className={className}
       width={size}
       height={size}
-      viewBox="0 0 32 32"
-      fill="none"
+      viewBox="0 0 24 24"
+      fill={color}
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
     >
-      {/* Interlocking circles forming the main shape */}
-      <circle cx="16.1" cy="10.3" r="6.2" className="fill-current" />
-      <circle cx="22.1" cy="14" r="6.1" className="fill-current" />
-      <circle cx="22.1" cy="20" r="6.1" className="fill-current" />
-      <circle cx="16.1" cy="24" r="6.1" className="fill-current" />
-      <circle cx="10.1" cy="20" r="6.1" className="fill-current" />
-      <circle cx="10.1" cy="14.1" r="6.1" className="fill-current" />
-
-      {/* Extended checkmark with proper spacing */}
       <path
-        d="M11.5 16L15 19.5L21.5 13"
-        fill="none"
-        className="stroke-white"
+        d="M12 2L14.12 5.47L18.09 6.18L15.5 9.5L16.18 13.5L12 11.67L7.82 13.5L8.5 9.5L5.91 6.18L9.88 5.47L12 2Z"
+        stroke={stroke}
+        strokeWidth={strokeWidth}
         strokeLinecap="round"
-        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.5 12L11.3 13.8L15 10"
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>
   );
 };
+
+export default VerifiedBadgeIcon;
