@@ -6,6 +6,20 @@ import MobileNav from "./MobileNav";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useResize } from "@/hooks/use-resize";
+import { Drawer } from "../ui/drawer";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -61,23 +75,16 @@ const Layout = ({
       )}
 
       <div className="flex flex-1 relative">
-        {/* Mobile menu overlay */}
-        {isMobileMenuOpen && (
-          <div
-            className="fixed inset-0 bg-black/50 z-40 md:hidden"
-            onClick={toggleMobileMenu}
-          />
-        )}
-
         {/* Mobile sidebar */}
-        <div
-          className={cn(
-            "fixed top-[56px] left-0 h-[calc(100vh-56px)] z-50 transform transition-transform duration-300 ease-in-out md:hidden",
-            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-          )}
-        >
-          <Sidebar className="w-64 h-full shadow-xl animate-slide-in" />
-        </div>
+        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          <SheetContent side={"left"} className="p-0 w-full max-w-xs">
+            <SheetTitle className="sr-only">Primary Sidebar</SheetTitle>
+            <SheetHeader></SheetHeader>
+            <Sidebar className="" />
+
+            <SheetFooter></SheetFooter>
+          </SheetContent>
+        </Sheet>
 
         {/* Desktop sidebar */}
         {!hideNav && <Sidebar className="hidden md:flex" />}

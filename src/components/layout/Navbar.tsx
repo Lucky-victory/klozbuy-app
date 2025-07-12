@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -53,10 +54,10 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
           className="md:hidden"
           onClick={onMobileMenuToggle}
         >
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          <UserAvatar src={user.avatar} name={user.name} />
         </Button>
         <Logo size="md" showText className="hidden md:flex" />
-        <Logo size="sm" showText={false} className="md:hidden" />
+        {/* <Logo size="sm" showText={false} className="md:hidden" /> */}
       </div>
 
       <div className="hidden relative md:flex items-center bg-muted rounded-full flex-1 max-w-md mx-4">

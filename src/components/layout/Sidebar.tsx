@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { createElement, memo, ReactElement } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -23,7 +23,9 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "../ui/scroll-area";
 import { useResize } from "@/hooks/use-resize";
-
+import { GoHomeFill } from "react-icons/go";
+import { IconType } from "react-icons/lib";
+import { HomeIcon } from "../custom-icons/home";
 interface SidebarProps {
   className?: string;
 }
@@ -55,7 +57,7 @@ const Sidebar = memo(({ className }: SidebarProps) => {
     label,
   }: {
     path: string;
-    icon: React.ElementType;
+    icon: IconType | ((isActive: boolean) => IconType);
     label: string;
   }) => {
     const isActive = pathname === path;
@@ -78,7 +80,12 @@ const Sidebar = memo(({ className }: SidebarProps) => {
           )}
         >
           <div className="flex">
-            <Icon size={26} />
+            {createElement(
+              typeof Icon == "function" ? (Icon?.(isActive) as any) : Icon,
+              {
+                size: 26,
+              }
+            )}
           </div>
           {!isTablet && (
             <div
@@ -98,16 +105,23 @@ const Sidebar = memo(({ className }: SidebarProps) => {
   return (
     <ScrollArea
       className={cn(
-        "hidden md:flex flex-col p-4 border-r border-border bg-background h-[calc(100vh - 60px)]",
-        isTablet ? "w-28" : "w-64",
+        "flex flex-col border-r border-border bg-background h-full transform transition-transform duration-300 ease-in-out",
+        isTablet ? "w-20" : "w-64",
         className
       )}
     >
       {/* <Logo className="mb-6 mt-2" /> */}
 
-      <nav id="Primary" className="flex-1 overflow-auto py-2 pt-4 px-2">
+      <nav
+        id="Primary"
+        className="flex-1 overflow-auto py-2 justify-center pt-4 px-3"
+      >
         <div className="flex flex-col space-y-1">
-          <NavItem path="/" icon={Home} label="Home" />
+          <NavItem
+            path="/"
+            icon={(isActive: boolean) => (isActive ? HomeIcon : Home)}
+            label="Home"
+          />
           <NavItem path="/search" icon={Search} label="Discover" />
           <NavItem path="/messages" icon={MessageSquare} label="Messages" />
           <NavItem path="/profile" icon={User} label="Profile" />

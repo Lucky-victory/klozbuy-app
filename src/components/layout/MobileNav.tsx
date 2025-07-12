@@ -1,18 +1,29 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Home, Search, MessageSquare, User, Store } from "lucide-react";
+import {
+  Home,
+  Search,
+  MessageSquare,
+  User,
+  Store,
+  Bell,
+  Mail,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { GoBell } from "react-icons/go";
+import { IoMail, IoMailOutline } from "react-icons/io5";
+import { HomeIcon } from "../custom-icons/home";
 
 const MobileNav = () => {
   const pathname = usePathname();
 
   const navItems = [
-    { path: "/", icon: Home, label: "Home" },
+    { path: "/", icon: HomeIcon, label: "Home" },
     { path: "/search", icon: Search, label: "Discover" },
-    { path: "/messages", icon: MessageSquare, label: "Messages" },
+    { path: "/notifications", icon: Bell, label: "Notifications" },
     { path: "/my-business", icon: Store, label: "Business" },
-    { path: "/profile", icon: User, label: "Profile" },
+    { path: "/messages", icon: Mail, label: "Messages" },
   ];
 
   return (
@@ -58,7 +69,7 @@ const NavItem = ({
       <div
         className={cn(
           "flex items-center justify-center rounded-full w-12 h-12 mb-1 transition-all",
-          isActive ? "bg-klozui-green-500/20" : "hover:bg-muted"
+          isActive ? "bg-klozui-green-50" : "hover:bg-muted"
         )}
       >
         <Icon size={showLabel ? 20 : 24} />
