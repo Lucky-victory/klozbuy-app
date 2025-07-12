@@ -56,7 +56,6 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
         >
           <UserAvatar src={user.avatar} name={user.name} />
         </Button>
-        <Logo size="md" showText className="hidden md:flex" />
         {/* <Logo size="sm" showText={false} className="md:hidden" /> */}
       </div>
 
@@ -73,17 +72,6 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
         <Button variant="ghost" size="icon" className="hidden md:flex">
           <Bell size={20} />
         </Button>
-
-        <Link href="/messages">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="hidden md:flex relative"
-          >
-            <MessageSquare size={20} />
-            <span className="absolute top-0 right-0 h-2 w-2 bg-klozui-orange-500 rounded-full" />
-          </Button>
-        </Link>
 
         {isAuthenticated ? (
           <DropdownMenu>

@@ -15,6 +15,9 @@ import {
   PanelTop,
   BarChart3,
   LogOut,
+  Bell,
+  Mail,
+  User2,
 } from "lucide-react";
 import Logo from "@/components/shared/Logo";
 import UserAvatar from "@/components/shared/UserAvatar";
@@ -50,7 +53,7 @@ const Sidebar = memo(({ className }: SidebarProps) => {
   };
 
   const { width } = useResize();
-  const isTablet = width >= 768 && width < 1024;
+  const isTablet = width >= 768 && width < 1120;
   const NavItem = ({
     path,
     icon: Icon,
@@ -64,15 +67,13 @@ const Sidebar = memo(({ className }: SidebarProps) => {
     return (
       <Link
         href={path}
-        tabIndex={-1}
         className={cn(
-          "flex items-center justify-start group mb-1 text-base flex-grow "
+          "flex items-center justify-start group mb-1 text-base flex-grow outline-none focus-visible:outline-none"
         )}
       >
         <div
-          tabIndex={0}
           className={cn(
-            "flex  items-center p-3 rounded-full transition-colors group-focus-within:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-klozui-green-500 focus-visible:ring-offset-2",
+            "flex  items-center p-3 rounded-full transition-colors group-focus-within:outline-none group-focus-visible:outline-none group-focus-visible:ring-2 group-focus-visible:ring-klozui-green-500 group-focus-visible:ring-offset-2",
 
             isActive
               ? "bg-klozui-green-500 text-white hover:bg-klozui-green-500/90 group-hover:bg-klozui-green-500/90"
@@ -123,8 +124,9 @@ const Sidebar = memo(({ className }: SidebarProps) => {
             label="Home"
           />
           <NavItem path="/search" icon={Search} label="Discover" />
-          <NavItem path="/messages" icon={MessageSquare} label="Messages" />
-          <NavItem path="/profile" icon={User} label="Profile" />
+          <NavItem path="/messages" icon={Mail} label="Messages" />
+          <NavItem path="/notifications" icon={Bell} label="Notifications" />
+          <NavItem path="/profile" icon={User2} label="Profile" />
           <NavItem path="/favorites" icon={Heart} label="Favorites" />
         </div>
 
