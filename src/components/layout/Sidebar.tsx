@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -21,12 +21,14 @@ import UserAvatar from "@/components/shared/UserAvatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "../ui/scroll-area";
+import { useResize } from "@/hooks/use-resize";
 
 interface SidebarProps {
   className?: string;
 }
 
-const Sidebar = ({ className }: SidebarProps) => {
+const Sidebar = memo(({ className }: SidebarProps) => {
   const pathname = usePathname();
 
   // Mock user data - in a real app this would come from auth context
@@ -45,6 +47,8 @@ const Sidebar = ({ className }: SidebarProps) => {
     avatar: "",
   };
 
+  const { width } = useResize();
+  const isTablet = width >= 768 && width < 1024;
   const NavItem = ({
     path,
     icon: Icon,
@@ -55,36 +59,54 @@ const Sidebar = ({ className }: SidebarProps) => {
     label: string;
   }) => {
     const isActive = pathname === path;
-
     return (
-      <Link href={path} className="w-full">
-        <Button
-          variant={isActive ? "default" : "ghost"}
+      <Link
+        href={path}
+        tabIndex={-1}
+        className={cn(
+          "flex items-center justify-start group mb-1 text-base flex-grow "
+        )}
+      >
+        <div
+          tabIndex={0}
           className={cn(
-            "w-full justify-start gap-2 mb-1 text-base",
+            "flex  items-center p-3 rounded-full transition-colors group-focus-within:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-klozui-green-500 focus-visible:ring-offset-2",
+
             isActive
-              ? "bg-klozui-green-500 text-white hover:bg-klozui-green-500/90"
-              : "hover:bg-muted"
+              ? "bg-klozui-green-500 text-white hover:bg-klozui-green-500/90 group-hover:bg-klozui-green-500/90"
+              : "hovr:bg-muted hover:bg-klozui-green-500/90 group-hover:bg-muted "
           )}
         >
-          <Icon size={20} />
-          <span>{label}</span>
-        </Button>
+          <div className="flex">
+            <Icon size={26} />
+          </div>
+          {!isTablet && (
+            <div
+              className={cn(
+                "flex text-lg leading-6 items-center ml-5 overflow-hidden mr-4 whitespace-nowrap",
+                isActive ? "font-semibold" : "font-normal"
+              )}
+            >
+              <span className="text-ellipsis">{label}</span>
+            </div>
+          )}
+        </div>
       </Link>
     );
   };
 
   return (
-    <div
+    <ScrollArea
       className={cn(
-        "hidden md:flex flex-col w-64 p-4 border-r border-border bg-background h-screen sticky top-0",
+        "hidden md:flex flex-col p-4 border-r border-border bg-background h-[calc(100vh - 60px)]",
+        isTablet ? "w-28" : "w-64",
         className
       )}
     >
-      <Logo className="mb-6 mt-2" />
+      {/* <Logo className="mb-6 mt-2" /> */}
 
-      <div className="flex-1 overflow-auto py-2">
-        <div className="space-y-1">
+      <nav id="Primary" className="flex-1 overflow-auto py-2 pt-4 px-2">
+        <div className="flex flex-col space-y-1">
           <NavItem path="/" icon={Home} label="Home" />
           <NavItem path="/search" icon={Search} label="Discover" />
           <NavItem path="/messages" icon={MessageSquare} label="Messages" />
@@ -116,7 +138,7 @@ const Sidebar = ({ className }: SidebarProps) => {
             <NavItem path="/settings" icon={Settings} label="Settings" />
           </>
         )}
-      </div>
+      </nav>
 
       {isAuthenticated ? (
         <div className="mt-auto pt-4 border-t border-border">
@@ -165,8 +187,8 @@ const Sidebar = ({ className }: SidebarProps) => {
           </Button>
         </div>
       )}
-    </div>
+    </ScrollArea>
   );
-};
-
+});
+Sidebar.displayName = "Sidebar";
 export default Sidebar;

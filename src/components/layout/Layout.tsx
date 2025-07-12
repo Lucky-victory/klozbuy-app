@@ -1,10 +1,11 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
-import MobileNav from './MobileNav';
-import { cn } from '@/lib/utils';
+"use client";
+import React, { useState, useEffect } from "react";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+import MobileNav from "./MobileNav";
+import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useResize } from "@/hooks/use-resize";
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -12,9 +13,14 @@ interface LayoutProps {
   fullWidth?: boolean;
 }
 
-const Layout = ({ children, hideNav = false, fullWidth = false }: LayoutProps) => {
+const Layout = ({
+  children,
+  hideNav = false,
+  fullWidth = false,
+}: LayoutProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const { width } = useResize();
 
   useEffect(() => {
     setIsMounted(true);
@@ -22,25 +28,20 @@ const Layout = ({ children, hideNav = false, fullWidth = false }: LayoutProps) =
 
   // Close mobile menu when screen size changes to desktop
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    if (width >= 768) {
+      setIsMobileMenuOpen(false);
+    }
+  }, [width]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
 
@@ -53,23 +54,23 @@ const Layout = ({ children, hideNav = false, fullWidth = false }: LayoutProps) =
   return (
     <div className="min-h-screen flex flex-col">
       {!hideNav && (
-        <Navbar 
-          onMobileMenuToggle={toggleMobileMenu} 
+        <Navbar
+          onMobileMenuToggle={toggleMobileMenu}
           isMobileMenuOpen={isMobileMenuOpen}
         />
       )}
-      
+
       <div className="flex flex-1 relative">
         {/* Mobile menu overlay */}
         {isMobileMenuOpen && (
-          <div 
+          <div
             className="fixed inset-0 bg-black/50 z-40 md:hidden"
             onClick={toggleMobileMenu}
           />
         )}
-        
+
         {/* Mobile sidebar */}
-        <div 
+        <div
           className={cn(
             "fixed top-[56px] left-0 h-[calc(100vh-56px)] z-50 transform transition-transform duration-300 ease-in-out md:hidden",
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -77,20 +78,22 @@ const Layout = ({ children, hideNav = false, fullWidth = false }: LayoutProps) =
         >
           <Sidebar className="w-64 h-full shadow-xl animate-slide-in" />
         </div>
-        
+
         {/* Desktop sidebar */}
         {!hideNav && <Sidebar className="hidden md:flex" />}
-        
+
         {/* Main content */}
-        <main className={cn(
-          "flex-1 flex flex-col min-h-screen",
-          fullWidth ? "max-w-none" : "max-w-7xl mx-auto",
-          !hideNav && "pb-16 md:pb-0 md:pl-0"
-        )}>
-          {children || <Outlet />}
+        <main
+          className={cn(
+            "flex-1 flex flex-col min-h-screen",
+            fullWidth ? "max-w-none" : "max-w-7xl mx-auto",
+            !hideNav && "pb-16 md:pb-0 md:pl-0"
+          )}
+        >
+          {children}
         </main>
       </div>
-      
+
       {!hideNav && <MobileNav />}
     </div>
   );

@@ -106,53 +106,54 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
           </div>
         </CardContent>
       </Card>
-
-      {/* Create Business Card */}
-      <Card className="bg-gradient-to-br from-klozui-green-500/90 to-klozui-green-500 text-white animate-fade-in">
-        <CardContent className="p-4">
-          <div className="flex flex-col items-center text-center gap-3 py-2">
-            <div className="bg-white/20 p-3 rounded-full">
-              <Store size={24} />
+      <div className="sticky top-16 lg:flex flex-col gap-4 ">
+        {/* Create Business Card */}
+        <Card className="bg-gradient-to-br from-klozui-green-500/90 to-klozui-green-500 text-white animate-fade-in">
+          <CardContent className="p-4">
+            <div className="flex flex-col items-center text-center gap-3 py-2">
+              <div className="bg-white/20 p-3 rounded-full">
+                <Store size={24} />
+              </div>
+              <h3 className="font-semibold text-lg">Grow Your Business</h3>
+              <p className="text-sm text-white/85">
+                Create a business profile to reach more customers in your area
+              </p>
+              <Link href="/onboarding?type=business">
+                <Button className="mt-1 bg-white text-klozui-green-500 hover:bg-white/90 hover:text-klozui-green-500">
+                  Create Business
+                </Button>
+              </Link>
             </div>
-            <h3 className="font-semibold text-lg">Grow Your Business</h3>
-            <p className="text-sm text-white/85">
-              Create a business profile to reach more customers in your area
-            </p>
-            <Link href="/onboarding?type=business">
-              <Button className="mt-1 bg-white text-klozui-green-500 hover:bg-white/90 hover:text-klozui-green-500">
-                Create Business
-              </Button>
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      {/* Sponsored Ad */}
-      <Card className="overflow-hidden border animate-fade-in">
-        <div className="relative">
-          <img
-            src={sampleAd.imageUrl}
-            alt={sampleAd.title}
-            className="w-full h-32 object-cover"
-          />
-          <div className="absolute top-2 right-2 bg-white/80 backdrop-blur-sm text-xs px-2 py-0.5 rounded-full">
-            Sponsored
+        {/* Sponsored Ad */}
+        <Card className="overflow-hidden border animate-fade-in">
+          <div className="relative">
+            <img
+              src={sampleAd.imageUrl}
+              alt={sampleAd.title}
+              className="w-full h-32 object-cover"
+            />
+            <div className="absolute top-2 right-2 bg-white/80 backdrop-blur-sm text-xs px-2 py-0.5 rounded-full">
+              Sponsored
+            </div>
           </div>
-        </div>
-        <CardContent className="p-3">
-          <h3 className="font-medium text-base">{sampleAd.title}</h3>
-          <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
-            {sampleAd.description}
-          </p>
-          <Button
-            variant="outline"
-            size="sm"
-            className="mt-3 w-full border-klozui-orange-500 text-klozui-orange-500 hover:bg-klozui-orange-500/5"
-          >
-            Learn More
-          </Button>
-        </CardContent>
-      </Card>
+          <CardContent className="p-3">
+            <h3 className="font-medium text-base">{sampleAd.title}</h3>
+            <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+              {sampleAd.description}
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-3 w-full border-klozui-orange-500 text-klozui-orange-500 hover:bg-klozui-orange-500/5"
+            >
+              Learn More
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

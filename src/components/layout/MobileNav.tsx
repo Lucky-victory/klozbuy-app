@@ -37,9 +37,16 @@ interface NavItemProps {
   icon: React.ElementType;
   label: string;
   isActive: boolean;
+  showLabel?: boolean;
 }
 
-const NavItem = ({ path, icon: Icon, label, isActive }: NavItemProps) => {
+const NavItem = ({
+  path,
+  icon: Icon,
+  label,
+  isActive,
+  showLabel = false,
+}: NavItemProps) => {
   return (
     <Link
       href={path}
@@ -50,13 +57,13 @@ const NavItem = ({ path, icon: Icon, label, isActive }: NavItemProps) => {
     >
       <div
         className={cn(
-          "flex items-center justify-center rounded-full w-10 h-10 mb-1 transition-all",
-          isActive ? "bg-klozui-green-500/10" : "hover:bg-muted"
+          "flex items-center justify-center rounded-full w-12 h-12 mb-1 transition-all",
+          isActive ? "bg-klozui-green-500/20" : "hover:bg-muted"
         )}
       >
-        <Icon size={20} />
+        <Icon size={showLabel ? 20 : 24} />
       </div>
-      <span className="text-xs font-medium">{label}</span>
+      {showLabel && <span className="text-xs font-medium">{label}</span>}
     </Link>
   );
 };
