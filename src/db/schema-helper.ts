@@ -41,14 +41,13 @@ export const messageType = ["text", "image", "video", "audio", "file"] as const;
 export type MessageType = (typeof messageType)[number];
 export const reactionType = [
   "like",
-  "dislike",
   "love",
-  "haha",
-  "wow",
-  "sad",
-  "angry",
+  "support",
+  "interesting",
+  "want",
 ] as const;
-export type MessageReactionType = (typeof reactionType)[number];
+
+export type ReactionType = (typeof reactionType)[number];
 export const mimeType = [
   "image/jpeg",
   "image/png",

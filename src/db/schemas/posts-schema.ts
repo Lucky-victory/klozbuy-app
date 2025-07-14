@@ -21,6 +21,7 @@ import {
   id,
   userId,
   currency,
+  reactionType,
 } from "../schema-helper";
 import { media } from "./media-schema";
 import { locations, users } from "./users-schema";
@@ -68,14 +69,7 @@ export const postReactions = mysqlTable(
     postId: varchar("post_id", { length: 36 })
       .notNull()
       .references(() => posts.id, { onDelete: "cascade" }),
-    type: mysqlEnum("type", [
-      "like",
-      "love",
-      "laugh",
-      "wow",
-      "sad",
-      "angry",
-    ]).notNull(),
+    type: mysqlEnum("type", reactionType).notNull(),
     createdAt,
   },
   (table) => [
@@ -311,14 +305,7 @@ export const commentReactions = mysqlTable(
     commentId: varchar("comment_id", { length: 36 })
       .notNull()
       .references(() => postComments.id, { onDelete: "cascade" }),
-    type: mysqlEnum("type", [
-      "like",
-      "love",
-      "laugh",
-      "wow",
-      "sad",
-      "angry",
-    ]).notNull(),
+    type: mysqlEnum("type", reactionType).notNull(),
     createdAt,
   },
   (table) => [
