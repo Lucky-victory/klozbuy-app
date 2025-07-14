@@ -12,7 +12,14 @@ import {
   uniqueIndex,
   foreignKey,
 } from "drizzle-orm/mysql-core";
-import { createdAt, genderEnum, id, updatedAt, userId } from "../schema-helper";
+import {
+  createdAt,
+  currency,
+  genderEnum,
+  id,
+  updatedAt,
+  userId,
+} from "../schema-helper";
 import { relations, sql } from "drizzle-orm";
 import { advertisements, postComments, posts, reactions } from "./posts-schema";
 import { media } from "./media-schema";
@@ -223,7 +230,7 @@ export const subscriptionPlans = mysqlTable(
     slug: varchar("slug", { length: 100 }).notNull().unique(),
     description: text("description"),
     price: decimal("price", { precision: 10, scale: 2 }).notNull(),
-    currency: varchar("currency", { length: 3 }).default("NGN"),
+    currency,
     billingInterval: mysqlEnum("billing_interval", [
       "monthly",
       "quarterly",

@@ -11,7 +11,11 @@ import {
 } from "drizzle-orm/mysql-core";
 import { users } from "./users-schema";
 import { id, createdAt, updatedAt, mediaType, userId } from "../schema-helper";
-import { advertisementAttachments, postMedia } from "./posts-schema";
+import {
+  advertisementAttachments,
+  postCommentMedia,
+  postMedia,
+} from "./posts-schema";
 
 // Base media table with common fields
 export const media = mysqlTable("media", {
@@ -88,6 +92,8 @@ export const mediaRelations = relations(media, ({ one, many }) => ({
   }),
   audio: one(audio, { fields: [media.id], references: [audio.mediaId] }),
   postMedia: many(postMedia),
+  postCommentMedia: many(postCommentMedia),
+
   advertisementAttachments: many(advertisementAttachments),
 }));
 

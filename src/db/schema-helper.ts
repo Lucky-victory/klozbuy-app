@@ -9,7 +9,7 @@ export const userId = varchar("user_id", { length: 36 })
   .notNull()
   .references(() => users.id, { onDelete: "cascade" });
 export const createdAt = timestamp("created_at").defaultNow();
-
+export const currency = varchar("currency", { length: 3 }).default("NGN");
 export const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
 export const messageStatus = [
   "pending",
@@ -39,7 +39,7 @@ export type ConversationParticipantRole =
 
 export const messageType = ["text", "image", "video", "audio", "file"] as const;
 export type MessageType = (typeof messageType)[number];
-export const messageReactionType = [
+export const reactionType = [
   "like",
   "dislike",
   "love",
@@ -48,7 +48,7 @@ export const messageReactionType = [
   "sad",
   "angry",
 ] as const;
-export type MessageReactionType = (typeof messageReactionType)[number];
+export type MessageReactionType = (typeof reactionType)[number];
 export const mimeType = [
   "image/jpeg",
   "image/png",

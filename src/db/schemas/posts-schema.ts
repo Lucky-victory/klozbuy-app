@@ -20,35 +20,29 @@ import {
   updatedAt,
   id,
   userId,
+  currency,
 } from "../schema-helper";
 import { media } from "./media-schema";
 import { locations, users } from "./users-schema";
-// Users table - Enhanced with better structure
 
+const postTypeEnum = ["general", "product", "service", "event"] as const;
+const postStatusEnum = ["draft", "published", "archived", "deleted"] as const;
+const ageGroupEnum = ["teen", "young_adult", "adult", "senior"] as const;
+const postVisibilityEnum = ["public", "followers", "nearby"] as const;
+
+// -------
 // Posts table - Enhanced with better structure
 export const posts = mysqlTable(
   "posts",
   {
     id,
     userId,
-    type: mysqlEnum("type", [
-      "general",
-      "product",
-      "service",
-      "event",
-    ]).notNull(),
+    type: mysqlEnum("type", postTypeEnum).notNull(),
     content: text("content"),
-    status: mysqlEnum("status", [
-      "draft",
-      "published",
-      "archived",
-      "deleted",
-    ]).default("published"),
-    visibility: mysqlEnum("visibility", [
-      "public",
-      "followers",
-      "nearby",
-    ]).default("public"),
+    status: mysqlEnum("status", postStatusEnum).default("published"),
+    visibility: mysqlEnum("visibility", postVisibilityEnum)
+      .default("public")
+      .notNull(),
     locationId: varchar("location_id", { length: 36 }).references(
       () => locations.id,
       { onDelete: "set null" }
@@ -81,7 +75,7 @@ export const productDetails = mysqlTable(
     sku: varchar("sku", { length: 100 }),
     price: decimal("price", { precision: 10, scale: 2 }),
     compareAtPrice: decimal("compare_at_price", { precision: 10, scale: 2 }),
-    currency: varchar("currency", { length: 3 }).default("NGN"),
+    currency,
     condition: mysqlEnum("condition", ["new", "used", "refurbished"]).default(
       "new"
     ),
@@ -129,7 +123,7 @@ export const serviceDetails = mysqlTable(
       "negotiable",
     ]).notNull(),
     price: decimal("price", { precision: 10, scale: 2 }),
-    currency: varchar("currency", { length: 3 }).default("NGN"),
+    currency,
     duration: varchar("duration", { length: 100 }), // e.g., "2 hours", "1 day"
     availability: json("availability"), // Available days/hours
     serviceVenue: mysqlEnum("service_venue", [
@@ -351,7 +345,7 @@ export const postPromotions = mysqlTable(
       scale: 2,
       mode: "number",
     }).default(0),
-    currency: varchar("currency", { length: 3 }).default("NGN"),
+    currency,
     targetRadius: int("target_radius"),
     targetLocationId: varchar("target_location_id", {
       length: 36,
@@ -430,6 +424,27 @@ export const advertisements = mysqlTable(
     index("advertisements_target_age_end_idx").on(table.targetAgeEnd),
   ]
 );
+export const advertisementTargeting = mysqlTable(
+  "advertisement_targeting",
+  {
+    id: varchar("id", { length: 36 }).primaryKey(),
+    advertisementId: varchar("advertisement_id", { length: 36 }).notNull(),
+    gender: mysqlEnum("gender", genderEnum),
+    minAge: int("min_age"),
+    maxAge: int("max_age"),
+    ageGroup: mysqlEnum("age_group", ageGroupEnum),
+    locationId: varchar("location_id", { length: 36 }),
+  },
+  (table) => [
+    index("advertisement_targeting_advertisement_id_idx").on(
+      table.advertisementId
+    ),
+    index("advertisement_targeting_gender_idx").on(table.gender),
+    index("advertisement_targeting_min_age_idx").on(table.minAge),
+    index("advertisement_targeting_max_age_idx").on(table.maxAge),
+    index("advertisement_targeting_age_group_idx").on(table.ageGroup),
+  ]
+);
 export const advertisementAttachments = mysqlTable(
   "advertisement_attachments",
   {
@@ -497,6 +512,12 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
     references: [serviceDetails.postId],
   }),
 }));
+export const postPromotionsRelations = relations(postPromotions, ({ one }) => ({
+  post: one(posts, {
+    fields: [postPromotions.postId],
+    references: [posts.id],
+  }),
+}));
 export const productDetailsRelations = relations(productDetails, ({ one }) => ({
   post: one(posts, {
     fields: [productDetails.postId],
@@ -551,3 +572,44 @@ export const commentsRelations = relations(postComments, ({ one, many }) => ({
     relationName: "commentReactions",
   }),
 }));
+export const advertisementsRelations = relations(
+  advertisements,
+  ({ one, many }) => ({
+    author: one(users, {
+      fields: [advertisements.userId],
+      references: [users.id],
+    }),
+    location: one(locations, {
+      fields: [advertisements.targetLocationId],
+      references: [locations.id],
+    }),
+    attachments: many(advertisementAttachments),
+    targeting: many(advertisementTargeting),
+  })
+);
+export const advertisementTargetingRelations = relations(
+  advertisementTargeting,
+  ({ one }) => ({
+    advertisement: one(advertisements, {
+      fields: [advertisementTargeting.advertisementId],
+      references: [advertisements.id],
+    }),
+    location: one(locations, {
+      fields: [advertisementTargeting.locationId],
+      references: [locations.id],
+    }),
+  })
+);
+export const advertisementAttachmentsRelations = relations(
+  advertisementAttachments,
+  ({ one }) => ({
+    advertisement: one(advertisements, {
+      fields: [advertisementAttachments.advertisementId],
+      references: [advertisements.id],
+    }),
+    media: one(media, {
+      fields: [advertisementAttachments.mediaId],
+      references: [media.id],
+    }),
+  })
+);
