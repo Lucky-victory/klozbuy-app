@@ -227,13 +227,18 @@ export const postMedia = mysqlTable(
       .notNull()
       .references(() => media.id, { onDelete: "cascade" }),
     isPrimary: boolean("is_primary").default(false),
+    sortOrder: int("sort_order").default(0),
+    altText: varchar("alt_text", { length: 200 }),
+    caption: text("caption"),
     createdAt,
     updatedAt,
   },
   (table) => [
     index("post_media_post_id_idx").on(table.postId),
     index("post_media_media_id_idx").on(table.mediaId),
+
     index("post_media_primary_idx").on(table.isPrimary),
+    index("post_media_sort_order_idx").on(table.sortOrder),
   ]
 );
 
@@ -253,6 +258,7 @@ export const reactions = mysqlTable(
       "sad",
       "angry",
     ]).notNull(),
+
     createdAt,
   },
   (table) => [
@@ -282,13 +288,15 @@ export const postComments = mysqlTable(
       length: 36,
       //@ts-ignore
     }).references(() => postComments.id, { onDelete: "cascade" }),
+    mentionedUsers: json("mentioned_users"), // Array of user IDs mentioned
     status: mysqlEnum("status", [
       "pending",
       "approved",
-      "rejected",
       "deleted",
+      "hidden",
     ]).default("approved"),
     isEdited: boolean("is_edited").default(false),
+    editedAt: timestamp("edited_at"),
     reactionCount: int("reaction_count").default(0), // Denormalized counter
     replyCount: int("reply_count").default(0),
     createdAt,
@@ -298,6 +306,11 @@ export const postComments = mysqlTable(
     index("comments_user_id_idx").on(table.userId),
     index("comments_post_id_idx").on(table.postId),
     index("comments_status_idx").on(table.status),
+    index("comments_parent_id_idx").on(table.parentId),
+    index("comments_mentioned_users_idx").on(table.mentionedUsers),
+    index("comments_edited_at_idx").on(table.editedAt),
+    index("comments_reaction_count_idx").on(table.reactionCount),
+    index("comments_reply_count_idx").on(table.replyCount),
   ]
 );
 export const postCommentMedia = mysqlTable(
@@ -326,17 +339,7 @@ export const postPromotions = mysqlTable(
       .notNull()
       .references(() => posts.id, { onDelete: "cascade" }),
     userId: userId,
-    type: mysqlEnum("type", [
-      "boost",
-      "featured",
-      "location_targeted",
-    ]).notNull(),
-    status: mysqlEnum("status", [
-      "active",
-      "paused",
-      "completed",
-      "cancelled",
-    ]).default("active"),
+
     budget: decimal("budget", {
       precision: 10,
       scale: 2,
@@ -358,6 +361,24 @@ export const postPromotions = mysqlTable(
     conversions: int("conversions").default(0),
     startDate: timestamp("start_date").notNull(),
     endDate: timestamp("end_date").notNull(),
+    dailyBudget: decimal("daily_budget", { precision: 10, scale: 2 }),
+    type: mysqlEnum("type", [
+      "boost",
+      "featured",
+      "location_targeted",
+      "demographic_targeted",
+      "interest_targeted",
+    ]).notNull(),
+    status: mysqlEnum("status", [
+      "active",
+      "paused",
+      "completed",
+      "cancelled",
+      "pending_approval",
+    ]).default("pending_approval"),
+    approvedAt: timestamp("approved_at"),
+    approvedBy: varchar("approved_by", { length: 36 }),
+    rejectionReason: text("rejection_reason"),
     createdAt,
     updatedAt,
   },
