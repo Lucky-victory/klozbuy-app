@@ -60,6 +60,33 @@ export const posts = mysqlTable(
     sql`FULLTEXT INDEX (content) WITH PARSER MULTILINGUAL`,
   ]
 );
+export const postReactions = mysqlTable(
+  "post_reactions",
+  {
+    id,
+    userId,
+    postId: varchar("post_id", { length: 36 })
+      .notNull()
+      .references(() => posts.id, { onDelete: "cascade" }),
+    type: mysqlEnum("type", [
+      "like",
+      "love",
+      "laugh",
+      "wow",
+      "sad",
+      "angry",
+    ]).notNull(),
+    createdAt,
+  },
+  (table) => [
+    uniqueIndex("post_reactions_unique_user_post").on(
+      table.userId,
+      table.postId
+    ),
+    index("post_reactions_user_id_idx").on(table.userId),
+    index("post_reactions_post_id_idx").on(table.postId),
+  ]
+);
 
 // Product details - For product posts
 export const productDetails = mysqlTable(
@@ -70,7 +97,7 @@ export const productDetails = mysqlTable(
     postId: varchar("post_id", { length: 36 })
       .notNull()
       .references(() => posts.id, { onDelete: "cascade" }),
-    productDescription: varchar("product_description", { length: 1000 }),
+    productDescription: varchar("product_description", { length: 500 }),
     productCategory: varchar("product_category", { length: 100 }),
     sku: varchar("sku", { length: 100 }),
     price: decimal("price", { precision: 10, scale: 2 }),
@@ -209,8 +236,6 @@ export const eventAttendees = mysqlTable(
   ]
 );
 
-// Media - Separate table for images/videos
-
 export const postMedia = mysqlTable(
   "post_media",
   {
@@ -234,36 +259,6 @@ export const postMedia = mysqlTable(
 
     index("post_media_primary_idx").on(table.isPrimary),
     index("post_media_sort_order_idx").on(table.sortOrder),
-  ]
-);
-
-// Reactions table - Enhanced
-export const reactions = mysqlTable(
-  "reactions",
-  {
-    id,
-    userId: userId,
-    targetId: varchar("target_id", { length: 36 }).notNull(),
-    targetType: mysqlEnum("target_type", ["post", "comment"]).notNull(),
-    type: mysqlEnum("type", [
-      "like",
-      "love",
-      "laugh",
-      "wow",
-      "sad",
-      "angry",
-    ]).notNull(),
-
-    createdAt,
-  },
-  (table) => [
-    uniqueIndex("reactions_unique_user_target").on(
-      table.userId,
-      table.targetId,
-      table.targetType
-    ),
-    index("reactions_user_id_idx").on(table.userId),
-    index("reactions_target_idx").on(table.targetId, table.targetType),
   ]
 );
 
@@ -308,6 +303,34 @@ export const postComments = mysqlTable(
     index("comments_reply_count_idx").on(table.replyCount),
   ]
 );
+export const commentReactions = mysqlTable(
+  "comment_reactions",
+  {
+    id,
+    userId,
+    commentId: varchar("comment_id", { length: 36 })
+      .notNull()
+      .references(() => postComments.id, { onDelete: "cascade" }),
+    type: mysqlEnum("type", [
+      "like",
+      "love",
+      "laugh",
+      "wow",
+      "sad",
+      "angry",
+    ]).notNull(),
+    createdAt,
+  },
+  (table) => [
+    uniqueIndex("comment_reactions_unique_user_comment").on(
+      table.userId,
+      table.commentId
+    ),
+    index("comment_reactions_user_id_idx").on(table.userId),
+    index("comment_reactions_comment_id_idx").on(table.commentId),
+  ]
+);
+
 export const postCommentMedia = mysqlTable(
   "post_comment_media",
   {
@@ -469,25 +492,6 @@ export const advertisementAttachments = mysqlTable(
 
 //relations
 
-export const reactionsRelations = relations(reactions, ({ one }) => ({
-  user: one(users, {
-    fields: [reactions.userId],
-    references: [users.id],
-  }),
-  // Polymorphic relations - conditionally reference based on targetType
-  post: one(posts, {
-    fields: [reactions.targetId],
-    references: [posts.id],
-    relationName: "postReactions",
-  }),
-  comment: one(postComments, {
-    fields: [reactions.targetId],
-    references: [postComments.id],
-    relationName: "commentReactions",
-  }),
-}));
-
-// Also update the posts and comments relations to include reactions
 export const postsRelations = relations(posts, ({ one, many }) => ({
   author: one(users, {
     fields: [posts.userId],
@@ -499,9 +503,7 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
   }),
   comments: many(postComments),
   media: many(postMedia),
-  reactions: many(reactions, {
-    relationName: "postReactions",
-  }),
+  reactions: many(postReactions),
   product: many(productDetails),
   eventDetails: one(eventDetails, {
     fields: [posts.id],
@@ -512,6 +514,56 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
     references: [serviceDetails.postId],
   }),
 }));
+
+export const postCommentsRelations = relations(
+  postComments,
+  ({ one, many }) => ({
+    author: one(users, {
+      fields: [postComments.userId],
+      references: [users.id],
+    }),
+    post: one(posts, {
+      fields: [postComments.postId],
+      references: [posts.id],
+    }),
+    parent: one(postComments, {
+      fields: [postComments.parentId],
+      references: [postComments.id],
+    }),
+    media: many(postCommentMedia),
+    reactions: many(commentReactions),
+  })
+);
+
+// Post Reactions Relation
+export const postReactionsRelations = relations(postReactions, ({ one }) => ({
+  user: one(users, {
+    fields: [postReactions.userId],
+    references: [users.id],
+  }),
+  post: one(posts, {
+    fields: [postReactions.postId],
+    references: [posts.id],
+  }),
+}));
+
+// Comment Reactions Relation
+export const commentReactionsRelations = relations(
+  commentReactions,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [commentReactions.userId],
+      references: [users.id],
+    }),
+    comment: one(postComments, {
+      fields: [commentReactions.commentId],
+      references: [postComments.id],
+    }),
+  })
+);
+
+// Also update the posts and comments relations to include reactions
+
 export const postPromotionsRelations = relations(postPromotions, ({ one }) => ({
   post: one(posts, {
     fields: [postPromotions.postId],
@@ -552,26 +604,6 @@ export const postCommentMediaRelations = relations(
   })
 );
 
-export const commentsRelations = relations(postComments, ({ one, many }) => ({
-  author: one(users, {
-    fields: [postComments.userId],
-    references: [users.id],
-  }),
-  post: one(posts, {
-    fields: [postComments.postId],
-    references: [posts.id],
-  }),
-  parent: one(postComments, {
-    fields: [postComments.parentId],
-    references: [postComments.id],
-    relationName: "parent",
-  }),
-  replies: many(postComments, { relationName: "parent" }),
-  media: many(postCommentMedia),
-  reactions: many(reactions, {
-    relationName: "commentReactions",
-  }),
-}));
 export const advertisementsRelations = relations(
   advertisements,
   ({ one, many }) => ({

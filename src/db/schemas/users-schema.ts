@@ -21,7 +21,13 @@ import {
   userId,
 } from "../schema-helper";
 import { relations, sql } from "drizzle-orm";
-import { advertisements, postComments, posts, reactions } from "./posts-schema";
+import {
+  advertisements,
+  commentReactions,
+  postComments,
+  postReactions,
+  posts,
+} from "./posts-schema";
 import { media } from "./media-schema";
 import { messages } from "./messages-schema";
 import { conversationParticipants } from "./messages-schema";
@@ -182,7 +188,8 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   }),
   posts: many(posts),
   comments: many(postComments),
-  reactions: many(reactions),
+  postReactions: many(postReactions),
+  commentReactions: many(commentReactions),
   advertisements: many(advertisements),
   media: many(media),
   locations: many(locations),
