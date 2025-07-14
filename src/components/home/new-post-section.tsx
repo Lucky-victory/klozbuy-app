@@ -769,7 +769,8 @@ const NewPostSection = () => {
         );
 
       case "details":
-        const fields = FORM_FIELDS[selectedType] || [];
+        const fields =
+          FORM_FIELDS[selectedType as keyof typeof FORM_FIELDS] || [];
         return (
           <div className="space-y-4">
             <div>
