@@ -9,6 +9,7 @@ import { MapPin, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { calculateHaversineDistance } from "@/lib/geolocation/utils";
+import NewPostSection from "../components/home/new-post-section";
 
 const Index = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -90,7 +91,7 @@ const Index = () => {
               Update Location
             </Button>
           </div>
-
+          <NewPostSection />
           {/* Main Feed */}
           <FeedSection />
         </div>

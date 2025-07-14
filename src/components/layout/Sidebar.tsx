@@ -108,7 +108,7 @@ const Sidebar = memo(({ className }: SidebarProps) => {
   return (
     <div
       className={cn(
-        "sticky top-0 left-0 gap-6 pt-4 flex flex-col items-center border-r border-border bg-background h-screen transform transition-transform duration-300 ease-in-out",
+        "sticky top-0 left-0 gap-6 pt-4  flex-col items-center border-r border-border bg-background h-screen transform transition-transform duration-300 ease-in-out hidden md:flex",
         isTablet ? "w-20" : "w-64"
       )}
     >
