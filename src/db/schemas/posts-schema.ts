@@ -75,8 +75,9 @@ export const productDetails = mysqlTable(
     productName: varchar("product_name", { length: 100 }).notNull(),
     postId: varchar("post_id", { length: 36 })
       .notNull()
-      .unique()
       .references(() => posts.id, { onDelete: "cascade" }),
+    productDescription: varchar("product_description", { length: 1000 }),
+    productCategory: varchar("product_category", { length: 100 }),
     sku: varchar("sku", { length: 100 }),
     price: decimal("price", { precision: 10, scale: 2 }),
     compareAtPrice: decimal("compare_at_price", { precision: 10, scale: 2 }),
@@ -496,6 +497,39 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
     references: [serviceDetails.postId],
   }),
 }));
+export const productDetailsRelations = relations(productDetails, ({ one }) => ({
+  post: one(posts, {
+    fields: [productDetails.postId],
+    references: [posts.id],
+  }),
+}));
+export const serviceDetailsRelations = relations(serviceDetails, ({ one }) => ({
+  post: one(posts, {
+    fields: [serviceDetails.postId],
+    references: [posts.id],
+  }),
+}));
+export const eventDetailsRelations = relations(eventDetails, ({ one }) => ({
+  post: one(posts, {
+    fields: [eventDetails.postId],
+    references: [posts.id],
+  }),
+}));
+export const postMediaRelations = relations(postMedia, ({ one }) => ({
+  post: one(posts, {
+    fields: [postMedia.postId],
+    references: [posts.id],
+  }),
+}));
+export const postCommentMediaRelations = relations(
+  postCommentMedia,
+  ({ one }) => ({
+    comment: one(postComments, {
+      fields: [postCommentMedia.commentId],
+      references: [postComments.id],
+    }),
+  })
+);
 
 export const commentsRelations = relations(postComments, ({ one, many }) => ({
   author: one(users, {
