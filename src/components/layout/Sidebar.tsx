@@ -53,6 +53,8 @@ const Sidebar = memo(({ className }: SidebarProps) => {
   };
 
   const { width } = useResize();
+  const isMobile = width < 768;
+  const isDesktop = width >= 1120;
   const isTablet = width >= 768 && width < 1120;
   const NavItem = ({
     path,
@@ -104,106 +106,120 @@ const Sidebar = memo(({ className }: SidebarProps) => {
   };
 
   return (
-    <ScrollArea
+    <div
       className={cn(
-        "flex flex-col border-r border-border bg-background h-full transform transition-transform duration-300 ease-in-out",
-        isTablet ? "w-20" : "w-64",
-        className
+        "sticky top-0 left-0 gap-6 pt-4 flex flex-col items-center border-r border-border bg-background h-screen transform transition-transform duration-300 ease-in-out",
+        isTablet ? "w-20" : "w-64"
       )}
     >
-      {/* <Logo className="mb-6 mt-2" /> */}
+      <div className="px-3 w-full">
+        <Logo size="lg" showText={isDesktop} className="hidden md:flex" />
+      </div>
+      <ScrollArea
+        className={cn(
+          "flex flex-col flex-1 px-3 w-full",
 
-      <nav
-        id="Primary"
-        className="flex-1 overflow-auto py-2 justify-center pt-4 px-3"
-      >
-        <div className="flex flex-col space-y-1">
-          <NavItem
-            path="/"
-            icon={(isActive: boolean) => (isActive ? HomeIcon : Home)}
-            label="Home"
-          />
-          <NavItem path="/search" icon={Search} label="Discover" />
-          <NavItem path="/messages" icon={Mail} label="Messages" />
-          <NavItem path="/notifications" icon={Bell} label="Notifications" />
-          <NavItem path="/profile" icon={User2} label="Profile" />
-          <NavItem path="/favorites" icon={Heart} label="Favorites" />
-        </div>
-
-        {isAuthenticated && (
-          <>
-            <Separator className="my-4" />
-
-            <p className="text-sm font-medium text-muted-foreground mb-2 px-2">
-              Business
-            </p>
-            <div className="space-y-1">
-              <NavItem path="/my-business" icon={Store} label="My Business" />
-              <NavItem path="/locations" icon={Map} label="Locations" />
-              <NavItem path="/promote" icon={Megaphone} label="Promote" />
-              <NavItem
-                path="/subscriptions"
-                icon={Crown}
-                label="Subscriptions"
-              />
-              <NavItem path="/dashboard" icon={BarChart3} label="Dashboard" />
-            </div>
-
-            <Separator className="my-4" />
-
-            <NavItem path="/settings" icon={Settings} label="Settings" />
-          </>
+          className
         )}
-      </nav>
+      >
+        {/* <Logo className="mb-6 mt-2" /> */}
 
-      {isAuthenticated ? (
-        <div className="mt-auto pt-4 border-t border-border">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <UserAvatar
-                name={user.name}
-                size="sm"
-                isVerified={user.isVerified}
-                userType={user.type as "individual" | "business"}
-                src={user.avatar}
-              />
-              <div className="ml-2">
-                <p className="text-sm font-medium truncate max-w-[120px]">
-                  {user.name}
-                </p>
-                <p className="text-xs text-muted-foreground capitalize">
-                  {user.type}
-                </p>
-              </div>
-            </div>
-            <Button variant="ghost" size="icon">
-              <LogOut size={18} />
-            </Button>
+        <nav id="Primary" className=" py-2 justify-center pt-4">
+          <div className="flex flex-col space-y-1">
+            <NavItem
+              path="/"
+              icon={(isActive: boolean) => (isActive ? HomeIcon : Home)}
+              label="Home"
+            />
+            <NavItem path="/search" icon={Search} label="Discover" />
+            <NavItem path="/messages" icon={Mail} label="Messages" />
+            <NavItem path="/notifications" icon={Bell} label="Notifications" />
+            <NavItem path="/profile" icon={User2} label="Profile" />
+            <NavItem path="/favorites" icon={Heart} label="Favorites" />
           </div>
 
-          {user.type === "individual" && (
-            <Link href="/onboarding?type=business">
-              <Button
-                variant="outline"
-                className="w-full border-dashed border-klozui-orange-500/50 text-klozui-orange-500 hover:bg-klozui-orange-500/5 hover:border-klozui-orange-500/80"
-              >
-                <Store size={16} className="mr-2" />
-                Create Business
-              </Button>
-            </Link>
+          {isAuthenticated && (
+            <>
+              <Separator className="my-4" />
+
+              {isDesktop && (
+                <p className="text-sm font-medium text-muted-foreground mb-2 px-2">
+                  Business
+                </p>
+              )}
+              <div className="space-y-1">
+                <NavItem path="/my-business" icon={Store} label="My Business" />
+                <NavItem path="/locations" icon={Map} label="Locations" />
+                <NavItem path="/promote" icon={Megaphone} label="Promote" />
+                <NavItem
+                  path="/subscriptions"
+                  icon={Crown}
+                  label="Subscriptions"
+                />
+                <NavItem path="/dashboard" icon={BarChart3} label="Dashboard" />
+              </div>
+
+              <Separator className="my-4" />
+
+              <NavItem path="/settings" icon={Settings} label="Settings" />
+            </>
           )}
-        </div>
-      ) : (
-        <div className="mt-auto pt-4 border-t border-border space-y-2">
-          <Button className="w-full bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white">
-            Sign up
-          </Button>
-          <Button variant="outline" className="w-full">
-            Log in
-          </Button>
-        </div>
-      )}
-    </ScrollArea>
+        </nav>
+
+        {isAuthenticated ? (
+          <div className="mt-auto pt-4 border-t border-border">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <UserAvatar
+                  name={user.name}
+                  size="sm"
+                  isVerified={user.isVerified}
+                  userType={user.type as "individual" | "business"}
+                  src={user.avatar}
+                />
+                {isDesktop && (
+                  <div className="ml-2">
+                    <p className="text-sm font-medium truncate max-w-[120px]">
+                      {user.name}
+                    </p>
+                    <p className="text-xs text-muted-foreground capitalize">
+                      {user.type}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* TODO: Add logout functionality */}
+              {/* <Button variant="ghost" size="icon">
+                <LogOut size={18} />
+              </Button> */}
+            </div>
+
+            {/* TODO: FIX THIS: Implement and style */}
+            {/* {user.type === "individual" && (
+              <Link href="/onboarding?type=business">
+                <Button
+                  variant="outline"
+                  className="w-full border-dashed border-klozui-orange-500/50 text-klozui-orange-500 hover:bg-klozui-orange-500/5 hover:border-klozui-orange-500/80"
+                >
+                  <Store size={16} className="mr-2" />
+                  {isDesktop && "Create Business"}
+                </Button>
+              </Link>
+            )} */}
+          </div>
+        ) : (
+          <div className="mt-auto pt-4 border-t border-border space-y-2">
+            <Button className="w-full bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white">
+              Sign up
+            </Button>
+            <Button variant="outline" className="w-full">
+              Log in
+            </Button>
+          </div>
+        )}
+      </ScrollArea>
+    </div>
   );
 });
 Sidebar.displayName = "Sidebar";

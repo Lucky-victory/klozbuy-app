@@ -17,9 +17,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -67,13 +64,6 @@ const Layout = ({
 
   return (
     <div className="min-h-screen flex flex-col">
-      {!hideNav && (
-        <Navbar
-          onMobileMenuToggle={toggleMobileMenu}
-          isMobileMenuOpen={isMobileMenuOpen}
-        />
-      )}
-
       <div className="flex flex-1 relative">
         {/* Mobile sidebar */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -90,15 +80,23 @@ const Layout = ({
         {!hideNav && <Sidebar className="hidden md:flex" />}
 
         {/* Main content */}
-        <main
-          className={cn(
-            "flex-1 flex flex-col min-h-screen",
-            fullWidth ? "max-w-none" : "max-w-7xl mx-auto",
-            !hideNav && "pb-16 md:pb-0 md:pl-0"
+        <div className="flex flex-col">
+          {!hideNav && (
+            <Navbar
+              onMobileMenuToggle={toggleMobileMenu}
+              isMobileMenuOpen={isMobileMenuOpen}
+            />
           )}
-        >
-          {children}
-        </main>
+          <main
+            className={cn(
+              "flex-1 flex flex-col min-h-screen",
+              fullWidth ? "max-w-none" : "max-w-7xl mx-auto",
+              !hideNav && "pb-16 md:pb-0 md:pl-0"
+            )}
+          >
+            {children}
+          </main>
+        </div>
       </div>
 
       {!hideNav && <MobileNav />}
