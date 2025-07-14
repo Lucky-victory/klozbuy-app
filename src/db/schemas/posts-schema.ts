@@ -72,6 +72,7 @@ export const productDetails = mysqlTable(
   "product_details",
   {
     id,
+    productName: varchar("product_name", { length: 100 }).notNull(),
     postId: varchar("post_id", { length: 36 })
       .notNull()
       .unique()
@@ -130,8 +131,11 @@ export const serviceDetails = mysqlTable(
     currency: varchar("currency", { length: 3 }).default("NGN"),
     duration: varchar("duration", { length: 100 }), // e.g., "2 hours", "1 day"
     availability: json("availability"), // Available days/hours
-    isRemote: boolean("is_remote").default(false),
-    isOnsite: boolean("is_onsite").default(true),
+    serviceVenue: mysqlEnum("service_venue", [
+      "onsite",
+      "remote",
+      "hybrid",
+    ]).default("onsite"),
     serviceRadius: int("service_radius"), // km radius for onsite services
     experienceYears: int("experience_years"),
     certifications: json("certifications"), // string[]
@@ -155,19 +159,21 @@ export const eventDetails = mysqlTable(
       .notNull()
       .unique()
       .references(() => posts.id, { onDelete: "cascade" }),
-    eventType: varchar("event_type", { length: 100 }).notNull(),
+    eventTitle: varchar("event_title", { length: 100 }).notNull(),
     startDate: timestamp("start_date").notNull(),
-    endDate: timestamp("end_date"),
+    endDate: timestamp("end_date").notNull(),
     startTime: varchar("start_time", { length: 10 }), // HH:MM format
     endTime: varchar("end_time", { length: 10 }),
-    isAllDay: boolean("is_all_day").default(false),
     timezone: varchar("timezone", { length: 50 }).default("Africa/Lagos"),
     venue: varchar("venue", { length: 200 }),
     venueLocationId: varchar("venue_location_id", { length: 36 }).references(
       () => locations.id,
       { onDelete: "set null" }
     ),
-    isOnline: boolean("is_online").default(false),
+    eventVenueType: mysqlEnum("event_venue_type", [
+      "online",
+      "offline",
+    ]).default("offline"),
     meetingUrl: varchar("meeting_url", { length: 500 }),
     capacity: int("capacity"),
     currentAttendees: int("current_attendees").default(0),
@@ -181,7 +187,13 @@ export const eventDetails = mysqlTable(
   (table) => [
     index("event_details_post_id_idx").on(table.postId),
     index("event_details_start_date_idx").on(table.startDate),
-    index("event_details_type_idx").on(table.eventType),
+    index("event_details_title_idx").on(table.eventTitle),
+    index("event_details_venue_idx").on(table.venue),
+    index("event_details_venue_location_id_idx").on(table.venueLocationId),
+    index("event_details_event_venue_type_idx").on(table.eventVenueType),
+    index("event_details_capacity_idx").on(table.capacity),
+    index("event_details_current_attendees_idx").on(table.currentAttendees),
+    index("event_details_ticket_price_idx").on(table.ticketPrice),
   ]
 );
 export const eventAttendees = mysqlTable(
@@ -453,10 +465,7 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
   reactions: many(reactions, {
     relationName: "postReactions",
   }),
-  productDetails: one(productDetails, {
-    fields: [posts.id],
-    references: [productDetails.postId],
-  }),
+  product: many(productDetails),
   eventDetails: one(eventDetails, {
     fields: [posts.id],
     references: [eventDetails.postId],
