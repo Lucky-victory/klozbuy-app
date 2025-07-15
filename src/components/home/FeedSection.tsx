@@ -1,6 +1,7 @@
 import React from "react";
 import PostCard from "./PostCard";
 import { cn } from "@/lib/utils";
+import ProductPostCard from "../shared/post-cards/product-post";
 
 // Sample data - would come from API in real app
 const samplePosts = [
@@ -112,9 +113,13 @@ const FeedSection = ({ className }: FeedSectionProps) => {
       <h2 className="text-xl font-semibold ml-1">Nearby Feed</h2>
 
       <div className="space-y-4">
-        {samplePosts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        {samplePosts.map((post) =>
+          post.type === "product" ? (
+            <ProductPostCard key={post.id} post={post} />
+          ) : (
+            <PostCard key={post.id} post={post} />
+          )
+        )}
       </div>
     </div>
   );

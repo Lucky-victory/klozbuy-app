@@ -1,0 +1,226 @@
+import React, { useState } from "react";
+import {
+  Heart,
+  MessageCircle,
+  Share,
+  ShoppingBag,
+  MoreHorizontal,
+  Clock,
+  Heart as HeartFilled,
+} from "lucide-react";
+import { cn, formatTimestamp } from "@/lib/utils";
+import UserAvatar from "@/components/shared/UserAvatar";
+import LocationBadge from "@/components/shared/LocationBadge";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
+import Link from "next/link";
+import { Posts } from "@/types";
+import { DividerDot } from "@/components/ui/divider-dot";
+import VerifiedBadgeIcon from "../../shared/verified-icon";
+import {
+  VerifiedCircleIcon,
+  VerifiedShieldIcon,
+} from "../../custom-icons/badges";
+
+interface PostCardProps {
+  post: Posts;
+  className?: string;
+}
+
+const ProductPostCard = ({ post, className }: PostCardProps) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(post.likesCount);
+
+  const toggleLike = () => {
+    setIsLiked(!isLiked);
+    setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
+  };
+
+  return (
+    <div
+      className={cn(
+        "bg-white rounded-xl shadow-sm border border-border overflow-hidden",
+        "transition-all duration-300 hover:shadow-md",
+        "animate-scale-in",
+        post.isPromoted && "ring-2 ring-klozui-orange-500/50",
+        className
+      )}
+    >
+      {/* Post Header */}
+      <div className="flex  justify-between p-3 md:p-4 ">
+        <div className="flex items-stretch   gap-2 w-full">
+          <Link href={`/profile/${post.owner.id}`}>
+            <UserAvatar
+              name={post.owner?.name || ""}
+              src={post.owner?.profilePicture || ""}
+              size="md"
+              userType={post.owner?.userType || "individual"}
+              isVerified={post.owner?.isVerified || false}
+            />
+          </Link>
+
+          <div className="flex flex-col gap-1 w-full ">
+            <div className="flex justify-between items-start   w-full">
+              <div className="flex items-center flex-wrap gap-1 sm:gap-2 ">
+                <div className="flex items-center">
+                  <Link
+                    href={`/profile/${post.owner.id}`}
+                    className="font-medium hover:underline mr-1"
+                  >
+                    {post.owner?.name || ""}
+                  </Link>
+                  <VerifiedBadgeIcon className="fill-klozui-orange-500 text-klozui-orange-500" />
+                </div>
+                <DividerDot />
+                <Button
+                  variant={"ghost"}
+                  className="text-blue-600 rounded-full h-auto p-0 hover:bg-transparent hover:text-blue-800 py-0 text-sm"
+                  size={"sm"}
+                >
+                  Follow
+                </Button>
+              </div>
+              <div className="flex items-center gap-1">
+                {post.isPromoted && (
+                  <span className="text-xs hidden sm:inline-block bg-klozui-orange-500/10 text-klozui-orange-500 px-2 py-0.5 rounded-full">
+                    Promoted
+                  </span>
+                )}
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6 ml-1"
+                    >
+                      <MoreHorizontal size={18} />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem>Save post</DropdownMenuItem>
+                    <DropdownMenuItem>Report</DropdownMenuItem>
+                    <DropdownMenuItem>Hide</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <span className="flex items-center  shrink-0 gap-1">
+                <Clock size={12} />
+                {formatTimestamp(post.createdAt)}
+              </span>
+              <DividerDot />
+              {(post.owner.distance !== undefined || post.owner.landmark) && (
+                <LocationBadge
+                  distance={post.owner.distance}
+                  landmark={post.owner.landmark}
+                  size="sm"
+                  variant="subtle"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Post Content */}
+      <div className="px-4 pb-3">
+        {post.content && <p className="text-sm mb-3">{post.content}</p>}
+      </div>
+
+      {/* Post Media */}
+      <div className="flex flex-col">
+        {post.type === "product" && post.productImage && (
+          <div className="relative aspect-square bg-muted">
+            <Image
+              src={post.productImage}
+              alt={post.productName || "Product image"}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          </div>
+        )}
+        <div className="flex max-sm:flex-col items-center justify-between gap-2 bg-muted p-3">
+          <div className="flex flex-col gap-2 ">
+            <h3 className="font-medium text-lg">{post.productName}</h3>
+            <p className="text-sm text-muted-foreground">
+              {post.content || "No description provided."}
+            </p>
+
+            {/* Price would go here */}
+            <span className="text-lg font-semibold text-foreground">
+              ₦25,000
+            </span>
+          </div>
+
+          <Button
+            // size="sm"
+            className="max-sm:w-full"
+          >
+            <ShoppingBag size={16} className="mr-1" />
+            Buy Now
+          </Button>
+        </div>
+      </div>
+
+      {post.type === "video" && post.videoUrl && (
+        <div className="relative aspect-video bg-muted">
+          <video
+            src={post.videoUrl}
+            controls
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
+      {/* Post Actions */}
+      <div className="px-3 md:px-4 py-3 flex items-center justify-between border-t border-border">
+        <div className="flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            className={cn(
+              "flex items-center gap-1 py-1 rounded-full px-2 h-auto text-sm font-normal",
+              isLiked && "text-red-500"
+            )}
+            onClick={toggleLike}
+          >
+            {isLiked ? (
+              <HeartFilled size={18} className="fill-red-500 text-red-500" />
+            ) : (
+              <Heart size={18} />
+            )}
+            <span>{likesCount}</span>
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex items-center gap-1 py-1 rounded-full px-2 h-auto text-sm font-normal"
+          >
+            <MessageCircle size={18} />
+            <span>{post.commentsCount}</span>
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex items-center gap-1 py-1 rounded-full px-2 h-auto text-sm font-normal"
+          >
+            <Share size={18} />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductPostCard;

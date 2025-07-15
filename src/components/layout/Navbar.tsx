@@ -46,8 +46,9 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
   };
 
   return (
-    <div className="bg-white sticky top-0 z-50 w-full px-4 py-2 flex items-center justify-between">
-      <div className="flex items-center gap-2">
+    <div className="bg-white sticky top-0 z-50 w-full px-4 py-2 flex items-center justify-between border-b border-border">
+      <div className="flex items-center justify-between gap-2">
+        <Logo size="sm" showText={false} className="md:hidden" />
         <Button
           variant="ghost"
           size="icon"
@@ -56,7 +57,6 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
         >
           <UserAvatar src={user.avatar} name={user.name} />
         </Button>
-        {/* <Logo size="sm" showText={false} className="md:hidden" /> */}
       </div>
 
       <div className="hidden relative md:flex items-center bg-muted rounded-full flex-1 max-w-md mx-4">

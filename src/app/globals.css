@@ -15,10 +15,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 142 67% 50%; /* Nigerian green */
+    --primary: 135 81% 49%; /* From config: #34C759 */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 30 100% 50%; /* Nigerian orange */
+    --secondary: 36 100% 50%; /* From config: #FF9500 */
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
@@ -32,18 +32,18 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 142 67% 50%;
+    --ring: 135 81% 49%;
 
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 215 25% 27%;
-    --sidebar-primary: 142 67% 50%;
+    --sidebar-primary: 135 81% 49%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 30 100% 97%;
-    --sidebar-accent-foreground: 30 90% 45%;
+    --sidebar-accent: 36 100% 97%;
+    --sidebar-accent-foreground: 36 90% 45%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 142 67% 50%;
+    --sidebar-ring: 135 81% 49%;
   }
 
   .dark {
@@ -56,10 +56,10 @@
     --popover: 220 25% 12%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 142 67% 50%;
+    --primary: 135 81% 49%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 30 100% 50%;
+    --secondary: 36 100% 50%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -73,16 +73,16 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 142 67% 50%;
+    --ring: 135 81% 49%;
 
     --sidebar-background: 220 25% 12%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 142 67% 50%;
+    --sidebar-primary: 135 81% 49%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 30 95% 50%;
+    --sidebar-accent: 36 95% 50%;
     --sidebar-accent-foreground: 0 0% 0%;
     --sidebar-border: 217.2 32.6% 17.5%;
-    --sidebar-ring: 142 67% 50%;
+    --sidebar-ring: 135 81% 49%;
   }
 }
 

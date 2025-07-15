@@ -63,7 +63,7 @@ const Layout = ({ children, hideNav = false }: LayoutProps) => {
       <div className="flex flex-1 relative">
         {/* Mobile sidebar */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-          <SheetContent side={"left"} className="p-0 w-full max-w-xs">
+          <SheetContent side={"right"} className="p-0 w-full max-w-xs">
             <SheetTitle className="sr-only">Primary Sidebar</SheetTitle>
             <SheetHeader></SheetHeader>
             <Sidebar className="" />

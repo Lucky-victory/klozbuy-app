@@ -142,8 +142,8 @@ const Sidebar = memo(({ className }: SidebarProps) => {
           <nav id="Primary" className="py-2 justify-center w-full pt-4 ">
             <div
               className={cn(
-                "flex flex-col space-y-1",
-                isTablet ? "px-0" : "px-0"
+                "flex flex-col space-y-1 px-1"
+                // isTablet ? "px-0" : "px-0"
               )}
             >
               <NavItem
@@ -171,7 +171,7 @@ const Sidebar = memo(({ className }: SidebarProps) => {
                     Business
                   </p>
                 )}
-                <div className="space-y-1">
+                <div className="space-y-1 px-1">
                   <NavItem
                     path="/my-business"
                     icon={Store}
