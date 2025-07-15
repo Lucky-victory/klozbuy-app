@@ -24,11 +24,7 @@ interface LayoutProps {
   fullWidth?: boolean;
 }
 
-const Layout = ({
-  children,
-  hideNav = false,
-  fullWidth = false,
-}: LayoutProps) => {
+const Layout = ({ children, hideNav = false }: LayoutProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const { width } = useResize();
@@ -63,7 +59,7 @@ const Layout = ({
   if (!isMounted) return null;
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col mx-auto max-w-[1300px]">
       <div className="flex flex-1 relative">
         {/* Mobile sidebar */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -89,8 +85,7 @@ const Layout = ({
           )}
           <main
             className={cn(
-              "flex-1 flex flex-col min-h-screen",
-              fullWidth ? "max-w-none" : "max-w-7xl mx-auto",
+              "flex-1 flex flex-col min-h-screen max-w-7xl mx-auto",
               !hideNav && "pb-16 md:pb-0 md:pl-0"
             )}
           >
