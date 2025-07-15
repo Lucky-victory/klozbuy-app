@@ -1,7 +1,7 @@
 import React from "react";
-import PostCard from "./post-card";
 import { cn } from "@/lib/utils";
 import ProductPostCard from "../shared/post-cards/product-post";
+import PostCard from "../shared/post-cards/post-card";
 
 // Sample data - would come from API in real app
 const samplePosts = [

@@ -26,10 +26,11 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "../ui/scroll-area";
 import { useResize } from "@/hooks/use-resize";
-import { GoHomeFill } from "react-icons/go";
 import { IconType } from "react-icons/lib";
 import { HomeIcon } from "../custom-icons/home";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+
+
 interface SidebarProps {
   className?: string;
 }

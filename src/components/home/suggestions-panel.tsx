@@ -6,11 +6,12 @@ import LocationBadge from "@/components/shared/location-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import UserName from "../shared/user-name";
 
 // Sample data - would come from API in real app
 const sampleBusinesses = [
   {
-    id: 201,
+    id: "201",
     name: "Mama's Kitchen",
     type: "restaurant",
     distance: 1.2,
@@ -18,7 +19,7 @@ const sampleBusinesses = [
     avatar: "",
   },
   {
-    id: 202,
+    id: "202",
     name: "Smart Electronics",
     type: "electronics",
     distance: 2.5,
@@ -26,7 +27,7 @@ const sampleBusinesses = [
     avatar: "",
   },
   {
-    id: 203,
+    id: "203",
     name: "Fashion Palace",
     type: "clothing",
     distance: 3.7,
@@ -34,7 +35,7 @@ const sampleBusinesses = [
     avatar: "",
   },
   {
-    id: 204,
+    id: "204",
     name: "Green Grocers",
     type: "grocery",
     distance: 1.8,
@@ -75,23 +76,26 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
             </Link>
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
+        <CardContent className="px-3">
+          <div className="space-y-1">
             {sampleBusinesses.map((business) => (
               <Link
                 key={business.id}
                 href={`/profile/${business.id}`}
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+                className="flex items-center gap-3 p-1 py-2 rounded-lg hover:bg-muted/50 transition-colors"
               >
                 <UserAvatar
                   name={business.name}
                   size="sm"
                   userType="business"
-                  isVerified={business.isVerified}
                   src={business.avatar}
                 />
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium truncate">{business.name}</div>
+                  <UserName
+                    id={business.id}
+                    name={business.name}
+                    isVerified={business.isVerified}
+                  />
                   <div className="text-xs text-muted-foreground capitalize">
                     {business.type}
                   </div>

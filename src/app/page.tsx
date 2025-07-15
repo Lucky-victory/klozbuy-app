@@ -98,7 +98,7 @@ const Index = () => {
 
         {/* Right Panel */}
         <div className="flex py-6">
-          <SuggestionsPanel className="w-80 flex-shrink-0" />
+          <SuggestionsPanel className="w-[340px] flex-shrink-0" />
         </div>
       </div>
 

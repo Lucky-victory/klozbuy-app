@@ -31,7 +31,6 @@ const postStatusEnum = ["draft", "published", "archived", "deleted"] as const;
 const ageGroupEnum = ["teen", "young_adult", "adult", "senior"] as const;
 const postVisibilityEnum = ["public", "followers", "nearby"] as const;
 
-// -------
 // Posts table - Enhanced with better structure
 export const posts = mysqlTable(
   "posts",
@@ -87,12 +86,12 @@ export const productDetails = mysqlTable(
   "product_details",
   {
     id,
-    productName: varchar("product_name", { length: 100 }).notNull(),
+    name: varchar("name", { length: 100 }).notNull(),
     postId: varchar("post_id", { length: 36 })
       .notNull()
       .references(() => posts.id, { onDelete: "cascade" }),
-    productDescription: varchar("product_description", { length: 500 }),
-    productCategory: varchar("product_category", { length: 100 }),
+    description: varchar("description", { length: 500 }),
+    category: varchar("category", { length: 100 }),
     sku: varchar("sku", { length: 100 }),
     price: decimal("price", { precision: 10, scale: 2 }),
     compareAtPrice: decimal("compare_at_price", { precision: 10, scale: 2 }),
@@ -489,14 +488,14 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
     references: [locations.id],
   }),
   comments: many(postComments),
-  media: many(postMedia),
+  medias: many(postMedia),
   reactions: many(postReactions),
-  product: many(productDetails),
-  eventDetails: one(eventDetails, {
+  products: many(productDetails),
+  eventDetail: one(eventDetails, {
     fields: [posts.id],
     references: [eventDetails.postId],
   }),
-  serviceDetails: one(serviceDetails, {
+  serviceDetail: one(serviceDetails, {
     fields: [posts.id],
     references: [serviceDetails.postId],
   }),

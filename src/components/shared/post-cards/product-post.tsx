@@ -27,6 +27,7 @@ import {
   VerifiedCircleIcon,
   VerifiedShieldIcon,
 } from "../../custom-icons/badges";
+import UserName from "../user-name";
 
 interface PostCardProps {
   post: Posts;
@@ -68,15 +69,12 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
           <div className="flex flex-col gap-1 w-full ">
             <div className="flex justify-between items-start   w-full">
               <div className="flex items-center flex-wrap gap-1 sm:gap-2 ">
-                <div className="flex items-center">
-                  <Link
-                    href={`/profile/${post.owner.id}`}
-                    className="font-medium hover:underline mr-1"
-                  >
-                    {post.owner?.name || ""}
-                  </Link>
-                  <VerifiedCircleIcon size={22} />
-                </div>
+                <UserName
+                  id={post.owner?.id || ""}
+                  username={post.owner?.username}
+                  name={post.owner?.name || ""}
+                  isVerified={post.owner?.isVerified || false}
+                />
                 <DividerDot />
                 <Button
                   variant={"ghost"}
@@ -103,7 +101,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
                       <MoreHorizontal size={18} />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
+                  <DropdownMenuContent align="end" className="w-48 p-3">
                     <DropdownMenuItem>Save post</DropdownMenuItem>
                     <DropdownMenuItem>Report</DropdownMenuItem>
                     <DropdownMenuItem>Hide</DropdownMenuItem>
@@ -163,7 +161,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
 
           <Button
             // size="sm"
-            className="max-sm:w-full"
+            className="max-sm:w-full bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white"
           >
             <ShoppingBag size={16} className="mr-1" />
             Buy Now

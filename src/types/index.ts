@@ -4,6 +4,7 @@ export interface User {
   bio: string;
   email: string;
   phone: string;
+  username: string;
   profilePicture: string;
   businessType: string;
   isVerified: boolean;
