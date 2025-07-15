@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import UserAvatar from "@/components/shared/UserAvatar";
+import UserAvatar from "@/components/shared/user-avatar";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Heart } from "lucide-react";
 

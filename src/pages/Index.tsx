@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useLocation } from "@/hooks/useLocation";
-import Layout from "@/components/layout/Layout";
-import FeedSection from "@/components/home/FeedSection";
-import SuggestionsPanel from "@/components/home/SuggestionsPanel";
+import Layout from "@/components/layout/layout";
+import FeedSection from "@/components/home/feed-section";
+import SuggestionsPanel from "@/components/home/suggestions-panel";
 import AuthModal from "@/components/authentication/AuthModal";
 import { MapPin, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";

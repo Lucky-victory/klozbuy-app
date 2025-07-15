@@ -1,9 +1,9 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "@/hooks/useLocation";
-import Layout from "@/components/layout/Layout";
-import FeedSection from "@/components/home/FeedSection";
-import SuggestionsPanel from "@/components/home/SuggestionsPanel";
+import Layout from "@/components/layout/layout";
+import FeedSection from "@/components/home/feed-section";
+import SuggestionsPanel from "@/components/home/suggestions-panel";
 import AuthModal from "@/components/authentication/AuthModal";
 import { MapPin, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -64,8 +64,8 @@ const Index = () => {
   }, [latitude, longitude]);
   return (
     <Layout>
-      <div className="flex flex-col md:flex-row gap-6 px-4 py-6">
-        <div className="flex-1 max-w-[600px] border-r border-border md:pr-4">
+      <div className="flex flex-col md:flex-row gap-6 px-4">
+        <div className="flex-1 max-w-[600px] border-r border-border md:pr-4 py-6">
           {/* Location Header */}
           <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
@@ -97,7 +97,9 @@ const Index = () => {
         </div>
 
         {/* Right Panel */}
-        <SuggestionsPanel className="w-80 flex-shrink-0" />
+        <div className="flex py-6">
+          <SuggestionsPanel className="w-80 flex-shrink-0" />
+        </div>
       </div>
 
       {/* Auth Modal */}

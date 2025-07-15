@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import Layout from "@/components/layout/Layout";
-import UserAvatar from "@/components/shared/UserAvatar";
+import Layout from "@/components/layout/layout";
+import UserAvatar from "@/components/shared/user-avatar";
 import {
   MapPin,
   MessageSquare,
@@ -17,8 +17,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PostCard from "@/components/home/PostCard";
-import LocationBadge from "@/components/shared/LocationBadge";
+import PostCard from "@/components/home/post-card";
+import LocationBadge from "@/components/shared/location-badge";
 import { cn, formatJoinDate } from "@/lib/utils";
 
 // Sample user data for demo

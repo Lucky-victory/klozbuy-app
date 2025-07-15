@@ -9,8 +9,8 @@ import {
   Heart as HeartFilled,
 } from "lucide-react";
 import { cn, formatTimestamp } from "@/lib/utils";
-import UserAvatar from "@/components/shared/UserAvatar";
-import LocationBadge from "@/components/shared/LocationBadge";
+import UserAvatar from "@/components/shared/user-avatar";
+import LocationBadge from "@/components/shared/location-badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

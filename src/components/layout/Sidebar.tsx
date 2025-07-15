@@ -19,8 +19,8 @@ import {
   Mail,
   User2,
 } from "lucide-react";
-import Logo from "@/components/shared/Logo";
-import UserAvatar from "@/components/shared/UserAvatar";
+import Logo from "@/components/shared/logo";
+import UserAvatar from "@/components/shared/user-avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";

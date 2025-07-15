@@ -46,14 +46,6 @@ const UserAvatar = ({
     xl: 24,
   };
 
-  const verifiedBadgeSize = {
-    xs: "h-3 w-3 right-0 bottom-0",
-    sm: "h-3.5 w-3.5 right-0 bottom-0",
-    md: "h-4 w-4 right-0 bottom-0",
-    lg: "h-5 w-5 right-0 bottom-0",
-    xl: "h-6 w-6 right-0 bottom-0",
-  };
-
   return (
     <div className="relative inline-flex">
       <Avatar
@@ -85,15 +77,6 @@ const UserAvatar = ({
           )}
         </AvatarFallback>
       </Avatar>
-
-      {isVerified && (
-        <div className={cn(verifiedBadgeSize[size], "absolute rounded-full")}>
-          <VerifiedCircleIcon
-            size={17}
-            className={cn(verifiedBadgeSize[size], "fill-klozui-green-500")}
-          />
-        </div>
-      )}
     </div>
   );
 };

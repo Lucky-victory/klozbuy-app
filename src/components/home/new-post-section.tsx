@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import UserAvatar from "../shared/UserAvatar";
+import UserAvatar from "../shared/user-avatar";
 
 const NewPostSection = () => {
   const [postText, setPostText] = useState("");

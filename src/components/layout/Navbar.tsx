@@ -13,8 +13,8 @@ import {
   Heart,
   Clock,
 } from "lucide-react";
-import Logo from "@/components/shared/Logo";
-import UserAvatar from "@/components/shared/UserAvatar";
+import Logo from "@/components/shared/logo";
+import UserAvatar from "@/components/shared/user-avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

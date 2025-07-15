@@ -95,7 +95,7 @@ export const VerifiedDiamondIcon = ({
 
 export const VerifiedCircleIcon = ({
   size = 24,
-  color = "#1DA1F2",
+  color = "#7c3aed",
   stroke = "#ffffff",
   strokeWidth = 2,
   className = "",

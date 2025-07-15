@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/layout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search as SearchIcon, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import UserCard from "@/components/shared/UserCard";
-import PostCard from "@/components/home/PostCard";
+import UserCard from "@/components/shared/user-card";
+import PostCard from "@/components/home/post-card";
 
 const samplePosts = [
   {

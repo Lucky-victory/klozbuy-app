@@ -1,8 +1,8 @@
 import React from "react";
 import { Store, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import UserAvatar from "@/components/shared/UserAvatar";
-import LocationBadge from "@/components/shared/LocationBadge";
+import UserAvatar from "@/components/shared/user-avatar";
+import LocationBadge from "@/components/shared/location-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
-import UserAvatar from "@/components/shared/UserAvatar";
+import UserAvatar from "@/components/shared/user-avatar";
 import { Clock } from "lucide-react";
 
 const sampleReviews = [

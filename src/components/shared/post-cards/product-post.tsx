@@ -9,8 +9,8 @@ import {
   Heart as HeartFilled,
 } from "lucide-react";
 import { cn, formatTimestamp } from "@/lib/utils";
-import UserAvatar from "@/components/shared/UserAvatar";
-import LocationBadge from "@/components/shared/LocationBadge";
+import UserAvatar from "@/components/shared/user-avatar";
+import LocationBadge from "@/components/shared/location-badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -75,7 +75,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
                   >
                     {post.owner?.name || ""}
                   </Link>
-                  <VerifiedBadgeIcon className="fill-klozui-orange-500 text-klozui-orange-500" />
+                  <VerifiedCircleIcon size={22} />
                 </div>
                 <DividerDot />
                 <Button

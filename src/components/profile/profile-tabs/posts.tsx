@@ -1,4 +1,4 @@
-import PostCard from "@/components/home/PostCard";
+import PostCard from "@/components/home/post-card";
 import { Posts } from "@/types";
 
 export default function ProfilePosts({ posts }: { posts: Posts[] }) {

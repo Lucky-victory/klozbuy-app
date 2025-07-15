@@ -1,5 +1,5 @@
 import React from "react";
-import PostCard from "./PostCard";
+import PostCard from "./post-card";
 import { cn } from "@/lib/utils";
 import ProductPostCard from "../shared/post-cards/product-post";
 

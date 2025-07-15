@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import Logo from "@/components/shared/Logo";
+import Logo from "@/components/shared/logo";
 
 interface AuthModalProps {
   open: boolean;

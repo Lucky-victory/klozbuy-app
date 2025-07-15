@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn, formatJoinDate } from "@/lib/utils";
-import UserAvatar from "@/components/shared/UserAvatar";
+import UserAvatar from "@/components/shared/user-avatar";
 import { useState } from "react";
 import VerifiedBadgeIcon from "../shared/verified-icon";
 
