@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import Layout from "@/components/layout/layout";
+import Layout from "@/components/layouts/layout";
 import UserAvatar from "@/components/shared/user-avatar";
 import {
   Search,

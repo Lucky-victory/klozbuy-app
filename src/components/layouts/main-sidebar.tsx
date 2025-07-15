@@ -148,7 +148,9 @@ const Sidebar = memo(({ className }: SidebarProps) => {
             >
               <NavItem
                 path="/"
-                icon={(isActive: boolean) => (isActive ? HomeIcon : Home)}
+                icon={(isActive: boolean) =>
+                  (isActive ? HomeIcon : Home) as any
+                }
                 label="Home"
               />
               <NavItem path="/search" icon={Search} label="Discover" />

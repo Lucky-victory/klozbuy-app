@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Navbar from "./navbar";
-import Sidebar from "./sidebar";
+import Navbar from "@/components/layouts/main-navbar";
+import Sidebar from "@/components/layouts/main-sidebar";
 import MobileNav from "./mobile-nav";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";

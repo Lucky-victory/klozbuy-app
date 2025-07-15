@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "@/hooks/useLocation";
-import Layout from "@/components/layout/layout";
+import Layout from "@/components/layouts/layout";
 import FeedSection from "@/components/home/feed-section";
 import SuggestionsPanel from "@/components/home/suggestions-panel";
 import AuthModal from "@/components/authentication/AuthModal";

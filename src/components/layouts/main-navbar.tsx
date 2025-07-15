@@ -13,7 +13,6 @@ import {
   Heart,
   Clock,
 } from "lucide-react";
-import Logo from "@/components/shared/logo";
 import UserAvatar from "@/components/shared/user-avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,6 +27,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
 import { Avatar, AvatarFallback } from "../ui/avatar";
+import Logo from "../shared/logo";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;

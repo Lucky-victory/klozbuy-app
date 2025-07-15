@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Layout from "@/components/layout/layout";
+import Layout from "@/components/layouts/layout";
 import ProfilePage from "@/components/profile/profile-page";
 type Props = {
   params: { userId: string };
