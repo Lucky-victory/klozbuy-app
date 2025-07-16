@@ -3,15 +3,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User, Store } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { VerifiedCircleIcon } from "../custom-icons/badges";
+import Link from "next/link";
 
 interface UserAvatarProps {
   src?: string;
   name: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   userType?: "individual" | "business";
-  isVerified?: boolean;
   className?: string;
   fallbackClassName?: string;
+  href?: string;
 }
 
 const UserAvatar = ({
@@ -19,7 +20,7 @@ const UserAvatar = ({
   name,
   size = "md",
   userType = "individual",
-  isVerified = false,
+  href,
   className,
   fallbackClassName,
 }: UserAvatarProps) => {
@@ -45,8 +46,7 @@ const UserAvatar = ({
     lg: 20,
     xl: 24,
   };
-
-  return (
+  const content = (
     <div className="relative inline-flex">
       <Avatar
         className={cn(
@@ -78,6 +78,17 @@ const UserAvatar = ({
         </AvatarFallback>
       </Avatar>
     </div>
+  );
+  return (
+    <>
+      {href ? (
+        <Link href={href} className="no-underline">
+          {content}
+        </Link>
+      ) : (
+        content
+      )}
+    </>
   );
 };
 

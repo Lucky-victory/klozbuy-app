@@ -30,7 +30,6 @@ import { IconType } from "react-icons/lib";
 import { HomeIcon } from "../custom-icons/home";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
-
 interface SidebarProps {
   className?: string;
 }
@@ -208,7 +207,6 @@ const Sidebar = memo(({ className }: SidebarProps) => {
                   <UserAvatar
                     name={user.name}
                     size="sm"
-                    isVerified={user.isVerified}
                     userType={user.type as "individual" | "business"}
                     src={user.avatar}
                   />

@@ -4,15 +4,17 @@ import { cn } from "@/lib/utils";
 import UserAvatar from "@/components/shared/user-avatar";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Heart } from "lucide-react";
+import UserName from "./user-name";
 
 interface UserCardProps {
-  id: number;
+  id: string;
   userName: string;
   userType: "individual" | "business";
   isVerified: boolean;
   avatar?: string;
   bio?: string;
   className?: string;
+  name?: string;
 }
 
 const UserCard = ({
@@ -21,6 +23,7 @@ const UserCard = ({
   userType,
   isVerified,
   avatar,
+  name,
   bio,
   className,
 }: UserCardProps) => {
@@ -39,14 +42,12 @@ const UserCard = ({
             src={avatar}
             size="md"
             userType={userType}
-            isVerified={isVerified}
           />
         </Link>
 
         <div className="flex-1">
-          <Link href={`/profile/${id}`} className="font-medium hover:underline">
-            {userName}
-          </Link>
+          <UserName id={id} name={userName} />
+
           {bio && (
             <p className="text-sm text-muted-foreground line-clamp-1 mt-0.5">
               {bio}
@@ -55,16 +56,15 @@ const UserCard = ({
         </div>
 
         <div className="flex gap-2">
-          {userType === "business" && (
-            <Button variant="outline" size="sm" className="h-8">
-              <MessageSquare size={14} className="mr-1" />
-              Message
-            </Button>
-          )}
-
+          (
+          <Button variant="outline" size="sm">
+            <MessageSquare size={14} className="mr-1" />
+            <span>Message</span>
+          </Button>
+          )
           <Button
             size="sm"
-            className="h-8 bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white"
+            className=" bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white"
           >
             <Heart size={14} className="mr-1" />
             Follow

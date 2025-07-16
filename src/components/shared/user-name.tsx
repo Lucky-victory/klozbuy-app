@@ -4,7 +4,7 @@ import { VerifiedCircleIcon } from "../custom-icons/badges";
 type PostOwner = {
   id: string;
   name: string;
-  isVerified: boolean;
+  isVerified?: boolean;
   username?: string;
 };
 export default function UserName({

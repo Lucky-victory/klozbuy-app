@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import UserName from "../shared/user-name";
+import { LinkBox } from "../ui/link-box";
+import { LinkOverlay } from "../ui/link-overlay";
 
 // Sample data - would come from API in real app
 const sampleBusinesses = [
@@ -79,11 +81,11 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
         <CardContent className="px-3">
           <div className="space-y-1">
             {sampleBusinesses.map((business) => (
-              <Link
+              <LinkBox
                 key={business.id}
-                href={`/profile/${business.id}`}
                 className="flex items-center gap-3 p-1 py-2 rounded-lg hover:bg-muted/50 transition-colors"
               >
+                <LinkOverlay href={`/business/${business.id}`} />
                 <UserAvatar
                   name={business.name}
                   size="sm"
@@ -105,7 +107,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
                   size="sm"
                   variant="subtle"
                 />
-              </Link>
+              </LinkBox>
             ))}
           </div>
         </CardContent>

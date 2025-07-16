@@ -62,7 +62,6 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
               src={post.owner?.profilePicture || ""}
               size="md"
               userType={post.owner?.userType || "individual"}
-              isVerified={post.owner?.isVerified || false}
             />
           </Link>
 
