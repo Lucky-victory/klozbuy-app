@@ -124,10 +124,10 @@ const PostCard = ({ post, className }: PostCardProps) => {
 
       {/* Post Content */}
       <div className="px-4 pb-3">
-        {post.content && <p className="text-sm mb-3">{post.content}</p>}
+        {post.content && <p className="text-sm mb-2">{post.content}</p>}
 
         {post.type === "product" && post.productName && (
-          <div className="mb-3">
+          <div className="mb-1.5">
             <h3 className="font-medium text-base">{post.productName}</h3>
             {/* Price would go here */}
           </div>

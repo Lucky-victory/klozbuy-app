@@ -7,6 +7,7 @@ import {
   Video,
   Calendar,
   Smile,
+  PackagePlus,
 } from "lucide-react";
 import { useState } from "react";
 import { Textarea } from "../ui/textarea";
@@ -19,8 +20,12 @@ const NewPostSection = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const categories = [
-    { id: "general", label: "General", icon: Smile, color: "bg-purple-500" },
-    { id: "product", label: "Product", icon: Tag, color: "bg-green-500" },
+    {
+      id: "product",
+      label: "Product",
+      icon: PackagePlus,
+      color: "bg-purple-500",
+    },
     { id: "service", label: "Service", icon: Users, color: "bg-orange-500" },
     { id: "event", label: "Event", icon: Calendar, color: "bg-blue-500" },
   ];
@@ -46,7 +51,7 @@ const NewPostSection = () => {
     <div className="max-w-4xl mx-auto mb-5">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         {/* Header */}
-        <div className="p-4 border-b border-gray-100">
+        <div className="p-3 md:p-4 border-b border-gray-100">
           <div className="flex items-center space-x-3">
             <UserAvatar name="John Doe" src="" />
             <div className="flex-1">
@@ -54,8 +59,8 @@ const NewPostSection = () => {
                 value={postText}
                 onChange={(e) => setPostText(e.target.value)}
                 onFocus={() => setIsExpanded(true)}
-                placeholder="What's on your mind? Share a product, service, or update..."
-                className="w-full resize-none border-none outline-none text-gray-700 placeholder-gray-400 text-lg bg-gray-50 rounded-lg px-4 py-3 min-h-[60px]"
+                placeholder="What's on your mind? Share a post, product, or service..."
+                className="w-full resize-none border border-border outline-none text-gray-700 placeholder-gray-400 text-base bg-gray-50 rounded-lg px-3 md:px-4 py-2 min-h-[30px]"
                 rows={isExpanded ? 4 : 2}
               />
             </div>
@@ -65,6 +70,22 @@ const NewPostSection = () => {
         {/* Expanded Options */}
         {isExpanded && (
           <div className="p-4 space-y-4">
+            <div className="flex flex-wrap gap-2">
+              {quickActions.map((action, index) => {
+                const IconComponent = action.icon;
+                return (
+                  <button
+                    key={index}
+                    className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <IconComponent className={`w-4 h-4 ${action.color}`} />
+                    <span className="text-sm text-gray-700">
+                      {action.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
             {/* Category Selection */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -98,22 +119,6 @@ const NewPostSection = () => {
             </div>
 
             {/* Quick Actions */}
-            <div className="flex flex-wrap gap-2">
-              {quickActions.map((action, index) => {
-                const IconComponent = action.icon;
-                return (
-                  <button
-                    key={index}
-                    className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <IconComponent className={`w-4 h-4 ${action.color}`} />
-                    <span className="text-sm text-gray-700">
-                      {action.label}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
 
             {/* Location Toggle */}
             <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
