@@ -14,14 +14,14 @@ export default function UserName({
   id,
 }: PostOwner) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center relative">
       <Link
         href={`/profile/${username || id}`}
         className="font-medium hover:underline mr-1 truncate"
       >
         {name || ""}
       </Link>
-      {isVerified && <VerifiedCircleIcon size={22} />}
+      {isVerified && <VerifiedCircleIcon size={20} />}
     </div>
   );
 }

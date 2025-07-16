@@ -158,13 +158,13 @@ const PostCard = ({ post, className }: PostCardProps) => {
       )}
 
       {/* Post Actions */}
-      <div className="px-3 md:px-4 py-3 flex items-center justify-between border-t border-border">
-        <div className="flex items-center gap-3">
+      <div className=" py-3 border-t border-border">
+        <div className="flex items-center justify-around gap-3">
           <Button
             variant="ghost"
             size="sm"
             className={cn(
-              "flex items-center gap-1 py-1 rounded-full px-2 h-auto text-sm font-normal",
+              "flex items-center gap-2 py-1 rounded-full px-2 h-auto text-sm font-normal",
               isLiked && "text-red-500"
             )}
             onClick={toggleLike}
@@ -172,7 +172,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
             {isLiked ? (
               <HeartFilled size={18} className="fill-red-500 text-red-500" />
             ) : (
-              <Heart size={18} />
+              <Heart size={20} />
             )}
             <span>{likesCount}</span>
           </Button>
@@ -180,18 +180,18 @@ const PostCard = ({ post, className }: PostCardProps) => {
           <Button
             variant="ghost"
             size="sm"
-            className="flex items-center gap-1 py-1 rounded-full px-2 h-auto text-sm font-normal"
+            className="flex items-center gap-2 py-1 rounded-full px-2 h-auto text-sm font-normal"
           >
-            <MessageCircle size={18} />
+            <MessageCircle size={20} />
             <span>{post.commentsCount}</span>
           </Button>
 
           <Button
             variant="ghost"
-            size="sm"
-            className="flex items-center gap-1 py-1 rounded-full px-2 h-auto text-sm font-normal"
+            // size="sm"
+            className="flex items-center gap-2 py-1 rounded-full px-2 h-auto text-sm font-normal"
           >
-            <Share size={18} />
+            <Share size={20} />
           </Button>
         </div>
 

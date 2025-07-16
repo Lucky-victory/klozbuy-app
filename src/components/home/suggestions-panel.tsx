@@ -78,12 +78,12 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
             </Link>
           </CardTitle>
         </CardHeader>
-        <CardContent className="px-3">
+        <CardContent className="px-0">
           <div className="space-y-1">
             {sampleBusinesses.map((business) => (
               <LinkBox
                 key={business.id}
-                className="flex items-center gap-3 p-1 py-2 rounded-lg hover:bg-muted/50 transition-colors"
+                className="flex items-center gap-3 px-4 py-2 rounded-lg "
               >
                 <LinkOverlay href={`/business/${business.id}`} />
                 <UserAvatar
