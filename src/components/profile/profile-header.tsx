@@ -68,10 +68,10 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
             />
           </div>
 
-          <div className="flex-1 flex flex-col pt-2 ">
+          <div className="flex-1 flex flex-col">
             <div className="flex flex-col gap-4 mb-4">
               <div>
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2 mb-2">
                   <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
                     {user.name}{" "}
                   </h1>
@@ -81,7 +81,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
+                <div className="flex items-center gap-3 text-sm text-muted-foreground">
                   {user.type === "business" && (
                     <>
                       <div className="flex items-center gap-1">
@@ -107,7 +107,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
               </div>
 
               {user?.bio && (
-                <p className="text-sm text-muted-foreground mb-2">{user.bio}</p>
+                <p className="text-sm text-muted-foreground mb-1">{user.bio}</p>
               )}
               <div className="flex gap-2 items-stretch mb-3">
                 {isOwnProfile ? (

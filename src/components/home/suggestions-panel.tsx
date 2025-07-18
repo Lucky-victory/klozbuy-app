@@ -67,7 +67,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
     <div className={cn("hidden lg:flex flex-col gap-4 w-full", className)}>
       {/* Nearby Businesses */}
       <Card className="animate-fade-in">
-        <CardHeader className="pb-2">
+        <CardHeader className="pb-2 px-4">
           <CardTitle className="text-lg flex items-center justify-between">
             <span>Nearby Businesses</span>
             <Link
@@ -98,14 +98,14 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
                     name={business.name}
                     isVerified={business.isVerified}
                   />
-                  <div className="text-xs text-muted-foreground capitalize">
+                  <div className="text-xs text-muted-foreground group-hover:z-10 relative inline-block capitalize">
                     {business.type}
                   </div>
                 </div>
                 <LocationBadge
                   distance={business.distance}
                   size="sm"
-                  variant="subtle"
+                  variant="outline"
                 />
               </LinkBox>
             ))}
@@ -153,7 +153,7 @@ const SuggestionsPanel = ({ className }: SuggestionsPanelProps) => {
             <Button
               variant="outline"
               size="sm"
-              className="mt-3 w-full border-klozui-orange-500 text-klozui-orange-500 hover:bg-klozui-orange-500/5"
+              className="mt-3 w-full border-klozui-green-500 text-klozui-green-500 hover:bg-klozui-green-500/5"
             >
               Learn More
             </Button>

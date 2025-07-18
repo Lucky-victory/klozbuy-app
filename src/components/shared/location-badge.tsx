@@ -31,9 +31,9 @@ const LocationBadge = ({
 
   const variantClasses = {
     outline:
-      "border border-klozui-orange-500/50 text-klozui-orange-500 bg-transparent",
-    filled: "bg-klozui-orange-500/90 text-white",
-    subtle: "bg-klozui-orange-500/10 text-klozui-orange-500",
+      "border border-klozui-orange-800/50 text-klozui-orange-800 bg-transparent",
+    filled: "bg-klozui-orange-600/90 text-white",
+    subtle: "bg-klozui-orange-500/10 text-klozui-orange-900",
   };
 
   return (

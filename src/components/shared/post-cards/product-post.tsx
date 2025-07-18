@@ -148,7 +148,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
         <div className="flex max-sm:flex-col items-center justify-between gap-2 bg-muted p-3">
           <div className="flex flex-col gap-2 ">
             <h3 className="font-medium text-lg">{post.productName}</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-gray-600">
               {post.content || "No description provided."}
             </p>
 

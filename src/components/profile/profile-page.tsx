@@ -36,7 +36,7 @@ export default function ProfilePage({ user, posts }: ProfilePageProps) {
         <ProfileHeader user={user} />
         <ProfileTabs userId={user.id} posts={posts} />
       </div>
-      <SuggestionsPanel className="hidden md:flex flex-col gap-4 py-6 max-w-[340px]" />
+      <SuggestionsPanel className="py-6 max-w-[340px]" />
     </div>
   );
 }
