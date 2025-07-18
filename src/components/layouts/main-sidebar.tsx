@@ -53,10 +53,8 @@ const Sidebar = memo(({ className }: SidebarProps) => {
     avatar: "",
   };
 
-  const { width } = useResize();
-  const isMobile = width < 768;
-  const isDesktop = width >= 1120;
-  const isTablet = width >= 768 && width < 1120;
+  const { isDesktop, isTablet } = useResize();
+
   const NavItem = ({
     path,
     icon: Icon,

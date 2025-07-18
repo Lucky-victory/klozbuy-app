@@ -7,6 +7,7 @@ import ProfilePosts from "./profile-tabs/posts";
 import ProfileHeader from "./profile-header";
 import { ProfileTabs } from "./profile-tabs";
 import { Posts } from "@/types";
+import SuggestionsPanel from "../home/suggestions-panel";
 interface ProfilePageProps {
   user: {
     id: string;
@@ -30,9 +31,12 @@ interface ProfilePageProps {
 }
 export default function ProfilePage({ user, posts }: ProfilePageProps) {
   return (
-    <div>
-      <ProfileHeader user={user} />
-      <ProfileTabs userId={user.id} posts={posts} />
+    <div className="flex flex-row gap-6 ">
+      <div className="border-r border-border flex-1 max-w-[600px]">
+        <ProfileHeader user={user} />
+        <ProfileTabs userId={user.id} posts={posts} />
+      </div>
+      <SuggestionsPanel className="hidden md:flex flex-col gap-4 py-6 max-w-[340px]" />
     </div>
   );
 }

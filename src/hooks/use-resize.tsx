@@ -49,6 +49,9 @@ export function useResize(fps = 60) {
       }
     };
   }, [fps]);
-
-  return dimensions;
+  const { width } = dimensions;
+  const isMobile = width < 768;
+  const isDesktop = width >= 1120;
+  const isTablet = width >= 768 && width < 1120;
+  return { ...dimensions, width, isMobile, isDesktop, isTablet };
 }

@@ -55,16 +55,16 @@ export const ProfileTabs = ({ userId, posts }: ProfileTabsProps) => {
           About
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="posts">
+      <TabsContent value="posts" className="px-3 md:px-4 pt-6">
         <ProfilePosts posts={posts} />
       </TabsContent>
-      <TabsContent value="shop">
+      <TabsContent value="shop" className="px-3 md:px-4 pt-6">
         <ProfileProducts />
       </TabsContent>
-      <TabsContent value="reviews">
+      <TabsContent value="reviews" className="px-3 md:px-4 pt-6">
         <ProfileReviews userId={userId} />
       </TabsContent>
-      <TabsContent value="about">
+      <TabsContent value="about" className="px-3 md:px-4 pt-6">
         <ProfileAbout />
       </TabsContent>
     </Tabs>

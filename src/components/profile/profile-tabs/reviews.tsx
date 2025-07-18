@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
+import { PenLine, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import UserAvatar from "@/components/shared/user-avatar";
 import { Clock } from "lucide-react";
@@ -36,7 +36,7 @@ export default function ProfileReviews({ userId }: { userId: string }) {
           Reviews ({sampleReviews.length})
         </h3>
         <Button variant="outline" className="text-sm">
-          <Star size={16} className="mr-2" />
+          <PenLine size={16} className="mr-2" />
           Write a Review
         </Button>
       </div>

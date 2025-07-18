@@ -9,6 +9,10 @@ import {
   phoneNumber,
   username,
 } from "better-auth/plugins";
+import {
+  isUsernameDisallowed,
+  isUsernameSimilarToDisallowed,
+} from "./constants/disallowed";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -55,7 +59,10 @@ export const auth = betterAuth({
     multiSession(),
     username({
       usernameValidator: (username) => {
-        if (username === "admin") {
+        if (
+          isUsernameDisallowed(username) ||
+          isUsernameSimilarToDisallowed(username)
+        ) {
           return false;
         }
         return true;
