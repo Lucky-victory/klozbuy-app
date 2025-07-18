@@ -22,12 +22,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Posts } from "@/types";
 import { DividerDot } from "@/components/ui/divider-dot";
-import VerifiedBadgeIcon from "../../shared/verified-icon";
-import {
-  VerifiedCircleIcon,
-  VerifiedShieldIcon,
-} from "../../custom-icons/badges";
+
 import UserName from "../user-name";
+import { Badge2 } from "@/components/ui/badge";
 
 interface PostCardProps {
   post: Posts;
@@ -85,9 +82,9 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
               </div>
               <div className="flex items-center gap-1">
                 {post.isPromoted && (
-                  <span className="text-xs hidden sm:inline-block bg-klozui-orange-500/10 text-klozui-orange-500 px-2 py-0.5 rounded-full">
-                    Promoted
-                  </span>
+                  <>
+                    <Badge2 variant={"subtle"}>Promoted</Badge2>
+                  </>
                 )}
 
                 <DropdownMenu>
@@ -118,8 +115,6 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
                 <LocationBadge
                   distance={post.owner.distance}
                   landmark={post.owner.landmark}
-                  size="sm"
-                  variant="subtle"
                 />
               )}
             </div>

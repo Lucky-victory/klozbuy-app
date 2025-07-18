@@ -1,7 +1,7 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
   "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
@@ -21,7 +21,7 @@ const badgeVariants = cva(
       variant: "default",
     },
   }
-)
+);
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -30,7 +30,50 @@ export interface BadgeProps
 function Badge({ className, variant, ...props }: BadgeProps) {
   return (
     <div className={cn(badgeVariants({ variant }), className)} {...props} />
-  )
+  );
 }
 
-export { Badge, badgeVariants }
+interface Badge2Props
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badge2Variants> {
+  icon?: React.ElementType;
+}
+const badge2Variants = cva("flex items-center rounded-full font-medium", {
+  variants: {
+    variant: {
+      default: "bg-klozui-orange-500/10 text-klozui-orange-900",
+      outline:
+        "border border-klozui-orange-800/50 text-klozui-orange-800 bg-transparent",
+      filled: "bg-klozui-orange-600/90 text-white",
+    },
+    size: {
+      sm: "text-xs py-0.5 px-1.5 gap-0.5",
+      default: "text-sm py-0.5 px-2 gap-1",
+      lg: "text-base py-1.5 px-3 gap-1.5",
+    },
+  },
+  defaultVariants: {
+    variant: "outline",
+    size: "default",
+  },
+});
+
+function Badge2({
+  className,
+  size,
+  variant,
+
+  children,
+  ...props
+}: Badge2Props) {
+  return (
+    <div
+      className={cn(badge2Variants({ variant, size }), className)}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
+export { Badge, badge2Variants, Badge2, badgeVariants };
