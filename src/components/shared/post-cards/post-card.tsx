@@ -141,7 +141,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
             src={post.productImage}
             alt={post.productName || "Product image"}
             fill
-            className="object-cover"
+            className="object-cover aspect-square"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>

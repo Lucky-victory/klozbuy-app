@@ -19,6 +19,7 @@ import { cn, formatJoinDate } from "@/lib/utils";
 import UserAvatar from "@/components/shared/user-avatar";
 import { useState } from "react";
 import VerifiedBadgeIcon from "../shared/verified-icon";
+import { VerifiedCircleIcon, VerifiedShieldIcon } from "../custom-icons/badges";
 
 interface ProfileHeaderProps {
   user: {
@@ -70,36 +71,51 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
           <div className="flex-1 flex flex-col pt-2 ">
             <div className="flex flex-col gap-4 mb-4">
               <div>
-                <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                  {user.name}
-                  {user.isRegistered && (
-                    <span className="bg-klozui-green-500/10 text-klozui-green-500 text-xs px-2 py-0.5 rounded-full flex items-center">
-                      <CheckCircle size={12} className="mr-1" />
-                      Registered
-                    </span>
-                  )}
-                </h1>
+                <div className="flex items-center gap-2 mb-3">
+                  <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+                    {user.name}{" "}
+                  </h1>
+                  <div className="flex items-center gap-1">
+                    {user?.isVerified && <VerifiedCircleIcon size={22} />}
+                    {user.isRegistered && <VerifiedShieldIcon size={22} />}
+                  </div>
+                </div>
 
                 <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
                   {user.type === "business" && (
                     <>
-                      <span className="flex items-center gap-1">
-                        <Star size={14} className="text-yellow-500" />
-                        {user.rating} ({user.reviewsCount} reviews)
-                        <VerifiedBadgeIcon className="text-klozui-green-500" />
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Users size={14} />
-                        {user.followersCount} followers
-                      </span>
+                      <div className="flex items-center gap-1">
+                        <Star
+                          size={14}
+                          className="text-yellow-500 fill-yellow-500"
+                        />
+                        <span className="font-bold text-klozui-dark-900">
+                          {user.rating}
+                        </span>{" "}
+                        ({user.reviewsCount} reviews)
+                      </div>
                     </>
                   )}
+                  <span className="flex items-center gap-1">
+                    <Users size={14} />
+                    <span className="font-bold text-klozui-dark-900">
+                      {user.followersCount}
+                    </span>
+                    Followers
+                  </span>
                 </div>
               </div>
 
-              <div className="flex gap-2 items-stretch">
+              {user?.bio && (
+                <p className="text-sm text-muted-foreground mb-2">{user.bio}</p>
+              )}
+              <div className="flex gap-2 items-stretch mb-3">
                 {isOwnProfile ? (
-                  <Button variant="outline" className="text-sm flex-1 max-w-sm">
+                  <Button
+                    variant="outline"
+                    size={"sm"}
+                    className="flex-1 max-w-xs"
+                  >
                     <Edit size={16} className="mr-2" />
                     Edit Profile
                   </Button>
@@ -108,7 +124,8 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                     <Button
                       variant={isFollowing ? "ghost" : "default"}
                       onClick={toggleFollow}
-                      className="text-sm flex-1 max-w-sm"
+                      size={"sm"}
+                      className=" flex-1 max-w-xs"
                     >
                       {isFollowing ? (
                         <>
@@ -126,7 +143,8 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                     {user.type === "business" && (
                       <Button
                         variant="outline"
-                        className="text-sm flex-1 max-w-sm"
+                        size={"sm"}
+                        className=" flex-1 max-w-xs"
                       >
                         <MessageSquare size={18} className="mr-2" />
                         Message
@@ -136,10 +154,6 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                 )}
               </div>
             </div>
-
-            {user?.bio && (
-              <p className="text-sm text-muted-foreground mb-4">{user.bio}</p>
-            )}
 
             <div className="mb-5">
               {user.type === "business" && (
