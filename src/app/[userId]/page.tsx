@@ -85,7 +85,7 @@ async function fetchPosts(userId: string) {
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // In a real app, fetch user data here
-  const userData = await fetchUserData(params.userId);
+  const userData = await fetchUserData(await params.userId);
 
   return {
     title: `${userData.name} - Klozbuy Profile`,
@@ -95,7 +95,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const userData = await fetchUserData(params.userId);
+  const userData = await fetchUserData(await params.userId);
   const posts = await fetchPosts(params.userId);
   return (
     <>

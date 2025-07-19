@@ -167,7 +167,7 @@ type PageProps = {
   };
 };
 export default async function Page(props: PageProps) {
-  const { conversationId } = props.params;
+  const { conversationId } = await props.params;
   const [activeConversation, setActiveConversation] = useState<number | null>(
     null
   );
