@@ -1,27 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Layout from "@/components/layouts/layout";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search as SearchIcon, X } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import UserCard from "@/components/shared/user-card";
-import PostCard from "@/components/home/post-card";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Layout from '@/components/layout/Layout';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Search as SearchIcon, X } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import UserCard from '@/components/shared/UserCard';
+import PostCard from '@/components/home/PostCard';
 
 const samplePosts = [
   {
     id: 1,
     userId: 101,
-    userName: "Lagos Cosmetics",
-    userType: "business",
+    userName: 'Lagos Cosmetics',
+    userType: 'business',
     isVerified: true,
-    type: "product",
-    content:
-      "Our bestselling shea butter face cream is back in stock! Made with 100% natural ingredients.",
-    productName: "Natural Shea Butter Face Cream",
-    productImage:
-      "https://images.unsplash.com/photo-1571875257727-256c39da42af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29zbWV0aWNzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    type: 'product',
+    content: 'Our bestselling shea butter face cream is back in stock! Made with 100% natural ingredients.',
+    productName: 'Natural Shea Butter Face Cream',
+    productImage: 'https://images.unsplash.com/photo-1571875257727-256c39da42af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29zbWV0aWNzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60',
     isPromoted: false,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
     likesCount: 42,
@@ -30,15 +28,13 @@ const samplePosts = [
   {
     id: 2,
     userId: 102,
-    userName: "Ibukun Shoes",
-    userType: "business",
+    userName: 'Ibukun Shoes',
+    userType: 'business',
     isVerified: false,
-    type: "product",
-    content:
-      "Step out in style with our handmade leather sandals. Available in all sizes.",
-    productName: "Handmade Leather Sandals",
-    productImage:
-      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+    type: 'product',
+    content: 'Step out in style with our handmade leather sandals. Available in all sizes.',
+    productName: 'Handmade Leather Sandals',
+    productImage: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60',
     isPromoted: true,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
     likesCount: 35,
@@ -47,12 +43,11 @@ const samplePosts = [
   {
     id: 3,
     userId: 103,
-    userName: "Naija Foodies",
-    userType: "business",
+    userName: 'Naija Foodies',
+    userType: 'business',
     isVerified: true,
-    type: "text",
-    content:
-      "Craving something spicy? Try our new pepper soup mix! Order online for delivery anywhere in Lagos.",
+    type: 'text',
+    content: 'Craving something spicy? Try our new pepper soup mix! Order online for delivery anywhere in Lagos.',
     isPromoted: false,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
     likesCount: 68,
@@ -61,12 +56,11 @@ const samplePosts = [
   {
     id: 4,
     userId: 104,
-    userName: "Tech Solutions",
-    userType: "business",
+    userName: 'Tech Solutions',
+    userType: 'business',
     isVerified: false,
-    type: "video",
-    content:
-      "Check out our latest video on how to set up your new smart home devices!",
+    type: 'video',
+    content: 'Check out our latest video on how to set up your new smart home devices!',
     isPromoted: false,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 96).toISOString(),
     likesCount: 52,
@@ -75,11 +69,10 @@ const samplePosts = [
   {
     id: 5,
     userId: 105,
-    userName: "Zara Okoro",
-    userType: "individual",
-    type: "story",
-    content:
-      "Just had the most amazing Jollof rice at a local restaurant. You guys should try it!",
+    userName: 'Zara Okoro',
+    userType: 'individual',
+    type: 'story',
+    content: 'Just had the most amazing Jollof rice at a local restaurant. You guys should try it!',
     isPromoted: false,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 120).toISOString(),
     likesCount: 81,
@@ -90,37 +83,34 @@ const samplePosts = [
 const sampleUsers = [
   {
     id: 101,
-    userName: "Lagos Cosmetics",
-    userType: "business",
+    userName: 'Lagos Cosmetics',
+    userType: 'business',
     isVerified: true,
-    avatar:
-      "https://images.unsplash.com/photo-1571875257727-256c39da42af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29zbWV0aWNzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    avatar: 'https://images.unsplash.com/photo-1571875257727-256c39da42af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29zbWV0aWNzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60',
   },
   {
     id: 102,
-    userName: "Ibukun Shoes",
-    userType: "business",
+    userName: 'Ibukun Shoes',
+    userType: 'business',
     isVerified: false,
-    avatar:
-      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+    avatar: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60',
   },
   {
     id: 105,
-    userName: "Zara Okoro",
-    userType: "individual",
+    userName: 'Zara Okoro',
+    userType: 'individual',
     isVerified: false,
-    avatar:
-      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+    avatar: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60',
   },
 ];
 
 const Search = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
   useEffect(() => {
     const combinedResults = [...samplePosts, ...sampleUsers];
-    const filteredResults = combinedResults.filter((item) => {
+    const filteredResults = combinedResults.filter(item => {
       if (item.userName) {
         return item.userName.toLowerCase().includes(searchTerm.toLowerCase());
       }
@@ -134,23 +124,23 @@ const Search = () => {
   }, [searchTerm]);
 
   const clearSearchTerm = () => {
-    setSearchTerm("");
+    setSearchTerm('');
   };
 
   const getSearchResults = () => {
-    return searchResults.map((result) => {
-      if ("avatar" in result) {
+    return searchResults.map(result => {
+      if ('avatar' in result) {
         return {
           ...result,
-          userType: result.userType as "business" | "individual",
-          isUser: true,
+          userType: result.userType as 'business' | 'individual',
+          isUser: true
         };
       } else {
         return {
           ...result,
-          userType: result.userType as "business" | "individual",
-          type: result.type as "text" | "product" | "video" | "story",
-          isUser: false,
+          userType: result.userType as 'business' | 'individual',
+          type: result.type as 'text' | 'product' | 'video' | 'story',
+          isUser: false
         };
       }
     });
@@ -180,9 +170,7 @@ const Search = () => {
               <X className="h-4 w-4" />
             </Button>
           )}
-          <Button className="absolute inset-y-0 right-12 px-4 rounded-full bg-klozui-green-600 hover:bg-klozui-green-600/90 text-white">
-            Search
-          </Button>
+          <Button className="absolute inset-y-0 right-12 px-4 rounded-full bg-naija-green hover:bg-naija-green/90 text-white">Search</Button>
         </div>
 
         {searchResults.length > 0 ? (
@@ -229,7 +217,7 @@ const Search = () => {
           <Card className="w-full">
             <CardContent className="py-8 flex items-center justify-center">
               <p className={cn("text-muted-foreground text-center")}>
-                {searchTerm ? "No results found." : "Start typing to search..."}
+                {searchTerm ? 'No results found.' : 'Start typing to search...'}
               </p>
             </CardContent>
           </Card>
