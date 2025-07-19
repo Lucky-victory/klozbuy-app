@@ -119,7 +119,9 @@ const Sidebar = memo(({ className }: SidebarProps) => {
       className={cn(
         "sticky top-0 left-0 pt-4 justify-end  border-r border-border bg-background h-screen transform transition-transform duration-300 ease-in-out hidden md:flex z-50",
         isTablet && "flex-grow-0 w-20",
-        isDesktop && "w-72"
+        isDesktop && "w-[380px]",
+
+        className
       )}
     >
       <div
@@ -130,13 +132,7 @@ const Sidebar = memo(({ className }: SidebarProps) => {
         <div className="px-3 w-full">
           <Logo size="lg" showText={isDesktop} className="hidden md:flex" />
         </div>
-        <ScrollArea
-          className={cn(
-            "flex flex-col flex-1 px-3 w-full",
-
-            className
-          )}
-        >
+        <ScrollArea className={cn("flex flex-col flex-1 px-3 w-full")}>
           <nav id="Primary" className="py-2 justify-center w-full pt-4 ">
             <div
               className={cn(
@@ -208,16 +204,13 @@ const Sidebar = memo(({ className }: SidebarProps) => {
                     userType={user.type as "individual" | "business"}
                     src={user.avatar}
                   />
-                  {isDesktop && (
-                    <div className="ml-2">
-                      <p className="text-sm font-medium truncate max-w-[120px]">
-                        {user.name}
-                      </p>
-                      <p className="text-xs text-muted-foreground capitalize">
-                        {user.type}
-                      </p>
-                    </div>
-                  )}
+
+                  <div className="ml-2">
+                    <p className="text-sm font-medium truncate">{user.name}</p>
+                    <p className="text-xs text-muted-foreground capitalize">
+                      {user.type}
+                    </p>
+                  </div>
                 </div>
 
                 {/* TODO: Add logout functionality */}

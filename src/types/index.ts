@@ -20,6 +20,7 @@ export interface User {
 }
 export interface Posts {
   id: string;
+  userId: string;
   videoUrl?: string;
   owner: Partial<User>;
 
