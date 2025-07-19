@@ -121,18 +121,11 @@ const PostCard = ({ post, className }: PostCardProps) => {
 
       {/* Post Content */}
       <div className="px-4 pb-3">
-        {post.content && <p className="text-sm mb-2">{post.content}</p>}
-
-        {post.type === "product" && post.productName && (
-          <div className="mb-1.5">
-            <h3 className="font-medium text-base">{post.productName}</h3>
-            {/* Price would go here */}
-          </div>
-        )}
+        {post.content && <p className=" mb-2">{post.content}</p>}
       </div>
 
       {/* Post Media */}
-      {post.type === "product" && post.productImage && (
+      {/* {post.type === "product" && post.productImage && (
         <div className="relative aspect-square bg-muted">
           <Image
             src={post.productImage}
@@ -142,7 +135,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
-      )}
+      )} */}
 
       {post.type === "video" && post.videoUrl && (
         <div className="relative aspect-video bg-muted">
@@ -191,16 +184,6 @@ const PostCard = ({ post, className }: PostCardProps) => {
             <Share size={20} />
           </Button>
         </div>
-
-        {post.type === "product" && (
-          <Button
-            size="sm"
-            className="bg-klozui-green-600 hover:bg-klozui-green-600/90 text-white"
-          >
-            <ShoppingBag size={16} className="mr-1" />
-            Buy Now
-          </Button>
-        )}
       </div>
     </div>
   );

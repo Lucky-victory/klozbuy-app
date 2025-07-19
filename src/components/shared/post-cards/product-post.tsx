@@ -124,7 +124,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
 
       {/* Post Content */}
       <div className="px-4 pb-3">
-        {post.content && <p className="text-sm mb-2">{post.content}</p>}
+        {post.content && <p className="mb-2">{post.content}</p>}
       </div>
 
       {/* Post Media */}
@@ -140,10 +140,10 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
             />
           </div>
         )}
-        <div className="flex max-sm:flex-col items-center justify-between gap-2 bg-muted p-3">
+        <div className="flex max-sm:flex-col items-center justify-between gap-2 bg-muted/20 p-3">
           <div className="flex flex-col gap-2 ">
-            <h3 className="font-medium text-lg">{post.productName}</h3>
-            <p className="text-sm text-gray-600">
+            <h3 className="font-semibold text-lg">{post.productName}</h3>
+            <p className="text-sm text-gray-800">
               {post.content || "No description provided."}
             </p>
 
@@ -153,8 +153,8 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
             </span>
           </div>
 
-          <Button variant={"secondary"}>
-            <ShoppingBag size={16} className="mr-1" />
+          <Button variant={"secondary"} className=" max-sm:w-full">
+            <ShoppingBag size={20} className="mr-1" />
             Buy Now
           </Button>
         </div>
