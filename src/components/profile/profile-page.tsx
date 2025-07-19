@@ -32,7 +32,7 @@ interface ProfilePageProps {
 export default function ProfilePage({ user, posts }: ProfilePageProps) {
   return (
     <div className="flex flex-row gap-6 ">
-      <div className="border-r border-border flex-1 max-w-[600px]">
+      <div className="border-r border-border flex-1 max-w-[650px]">
         <ProfileHeader user={user} />
         <ProfileTabs userId={user.id} posts={posts} />
       </div>

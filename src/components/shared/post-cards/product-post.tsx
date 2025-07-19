@@ -140,7 +140,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
             />
           </div>
         )}
-        <div className="flex max-sm:flex-col items-center justify-between gap-2 bg-muted/20 p-3">
+        <div className="flex flex-col items-center justify-between gap-2 bg-muted/20 p-3">
           <div className="flex flex-col gap-2 ">
             <h3 className="font-semibold text-lg">{post.productName}</h3>
             <p className="text-sm text-gray-800">
@@ -148,15 +148,18 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
             </p>
 
             {/* Price would go here */}
+          </div>
+          <div className="flex items-center justify-between max-md:flex-col gap-2 w-full">
             <span className="text-lg font-semibold text-foreground">
               ₦25,000
             </span>
+            <div className="flex-1 max-w-xs w-full">
+              <Button variant={"secondary"} className="w-full">
+                <ShoppingBag size={20} className="mr-1" />
+                Buy Now
+              </Button>
+            </div>
           </div>
-
-          <Button variant={"secondary"} className=" max-sm:w-full">
-            <ShoppingBag size={20} className="mr-1" />
-            Buy Now
-          </Button>
         </div>
       </div>
 

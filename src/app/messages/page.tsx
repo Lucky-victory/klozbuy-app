@@ -163,11 +163,11 @@ const sampleMessages = [
 
 type PageProps = {
   params: {
-    converstionId: string;
+    conversationId: string;
   };
 };
 export default async function Page(props: PageProps) {
-  const { conversationId } = use(props.params);
+  const { conversationId } = props.params;
   const [activeConversation, setActiveConversation] = useState<number | null>(
     null
   );
@@ -243,7 +243,7 @@ export default async function Page(props: PageProps) {
 
   return (
     <Layout>
-      <div className="flex h-[calc(100vh-170px)] md:h-[calc(100vh-56px)]">
+      <div className="flex h-[calc(100vh - 170px)] md:h-[calc(100vh-56px)]">
         <div
           className={cn(
             "w-full md:w-80 border-r overflow-hidden flex flex-col",
@@ -276,7 +276,6 @@ export default async function Page(props: PageProps) {
                       name={conv.name}
                       size="md"
                       userType={conv.type as "individual" | "business"}
-                      isVerified={conv.isVerified}
                       src={conv.avatar}
                     />
                     {conv.online && (

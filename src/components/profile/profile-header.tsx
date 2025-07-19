@@ -15,11 +15,12 @@ import {
   UserPlus2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn, formatJoinDate } from "@/lib/utils";
+import { cn, formatJoinDate, formatNumber } from "@/lib/utils";
 import UserAvatar from "@/components/shared/user-avatar";
 import { useState } from "react";
 import VerifiedBadgeIcon from "../shared/verified-icon";
 import { VerifiedCircleIcon, VerifiedShieldIcon } from "../custom-icons/badges";
+import { DividerDot } from "../ui/divider-dot";
 
 interface ProfileHeaderProps {
   user: {
@@ -48,7 +49,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
     setIsFollowing(!isFollowing);
   };
   return (
-    <div>
+    <div className="border-b border-border">
       {" "}
       <div className="h-28 md:h-64 bg-gradient-to-r from-klozui-green-600/90 to-klozui-green-600 relative">
         <div className="absolute inset-0 overflow-hidden">
@@ -69,7 +70,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
           </div>
 
           <div className="flex-1 flex flex-col">
-            <div className="flex flex-col gap-4 mb-4">
+            <div className="flex flex-col gap-3 mb-4">
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
@@ -92,16 +93,26 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                         <span className="font-bold text-klozui-dark-900">
                           {user.rating}
                         </span>{" "}
-                        ({user.reviewsCount} reviews)
+                        ({formatNumber(user.reviewsCount)}{" "}
+                        <span className={"hidden md:inline"}>reviews</span>)
                       </div>
                     </>
                   )}
+                  <DividerDot />
                   <span className="flex items-center gap-1">
-                    <Users size={14} />
+                    {/* <Users size={14} /> */}
                     <span className="font-bold text-klozui-dark-900">
-                      {user.followersCount}
+                      {formatNumber(user.followersCount)}
                     </span>
                     Followers
+                  </span>
+                  <DividerDot />
+                  <span className="flex items-center gap-1">
+                    {/* <Users size={14} /> */}
+                    <span className="font-bold text-klozui-dark-900">
+                      {formatNumber(user.followersCount)}
+                    </span>
+                    Following
                   </span>
                 </div>
               </div>

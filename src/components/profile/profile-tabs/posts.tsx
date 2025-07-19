@@ -4,7 +4,7 @@ import { Posts } from "@/types";
 
 export default function ProfilePosts({ posts }: { posts: Posts[] }) {
   return (
-    <div className="grid grid-cols-1 gap-4 max-w-3xl">
+    <div className="grid grid-cols-1 gap-4 max-w-3xl pb-20">
       {posts.map((post) =>
         post.type === "product" ? (
           <ProductPostCard key={post.id} post={post} />
