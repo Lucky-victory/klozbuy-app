@@ -61,8 +61,6 @@ export const users = mysqlTable(
     banReason: text("ban_reason"),
     banExpires: timestamp("ban_expires"),
     displayUsername: text("display_username"),
-    followersCount: int("followers_count").default(0),
-    followingCount: int("following_count").default(0),
     createdAt,
     updatedAt,
   },
@@ -80,11 +78,6 @@ export const users = mysqlTable(
     index("users_date_of_birth_idx").on(table.dateOfBirth),
     index("users_first_name_idx").on(table.firstName),
     index("users_last_name_idx").on(table.lastName),
-    index("users_followers_count_idx").on(table.followersCount),
-    index("users_following_count_idx").on(table.followingCount),
-    index("users_display_username_idx").on(table.displayUsername),
-
-    index("users_bio_idx").on(table.bio),
     sql`FULLTEXT INDEX (bio) WITH PARSER MULTILINGUAL`,
   ]
 );
@@ -97,6 +90,7 @@ export const businessProfiles = mysqlTable(
     userId: userId,
     businessName: varchar("business_name", { length: 100 }).notNull(),
     businessType: varchar("business_type", { length: 50 }).notNull(),
+    description: text("description"),
     registrationNumber: varchar("registration_number", { length: 100 }),
     taxId: varchar("tax_id", { length: 100 }),
     isVerified: boolean("is_verified").default(false),
@@ -121,12 +115,7 @@ export const businessProfiles = mysqlTable(
   (table) => [
     index("business_profiles_user_id_idx").on(table.userId),
     index("business_profiles_verified_idx").on(table.isVerified),
-    index("business_profiles_status_idx").on(table.verificationStatus),
-    index("business_profiles_created_at_idx").on(table.createdAt),
-    index("business_profiles_business_name_idx").on(table.businessName),
-    index("business_profiles_established_year_idx").on(table.establishedYear),
-    index("business_profiles_employee_count_idx").on(table.employeeCount),
-    index("business_profiles_business_type_idx").on(table.businessType),
+    index("business_profiles_type_idx").on(table.businessType),
   ]
 );
 
@@ -211,8 +200,8 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   messageReadReceipts: many(messageReadReceipts),
   messageMentions: many(messageMentions),
   // Following relationships
-  following: many(follows, { relationName: "following" }),
-  followers: many(follows, { relationName: "follower" }),
+  following: many(follows, { relationName: "follower" }),
+  followers: many(follows, { relationName: "following" }),
 }));
 export const followsRelations = relations(follows, ({ one }) => ({
   follower: one(users, {
