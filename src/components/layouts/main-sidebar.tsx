@@ -231,7 +231,7 @@ const Sidebar = memo(({ className }: SidebarProps) => {
               <Link href="/onboarding?type=business">
                 <Button
                   variant="outline"
-                  className="w-full border-dashed border-klozui-orange-500/50 text-klozui-orange-500 hover:bg-klozui-orange-500/5 hover:border-klozui-orange-500/80"
+                  className="w-full border-dashed border-klozui-amber-500/50 text-klozui-amber-500 hover:bg-klozui-amber-500/5 hover:border-klozui-amber-500/80"
                 >
                   <Store size={16} className="mr-2" />
                   {isDesktop && "Create Business"}

@@ -181,7 +181,7 @@ const AuthModal = ({
                     className={cn(
                       "flex flex-col items-center gap-3 p-4 rounded-lg border-2 transition-all hover:bg-muted/30",
                       userType === "business"
-                        ? "border-klozui-orange-500 bg-klozui-orange-500/5"
+                        ? "border-klozui-amber-500 bg-klozui-amber-500/5"
                         : "border-muted"
                     )}
                     onClick={() => setUserType("business")}
@@ -190,7 +190,7 @@ const AuthModal = ({
                       className={cn(
                         "p-3 rounded-full",
                         userType === "business"
-                          ? "bg-klozui-orange-500/10 text-klozui-orange-500"
+                          ? "bg-klozui-amber-500/10 text-klozui-amber-500"
                           : "bg-muted text-muted-foreground"
                       )}
                     >

@@ -61,7 +61,7 @@ const UserAvatar = ({
             "bg-gradient-to-br",
             userType === "individual"
               ? "from-klozui-green-500/80 to-klozui-green-500"
-              : "from-klozui-orange-500/80 to-klozui-orange-500",
+              : "from-klozui-amber-500/80 to-klozui-amber-500",
             "text-white font-medium",
             fallbackClassName
           )}

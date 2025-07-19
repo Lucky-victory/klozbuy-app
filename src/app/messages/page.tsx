@@ -1,6 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef, use } from "react";
 import Layout from "@/components/layouts/layout";
 import UserAvatar from "@/components/shared/user-avatar";
 import {
@@ -162,8 +161,13 @@ const sampleMessages = [
   },
 ];
 
-const Messages = () => {
-  const { conversationId } = useParams<{ conversationId?: string }>();
+type PageProps = {
+  params: {
+    converstionId: string;
+  };
+};
+export default async function Page(props: PageProps) {
+  const { conversationId } = use(props.params);
   const [activeConversation, setActiveConversation] = useState<number | null>(
     null
   );
@@ -341,7 +345,6 @@ const Messages = () => {
                   userType={
                     getActiveConversation()?.type as "individual" | "business"
                   }
-                  isVerified={getActiveConversation()?.isVerified || false}
                   src={getActiveConversation()?.avatar || ""}
                 />
 
@@ -500,6 +503,4 @@ const Messages = () => {
       </div>
     </Layout>
   );
-};
-
-export default Messages;
+}

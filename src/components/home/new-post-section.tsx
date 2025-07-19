@@ -26,7 +26,7 @@ const NewPostSection = () => {
       icon: PackagePlus,
       color: "bg-purple-500",
     },
-    { id: "service", label: "Service", icon: Users, color: "bg-orange-500" },
+    { id: "service", label: "Service", icon: Users, color: "bg-amber-500" },
     { id: "event", label: "Event", icon: Calendar, color: "bg-blue-500" },
   ];
 
@@ -34,7 +34,7 @@ const NewPostSection = () => {
     { icon: Image, label: "Photo", color: "text-green-600" },
     { icon: Video, label: "Video", color: "text-blue-600" },
     { icon: MapPin, label: "Location", color: "text-red-600" },
-    { icon: Tag, label: "Tag People", color: "text-orange-600" },
+    { icon: Tag, label: "Tag People", color: "text-amber-600" },
   ];
 
   const handlePost = () => {

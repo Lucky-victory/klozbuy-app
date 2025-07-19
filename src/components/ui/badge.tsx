@@ -41,10 +41,11 @@ interface Badge2Props
 const badge2Variants = cva("flex items-center rounded-full font-medium", {
   variants: {
     variant: {
-      default: "bg-klozui-orange-500/10 text-klozui-orange-900",
+      default: "bg-klozui-amber-500/10 text-klozui-amber-900",
+      subtle: "bg-klozui-amber-500/10 text-klozui-amber-900",
       outline:
-        "border border-klozui-orange-800/50 text-klozui-orange-800 bg-transparent",
-      filled: "bg-klozui-orange-600/90 text-white",
+        "border border-klozui-amber-900 text-klozui-amber-900 bg-transparent",
+      filled: "bg-klozui-amber-600/90 text-white",
     },
     size: {
       sm: "text-xs py-0.5 px-1.5 gap-0.5",
