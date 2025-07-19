@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --mobile-navbar-height: 3.5rem;
+    --mobile-header-height: 4rem;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 140 52% 30% /* #24753a */;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 45 100% 56%; /* #ffc107 */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 137 53% 47%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 215 25% 27%;
+    --sidebar-primary: 137 53% 47%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 45 100% 90%;
+    --sidebar-accent-foreground: 45 70% 30%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 137 53% 47%;
+
+    /* Gray Light */
+    --gray-light-50: 210 20% 98%;
+    --gray-light-100: 220 20% 96%;
+    --gray-light-200: 220 14% 93%;
+    --gray-light-300: 216 12% 84%;
+    --gray-light-400: 220 9% 65%;
+    --gray-light-500: 220 8% 46%;
+    --gray-light-600: 220 8% 32%;
+    --gray-light-700: 220 9% 25%;
+    --gray-light-800: 222 10% 17%;
+    --gray-light-900: 225 11% 10%;
+
+    /* Gray Dark */
+    --gray-dark-50: 0 0% 90%;
+    --gray-dark-100: 0 0% 80%;
+    --gray-dark-200: 0 0% 70%;
+    --gray-dark-300: 0 0% 60%;
+    --gray-dark-400: 0 0% 50%;
+    --gray-dark-500: 0 0% 40%;
+    --gray-dark-600: 0 0% 30%;
+    --gray-dark-700: 0 0% 22%;
+    --gray-dark-800: 0 0% 18%;
+    --gray-dark-900: 0 0% 10%;
+  }
+
+  .dark {
+    --background: 220 20% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 25% 12%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 25% 12%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 140 52% 30% /* #24753a */;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 45 100% 56%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 137 53% 47%;
+
+    --sidebar-background: 220 25% 12%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 137 53% 47%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 45 100% 80%;
+    --sidebar-accent-foreground: 0 0% 0%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 137 53% 47%;
+
+    /* Gray Light (dark fallback, if needed) */
+    --gray-light-50: 210 20% 98%;
+    --gray-light-100: 220 20% 96%;
+    --gray-light-200: 220 14% 93%;
+    --gray-light-300: 216 12% 84%;
+    --gray-light-400: 220 9% 65%;
+    --gray-light-500: 220 8% 46%;
+    --gray-light-600: 220 8% 32%;
+    --gray-light-700: 220 9% 25%;
+    --gray-light-800: 222 10% 17%;
+    --gray-light-900: 225 11% 10%;
+
+    /* Gray Dark */
+    --gray-dark-50: 0 0% 90%;
+    --gray-dark-100: 0 0% 80%;
+    --gray-dark-200: 0 0% 70%;
+    --gray-dark-300: 0 0% 60%;
+    --gray-dark-400: 0 0% 50%;
+    --gray-dark-500: 0 0% 40%;
+    --gray-dark-600: 0 0% 30%;
+    --gray-dark-700: 0 0% 22%;
+    --gray-dark-800: 0 0% 18%;
+    --gray-dark-900: 0 0% 10%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-poppins;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg;
+  }
+
+  .glass-input {
+    @apply bg-white/50 backdrop-blur-sm border border-white/30 focus:border-klozui-green-500;
+  }
+
+  .klozui-button {
+    @apply bg-klozui-green-500 text-white font-medium px-4 py-2 rounded-lg transition-all hover:bg-klozui-green-500/90 hover:shadow-md active:scale-95;
+  }
+
+  .klozui-button-secondary {
+    @apply bg-klozui-amber-500 text-white font-medium px-4 py-2 rounded-lg transition-all hover:bg-klozui-amber-500/90 hover:shadow-md active:scale-95;
+  }
+
+  .klozui-button-outline {
+    @apply border-2 border-klozui-green-500 text-klozui-green-500 font-medium px-4 py-2 rounded-lg transition-all hover:bg-klozui-green-500/10 active:scale-95;
+  }
+
+  .navbar-glass {
+    @apply bg-white/70 backdrop-blur-md border-b border-white/20 shadow-sm;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-md hover:translate-y-[-2px];
+  }
+}
+
+.link-box.group a:not(.link-overlay),
+.link-box.group button {
+  @apply z-10;
+}

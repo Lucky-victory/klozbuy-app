@@ -1,17 +1,17 @@
-
-import React, { useState } from 'react';
-import { useLocation } from '@/hooks/useLocation';
-import Layout from '@/components/layout/Layout';
-import FeedSection from '@/components/home/FeedSection';
-import SuggestionsPanel from '@/components/home/SuggestionsPanel';
-import AuthModal from '@/components/authentication/AuthModal';
-import { MapPin, Navigation } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
+import React, { useState } from "react";
+import { useLocation } from "@/hooks/useLocation";
+import Layout from "@/components/layouts/layout";
+import FeedSection from "@/components/home/feed-section";
+import SuggestionsPanel from "@/components/home/suggestions-panel";
+import AuthModal from "@/components/authentication/AuthModal";
+import { MapPin, Navigation } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Index = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const { latitude, longitude, loading, error, setManualLocation } = useLocation();
+  const { latitude, longitude, loading, error, setManualLocation } =
+    useLocation();
 
   // In a real app, this would fetch posts based on the user's location
   const handleLocation = () => {
@@ -27,12 +27,17 @@ const Index = () => {
     // In a real app, this would use reverse geocoding or the user's saved location
     if (latitude && longitude) {
       // Approximate coordinates for Lagos
-      if (latitude >= 6.3 && latitude <= 6.7 && longitude >= 3.1 && longitude <= 3.5) {
-        return 'Lagos';
+      if (
+        latitude >= 6.3 &&
+        latitude <= 6.7 &&
+        longitude >= 3.1 &&
+        longitude <= 3.5
+      ) {
+        return "Lagos";
       }
-      return 'your area';
+      return "your area";
     }
-    return 'Nigeria';
+    return "Nigeria";
   };
 
   return (
@@ -54,9 +59,9 @@ const Index = () => {
                 )}
               </div>
             </div>
-            
-            <Button 
-              className="bg-naija-green hover:bg-naija-green/90 text-white flex-shrink-0"
+
+            <Button
+              className="bg-klozui-green-600 hover:bg-klozui-green-600/90 text-white flex-shrink-0"
               onClick={handleLocation}
               disabled={loading}
             >
@@ -64,20 +69,17 @@ const Index = () => {
               Update Location
             </Button>
           </div>
-          
+
           {/* Main Feed */}
           <FeedSection />
         </div>
-        
+
         {/* Right Panel */}
         <SuggestionsPanel className="w-80 flex-shrink-0" />
       </div>
-      
+
       {/* Auth Modal */}
-      <AuthModal 
-        open={isAuthModalOpen} 
-        onOpenChange={setIsAuthModalOpen} 
-      />
+      <AuthModal open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen} />
     </Layout>
   );
 };
