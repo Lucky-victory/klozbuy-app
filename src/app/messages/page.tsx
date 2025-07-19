@@ -16,7 +16,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -166,8 +165,9 @@ type PageProps = {
     conversationId: string;
   };
 };
-export default async function Page(props: PageProps) {
-  const { conversationId } = await props.params;
+export default function Page({ params }: PageProps) {
+  const { conversationId: covId = "204" } = use<PageProps["params"]>(params);
+  const conversationId = +covId;
   const [activeConversation, setActiveConversation] = useState<number | null>(
     null
   );
@@ -243,7 +243,7 @@ export default async function Page(props: PageProps) {
 
   return (
     <Layout>
-      <div className="flex h-[calc(100vh - 170px)] md:h-[calc(100vh-56px)]">
+      <div className="flex bg-green-300 h-[calc(100vh - 170px)] md:h-[calc(100vh-56px)]">
         <div
           className={cn(
             "w-full md:w-80 border-r overflow-hidden flex flex-col",
@@ -310,7 +310,7 @@ export default async function Page(props: PageProps) {
         {activeConversation ? (
           <div
             className={cn(
-              "flex flex-col flex-1 h-full",
+              "flex flex-col flex-1 bg-yellow-300 h-full",
               !activeConversation && "hidden md:flex"
             )}
           >
@@ -386,7 +386,7 @@ export default async function Page(props: PageProps) {
               </div>
             </div>
 
-            <ScrollArea className="flex-1 p-4">
+            <ScrollArea className="flex-1 p-4 bg-red-500">
               <div className="space-y-4">
                 {getConversationMessages().map((msg, index) => {
                   const isCurrentUser = msg.senderId === 201;

@@ -1,8 +1,12 @@
+import Layout from "@/components/layouts/layout";
+
 export default function Page() {
   return (
-    <>
-      Notifications Page
-      <p>This is the notifications page.</p>
-    </>
+    <Layout>
+      <div className="flex-grow">
+        Notifications Page
+        <p>This is the notifications page.</p>
+      </div>
+    </Layout>
   );
 }

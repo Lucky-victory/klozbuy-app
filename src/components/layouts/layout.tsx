@@ -59,14 +59,14 @@ const Layout = ({ children, hideNav = false }: LayoutProps) => {
   if (!isMounted) return null;
 
   return (
-    <div className="min-h-screen flex flex-col mx-auto max-w-[1300px]">
-      <div className="flex flex-1 relative">
+    <div className="min-h-screen flex flex-col mx-auto max-w-[1300px] ">
+      <div className="flex flex-1 w-full relative">
         {/* Mobile sidebar */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetContent side={"right"} className="p-0 w-full max-w-xs">
             <SheetTitle className="sr-only">Primary Sidebar</SheetTitle>
             <SheetHeader></SheetHeader>
-            <Sidebar className="" />
+            <Sidebar className="flex" />
 
             <SheetFooter></SheetFooter>
           </SheetContent>
@@ -76,7 +76,7 @@ const Layout = ({ children, hideNav = false }: LayoutProps) => {
         {!hideNav && <Sidebar className="hidden md:flex" />}
 
         {/* Main content */}
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           {!hideNav && (
             <Navbar
               onMobileMenuToggle={toggleMobileMenu}
@@ -85,7 +85,7 @@ const Layout = ({ children, hideNav = false }: LayoutProps) => {
           )}
           <main
             className={cn(
-              "flex-1 flex flex-col min-h-screen max-w-7xl mx-auto",
+              " flex flex-col max-w-7xl flex-1",
               !hideNav && "pb-16 md:pb-0 md:pl-0"
             )}
           >

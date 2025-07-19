@@ -1,10 +1,11 @@
 import { sql } from "drizzle-orm";
 import { timestamp, varchar } from "drizzle-orm/mysql-core";
 import { users } from "./schemas";
+import { generateUniqueId } from "../lib/id-generator";
 
 export const id = varchar("id", { length: 36 })
   .primaryKey()
-  .default(sql`(UUID())`);
+  .$defaultFn(() => generateUniqueId());
 export const userId = varchar("user_id", { length: 36 })
   .notNull()
   .references(() => users.id, { onDelete: "cascade" });
