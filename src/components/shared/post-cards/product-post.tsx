@@ -153,10 +153,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
             </span>
           </div>
 
-          <Button
-            // size="sm"
-            className="max-sm:w-full bg-klozui-green-500 hover:bg-klozui-green-600 text-white shadow-sm"
-          >
+          <Button variant={"secondary"}>
             <ShoppingBag size={16} className="mr-1" />
             Buy Now
           </Button>

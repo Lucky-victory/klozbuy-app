@@ -47,7 +47,7 @@ const Logo = ({ className, size = "md", showText = true }: LogoProps) => {
         {showText && (
           <span className="flex items-center">
             <span className="text-klozui-green-500">Kloz</span>
-            <span className="text-klozui-amber-500">buy</span>
+            <span className="text-klozui-amber-800">buy</span>
           </span>
         )}
       </div>

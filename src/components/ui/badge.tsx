@@ -42,19 +42,19 @@ const badge2Variants = cva("flex items-center rounded-full font-medium", {
   variants: {
     variant: {
       default: "bg-klozui-amber-500/10 text-klozui-amber-900",
-      subtle: "bg-klozui-amber-500/10 text-klozui-amber-900",
+      subtle: "bg-klozui-amber-100 text-klozui-gray-dark-900",
       outline:
         "border border-klozui-amber-900 text-klozui-amber-900 bg-transparent",
-      filled: "bg-klozui-amber-600/90 text-white",
+      filled: "bg-klozui-amber-600/90 text-klozui-gray-dark-900",
     },
     size: {
-      sm: "text-xs py-0.5 px-1.5 gap-0.5",
-      default: "text-sm py-0.5 px-2 gap-1",
+      default: "text-xs py-0.5 px-1.5 gap-0.5",
+      md: "text-sm py-0.5 px-2 gap-1",
       lg: "text-base py-1.5 px-3 gap-1.5",
     },
   },
   defaultVariants: {
-    variant: "outline",
+    variant: "filled",
     size: "default",
   },
 });

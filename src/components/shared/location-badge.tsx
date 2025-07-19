@@ -16,9 +16,9 @@ const LocationBadge = ({
 }: LocationBadgeProps) => {
   return (
     <Badge2 className={className}>
-      <MapPin className="mr-1" size={14} />
+      <MapPin size={14} />
       {/* Display distance if available, otherwise show landmark or default text */}
-      <span className="truncate">
+      <span className="truncate text-xs">
         {distance !== undefined ? `${distance}km away` : landmark || "Nearby"}
       </span>
     </Badge2>

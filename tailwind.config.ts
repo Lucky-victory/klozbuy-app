@@ -53,6 +53,18 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         klozui: {
+          "green-custom": {
+            "50": "#e6f5ec",
+            "100": "#c8e9d4",
+            "200": "#a9dcbb",
+            "300": "#89d0a3",
+            "400": "#69c38a",
+            "500": "#49b672",
+            "600": "#2c8f47", // Base
+            "700": "#257a3d",
+            "800": "#1e6433",
+            "900": "#164f29",
+          },
           green: {
             "50": "#e6f5ec",
             "100": "#c0e6cf",
