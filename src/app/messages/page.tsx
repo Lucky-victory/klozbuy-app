@@ -243,7 +243,7 @@ export default function Page({ params }: PageProps) {
 
   return (
     <Layout>
-      <div className="flex bg-green-300 h-[calc(100vh - 170px)] md:h-[calc(100vh-56px)]">
+      <div className="flex h-[calc(100vh - 170px)] md:h-[calc(100vh-56px)]">
         <div
           className={cn(
             "w-full md:w-80 border-r overflow-hidden flex flex-col",
@@ -310,7 +310,7 @@ export default function Page({ params }: PageProps) {
         {activeConversation ? (
           <div
             className={cn(
-              "flex flex-col flex-1 bg-yellow-300 h-full",
+              "flex flex-col flex-1  h-full",
               !activeConversation && "hidden md:flex"
             )}
           >
@@ -386,7 +386,7 @@ export default function Page({ params }: PageProps) {
               </div>
             </div>
 
-            <ScrollArea className="flex-1 p-4 bg-red-500">
+            <ScrollArea className="flex-1 p-4">
               <div className="space-y-4">
                 {getConversationMessages().map((msg, index) => {
                   const isCurrentUser = msg.senderId === 201;
