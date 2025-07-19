@@ -74,11 +74,11 @@ const Sidebar = memo(({ className }: SidebarProps) => {
       >
         <div
           className={cn(
-            "flex  items-center p-3 rounded-full transition-colors group-focus-within:outline-none group-focus-visible:outline-none group-focus-visible:ring-2 group-focus-visible:ring-klozui-green-500 group-focus-visible:ring-offset-2",
+            "flex  items-center p-3 rounded-full transition-colors group-focus-within:outline-none group-focus-visible:outline-none group-focus-visible:ring-2 group-focus-visible:ring-klozui-green-600 group-focus-visible:ring-offset-2",
 
             isActive
-              ? "bg-klozui-green-500 text-white hover:bg-klozui-green-500/90 group-hover:bg-klozui-green-500/90"
-              : "hovr:bg-muted hover:bg-klozui-green-500/90 group-hover:bg-muted "
+              ? "bg-klozui-green-600 text-white hover:bg-klozui-green-600/90 group-hover:bg-klozui-green-600/90"
+              : "hovr:bg-muted hover:bg-klozui-green-600/90 group-hover:bg-muted "
           )}
         >
           <div className="flex">
@@ -241,7 +241,7 @@ const Sidebar = memo(({ className }: SidebarProps) => {
             </div>
           ) : (
             <div className="mt-auto pt-4 border-t border-border space-y-2">
-              <Button className="w-full bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white">
+              <Button className="w-full bg-klozui-green-600 hover:bg-klozui-green-600/90 text-white">
                 Sign up
               </Button>
               <Button variant="outline" className="w-full">

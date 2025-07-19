@@ -180,7 +180,7 @@ const Search = () => {
               <X className="h-4 w-4" />
             </Button>
           )}
-          <Button className="absolute inset-y-0 right-12 px-4 rounded-full bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white">
+          <Button className="absolute inset-y-0 right-12 px-4 rounded-full bg-klozui-green-600 hover:bg-klozui-green-600/90 text-white">
             Search
           </Button>
         </div>

@@ -36,7 +36,7 @@ const Logo = ({ className, size = "md", showText = true }: LogoProps) => {
         <div className="relative">
           <MapPin
             size={iconSizes[size]}
-            className="text-klozui-green-500"
+            className="text-klozui-green-600"
             strokeWidth={3}
             fill="#34C759"
             color="white"
@@ -46,7 +46,7 @@ const Logo = ({ className, size = "md", showText = true }: LogoProps) => {
         </div>
         {showText && (
           <span className="flex items-center">
-            <span className="text-klozui-green-500">Kloz</span>
+            <span className="text-klozui-green-600">Kloz</span>
             <span className="text-klozui-amber-800">buy</span>
           </span>
         )}

@@ -63,7 +63,7 @@ const NavItem = ({
       href={path}
       className={cn(
         "flex flex-col items-center justify-center w-full py-1",
-        isActive ? "text-klozui-green-500" : "text-gray-500"
+        isActive ? "text-klozui-green-600" : "text-gray-500"
       )}
     >
       <div

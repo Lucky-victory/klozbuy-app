@@ -195,7 +195,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
         {post.type === "product" && (
           <Button
             size="sm"
-            className="bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white"
+            className="bg-klozui-green-600 hover:bg-klozui-green-600/90 text-white"
           >
             <ShoppingBag size={16} className="mr-1" />
             Buy Now

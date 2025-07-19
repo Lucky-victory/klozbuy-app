@@ -5,7 +5,7 @@ const VerifiedBadgeIcon = ({
   color = "#1DA1F2",
   stroke = "#ffffff",
   strokeWidth = 2,
-  className = "bg-klozui-green-500",
+  className = "bg-klozui-green-600",
 }) => {
   return (
     <svg

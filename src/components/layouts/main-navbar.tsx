@@ -80,7 +80,6 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
                 <UserAvatar
                   name={user.name}
                   size="sm"
-                  isVerified={user.isVerified}
                   userType={user.type as "individual" | "business"}
                   src={user.avatar}
                 />
@@ -143,7 +142,7 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
               Log in
             </Button>
             <Button
-              className="bg-klozui-green-500 hover:bg-klozui-green-500/90 text-white text-sm"
+              className="bg-klozui-green-600 hover:bg-klozui-green-600/90 text-white text-sm"
               onClick={() => setIsAuthenticated(true)}
             >
               Sign up

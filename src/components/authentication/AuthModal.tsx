@@ -133,7 +133,7 @@ const AuthModal = ({
 
               <Button
                 type="submit"
-                className="w-full mt-6 bg-klozui-green-500 hover:bg-klozui-green-500/90"
+                className="w-full mt-6 bg-klozui-green-600 hover:bg-klozui-green-600/90"
               >
                 Log In
               </Button>
@@ -155,7 +155,7 @@ const AuthModal = ({
                     className={cn(
                       "flex flex-col items-center gap-3 p-4 rounded-lg border-2 transition-all hover:bg-muted/30",
                       userType === "individual"
-                        ? "border-klozui-green-500 bg-klozui-green-500/5"
+                        ? "border-klozui-green-600 bg-klozui-green-600/5"
                         : "border-muted"
                     )}
                     onClick={() => setUserType("individual")}
@@ -164,7 +164,7 @@ const AuthModal = ({
                       className={cn(
                         "p-3 rounded-full",
                         userType === "individual"
-                          ? "bg-klozui-green-500/10 text-klozui-green-500"
+                          ? "bg-klozui-green-600/10 text-klozui-green-600"
                           : "bg-muted text-muted-foreground"
                       )}
                     >
@@ -204,7 +204,7 @@ const AuthModal = ({
                 </div>
 
                 <Button
-                  className="w-full mt-6 bg-klozui-green-500 hover:bg-klozui-green-500/90"
+                  className="w-full mt-6 bg-klozui-green-600 hover:bg-klozui-green-600/90"
                   onClick={goToNextStep}
                 >
                   Continue
@@ -312,7 +312,7 @@ const AuthModal = ({
                 <div className="mt-6">
                   <Button
                     type="submit"
-                    className="w-full bg-klozui-green-500 hover:bg-klozui-green-500/90"
+                    className="w-full bg-klozui-green-600 hover:bg-klozui-green-600/90"
                   >
                     Create Account
                   </Button>
@@ -321,14 +321,14 @@ const AuthModal = ({
                     By signing up, you agree to our{" "}
                     <a
                       href="#"
-                      className="text-klozui-green-500 hover:underline"
+                      className="text-klozui-green-600 hover:underline"
                     >
                       Terms of Service
                     </a>{" "}
                     and{" "}
                     <a
                       href="#"
-                      className="text-klozui-green-500 hover:underline"
+                      className="text-klozui-green-600 hover:underline"
                     >
                       Privacy Policy
                     </a>

@@ -50,7 +50,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
   return (
     <div>
       {" "}
-      <div className="h-28 md:h-64 bg-gradient-to-r from-klozui-green-500/90 to-klozui-green-500 relative">
+      <div className="h-28 md:h-64 bg-gradient-to-r from-klozui-green-600/90 to-klozui-green-600 relative">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-20"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -166,7 +166,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                     <Button
                       variant="link"
                       size="sm"
-                      className="text-klozui-green-500 hover:underline h-auto"
+                      className="text-klozui-green-600 hover:underline h-auto"
                       onClick={() => {
                         if (user.landmark) {
                           window.open(

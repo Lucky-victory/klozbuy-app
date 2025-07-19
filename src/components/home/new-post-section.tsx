@@ -100,7 +100,7 @@ const NewPostSection = () => {
                       onClick={() => setSelectedCategory(category.id)}
                       className={`p-3 rounded-lg border-2 transition-all duration-200 flex items-center space-x-2 ${
                         selectedCategory === category.id
-                          ? "border-green-500 bg-green-50"
+                          ? "border-green-600 bg-green-50"
                           : "border-gray-200 hover:border-gray-300"
                       }`}
                     >
