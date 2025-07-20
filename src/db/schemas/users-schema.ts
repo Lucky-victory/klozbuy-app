@@ -72,6 +72,9 @@ export const users = mysqlTable(
     index("users_email_idx").on(table.email),
     index("users_type_idx").on(table.type),
     index("users_online_idx").on(table.isOnline),
+    index("users_email_verified_idx").on(table.emailVerified),
+    index("users_phone_verified_idx").on(table.phoneNumberVerified),
+    index("users_is_verified_idx").on(table.isVerified),
     index("users_role_idx").on(table.role),
     index("users_banned_idx").on(table.banned),
     index("users_phone_number_idx").on(table.phoneNumber),
@@ -134,6 +137,8 @@ export const businessProfiles = mysqlTable(
     index("business_profiles_established_year_idx").on(table.establishedYear),
     index("business_profiles_employee_count_idx").on(table.employeeCount),
     index("business_profiles_business_type_idx").on(table.businessType),
+    index("business_profiles_rating_idx").on(table.rating),
+    index("business_profiles_reviews_count_idx").on(table.reviewsCount),
   ]
 );
 

@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1753002624290,
+      "tag": "0000_green_hiroim",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1753003149008,
+      "tag": "0001_bouncy_the_executioner",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1753003220326,
+      "tag": "0002_spotty_thunderball",
+      "breakpoints": true
+    }
+  ]
+}
