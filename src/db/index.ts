@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { drizzle as drizzleMysql } from "drizzle-orm/mysql-core";
+import { drizzle as drizzleMysql } from "drizzle-orm/mysql2";
 import { drizzle as drizzleTidb } from "drizzle-orm/tidb-serverless";
 import { connect } from "@tidbcloud/serverless";
 import mysql2 from "mysql2/promise";
@@ -28,8 +28,7 @@ export const connectionUri = isEmpty(DATABASE_URL)
   ? `mysql://${DB_USER_NAME}:${DB_USER_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}?ssl=${DB_SSL_CONFIG}`
   : (`${DATABASE_URL}?ssl={"rejectUnauthorized":true}` as string);
 const poolConnection = mysql2.createPool(connectionUri);
-export const db = drizzleMysql({
-  client: poolConnection,
+export const db = drizzleMysql(poolConnection, {
   mode: "planetscale",
   schema,
 });

@@ -99,26 +99,3 @@ export const mediaRelations = relations(media, ({ one, many }) => ({
   serviceMedia: many(serviceMedia),
   advertisementAttachments: many(advertisementAttachments),
 }));
-
-// Retrieval examples
-// async function getPostMediaWithDetails(postId: number) {
-//   return await db
-//     .select()
-//     .from(postMedia)
-//     .innerJoin(media, eq(postMedia.mediaId, media.id))
-//     .leftJoin(images, eq(media.id, images.mediaId))
-//     .leftJoin(videos, eq(media.id, videos.mediaId))
-//     .leftJoin(documents, eq(media.id, documents.mediaId))
-//     .leftJoin(audio, eq(media.id, audio.mediaId))
-//     .where(eq(postMedia.postId, postId));
-// }
-
-// // Type-safe retrieval
-// async function getImageMedia(mediaId: number) {
-//   return await db
-//     .select()
-//     .from(media)
-//     .innerJoin(images, eq(media.id, images.mediaId))
-//     .where(and(eq(media.id, mediaId), eq(media.type, "image")))
-//     .then((rows) => rows[0]);
-// }

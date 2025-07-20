@@ -51,7 +51,7 @@ export const users = mysqlTable(
     firstName: varchar("first_name", { length: 50 }),
     lastName: varchar("last_name", { length: 50 }),
     bio: varchar("bio", { length: 255 }),
-    avatarUrl: varchar("avatar_url", { length: 500 }),
+    profilePictureUrl: varchar("profile_picture_url", { length: 500 }),
     coverImageUrl: varchar("cover_image_url", { length: 500 }),
     website: varchar("website", { length: 255 }),
     dateOfBirth: timestamp("date_of_birth"),
@@ -100,12 +100,12 @@ export const businessProfiles = mysqlTable(
     id,
     userId: userId,
     businessName: varchar("business_name", { length: 100 }).notNull(),
-    businessType: varchar("business_type", { length: 50 }).notNull(),
+    businessCategory: varchar("business_category", { length: 50 }).notNull(),
     registrationNumber: varchar("registration_number", { length: 100 }),
     taxId: varchar("tax_id", { length: 100 }),
     isVerified: boolean("is_verified").default(false),
     reviewsCount: int("reviews_count").default(0),
-    rating: decimal("rating", {
+    averageRating: decimal("average_rating", {
       precision: 3,
       scale: 2,
       mode: "number",
@@ -117,7 +117,7 @@ export const businessProfiles = mysqlTable(
       "suspended",
     ]).default("pending"),
     verifiedAt: timestamp("verified_at"),
-    establishedYear: int("established_year"),
+    registeredDate: int("registered_date"),
     employeeCount: mysqlEnum("employee_count", [
       "1-10",
       "11-50",
@@ -134,10 +134,10 @@ export const businessProfiles = mysqlTable(
     index("business_profiles_status_idx").on(table.verificationStatus),
     index("business_profiles_created_at_idx").on(table.createdAt),
     index("business_profiles_business_name_idx").on(table.businessName),
-    index("business_profiles_established_year_idx").on(table.establishedYear),
+    index("business_profiles_registred_date_idx").on(table.registeredDate),
     index("business_profiles_employee_count_idx").on(table.employeeCount),
-    index("business_profiles_business_type_idx").on(table.businessType),
-    index("business_profiles_rating_idx").on(table.rating),
+    index("business_profiles_business_category_idx").on(table.businessCategory),
+    index("business_profiles_average_rating_idx").on(table.averageRating),
     index("business_profiles_reviews_count_idx").on(table.reviewsCount),
   ]
 );
