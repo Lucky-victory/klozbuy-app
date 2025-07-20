@@ -1,0 +1,1 @@
+CREATE INDEX `business_profiles_contact_phone_idx` ON `business_profiles` (`contact_phone`);

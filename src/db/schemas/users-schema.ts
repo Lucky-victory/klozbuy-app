@@ -105,6 +105,7 @@ export const businessProfiles = mysqlTable(
     taxId: varchar("tax_id", { length: 100 }),
     isVerified: boolean("is_verified").default(false),
     reviewsCount: int("reviews_count").default(0),
+    contactPhone: varchar("contact_phone", { length: 20 }),
     address: varchar("address", { length: 255 }),
     averageRating: decimal("average_rating", {
       precision: 3,
@@ -141,6 +142,8 @@ export const businessProfiles = mysqlTable(
     index("business_profiles_average_rating_idx").on(table.averageRating),
     index("business_profiles_reviews_count_idx").on(table.reviewsCount),
     index("business_profiles_address_idx").on(table.address),
+    index("business_profiles_contact_phone_idx").on(table.contactPhone),
+    sql`FULLTEXT INDEX (business_name) WITH PARSER MULTILINGUAL`,
   ]
 );
 

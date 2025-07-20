@@ -71,6 +71,20 @@
       "when": 1753027301487,
       "tag": "0009_slow_black_panther",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1753030229179,
+      "tag": "0010_keen_shinobi_shaw",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1753030410730,
+      "tag": "0011_free_harrier",
+      "breakpoints": true
     }
   ]
 }

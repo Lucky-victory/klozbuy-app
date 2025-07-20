@@ -1,0 +1,1 @@
+ALTER TABLE `business_profiles` ADD `contact_phone` varchar(20);
