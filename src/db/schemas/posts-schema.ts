@@ -72,6 +72,17 @@ export const posts = mysqlTable(
     sql`FULLTEXT INDEX (content) WITH PARSER MULTILINGUAL`,
   ]
 );
+export const postMentions = mysqlTable("post_mentions", {
+  id,
+  postId: varchar("post_id", { length: 36 })
+    .notNull()
+    .references(() => posts.id, { onDelete: "cascade" }),
+  mentionedUserId: varchar("mentioned_user_id", { length: 36 })
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  createdAt,
+  updatedAt,
+});
 export const postReactions = mysqlTable(
   "post_reactions",
   {
@@ -224,7 +235,6 @@ export const events = mysqlTable(
     index("events_current_attendees_idx").on(table.currentAttendees),
     index("events_ticket_price_idx").on(table.ticketPrice),
     index("events_registration_deadline_idx").on(table.registrationDeadline),
-    index("events_contact_info_idx").on(table.contactInfo),
     //end date
     index("events_end_date_idx").on(table.endDate),
   ]
@@ -340,7 +350,6 @@ export const postComments = mysqlTable(
       length: 36,
       //@ts-ignore
     }).references(() => postComments.id, { onDelete: "cascade" }),
-    mentionedUsers: json("mentioned_users"), // Array of user IDs mentioned
     status: mysqlEnum("status", [
       "pending",
       "approved",
@@ -359,12 +368,32 @@ export const postComments = mysqlTable(
     index("comments_post_id_idx").on(table.postId),
     index("comments_status_idx").on(table.status),
     index("comments_parent_id_idx").on(table.parentId),
-    index("comments_mentioned_users_idx").on(table.mentionedUsers),
     index("comments_edited_at_idx").on(table.editedAt),
     index("comments_reaction_count_idx").on(table.reactionCount),
     index("comments_reply_count_idx").on(table.replyCount),
   ]
 );
+export const postCommentMentions = mysqlTable(
+  "post_comment_mentions",
+  {
+    id,
+    commentId: varchar("comment_id", { length: 36 })
+      .notNull()
+      .references(() => postComments.id, { onDelete: "cascade" }),
+    mentionedUserId: varchar("mentioned_user_id", { length: 36 })
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    positionStart: int("position_start"),
+    positionEnd: int("position_end"),
+    createdAt,
+    updatedAt,
+  },
+  (table) => [
+    index("comment_mentions_comment_id_idx").on(table.commentId),
+    index("comment_mentions_user_id_idx").on(table.mentionedUserId),
+  ]
+);
+
 export const commentReactions = mysqlTable(
   "comment_reactions",
   {
@@ -490,6 +519,7 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
     fields: [posts.id],
     references: [services.postId],
   }),
+  mentions: many(postMentions),
 }));
 
 export const postCommentsRelations = relations(
@@ -509,6 +539,7 @@ export const postCommentsRelations = relations(
     }),
     media: many(postCommentMedia),
     reactions: many(commentReactions),
+    mentions: many(postCommentMentions),
   })
 );
 

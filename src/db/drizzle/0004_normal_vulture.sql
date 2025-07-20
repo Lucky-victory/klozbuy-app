@@ -1,0 +1,1 @@
+DROP INDEX `events_contact_info_idx` ON `events`;
