@@ -22,8 +22,8 @@ export const advertisements = mysqlTable(
   "advertisements",
   {
     id,
-    title: varchar("title", { length: 200 }).notNull(),
-    content: text("content").notNull(),
+    title: varchar("title", { length: 100 }).notNull(),
+    content: varchar("content", { length: 500 }).notNull(),
     imageUrl: varchar("image_url", { length: 500 }),
     clickUrl: varchar("click_url", { length: 500 }),
     userId: userId,
