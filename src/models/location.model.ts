@@ -1,5 +1,9 @@
 import { locations } from "@/db/schemas/users-schema"; // Adjusted path
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
 import { z } from "zod/v4";
 
 export type Location = typeof locations.$inferSelect;
@@ -20,7 +24,7 @@ export const CreateLocationSchema = createInsertSchema(locations, {
   updatedAt: true,
 });
 
-export const UpdateLocationSchema = CreateLocationSchema.partial().extend({
+export const UpdateLocationSchema = createUpdateSchema(locations, {
   id: z.string().length(36).optional(),
 });
 

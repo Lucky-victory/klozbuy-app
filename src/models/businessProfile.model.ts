@@ -1,5 +1,9 @@
 import { businessProfiles } from "@/db/schemas/users-schema"; // Adjusted path
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
 import { z } from "zod/v4";
 
 export type BusinessProfile = typeof businessProfiles.$inferSelect;
@@ -23,10 +27,12 @@ export const CreateBusinessProfileSchema = createInsertSchema(
   updatedAt: true,
 });
 
-export const UpdateBusinessProfileSchema =
-  CreateBusinessProfileSchema.partial().extend({
+export const UpdateBusinessProfileSchema = createUpdateSchema(
+  businessProfiles,
+  {
     id: z.string().length(36).optional(), // Can be omitted as it's from path
-  });
+  }
+);
 
 export const SelectBusinessProfileSchema = createSelectSchema(businessProfiles);
 

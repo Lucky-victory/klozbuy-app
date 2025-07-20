@@ -43,7 +43,9 @@ export const CreateUserSchema = createInsertSchema(users, {
 });
 
 // Zod schema for updating an existing user (input validation)
-export const UpdateUserSchema = createUpdateSchema(users);
+export const UpdateUserSchema = createUpdateSchema(users, {
+  id: z.string().length(36, "Invalid Post ID format.").optional(),
+});
 
 // Zod schema for selecting a user (output validation/typing, though Drizzle types handle this)
 export const SelectUserSchema = createSelectSchema(users);

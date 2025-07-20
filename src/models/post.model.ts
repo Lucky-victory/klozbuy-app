@@ -10,7 +10,11 @@ import {
 } from "@/db/schemas/posts-schema"; // Adjusted path to your Drizzle schema file
 import { CreateUserSchema, UserResponseSchema } from "./users.model";
 import { CreateLocationSchema, SelectLocationSchema } from "./location.model";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
 import { z } from "zod/v4";
 
 // Infer the Drizzle schema types for full post data
@@ -52,7 +56,7 @@ export const CreatePostSchema = createInsertSchema(posts, {
 });
 
 // Zod schema for updating an existing post (input validation)
-export const UpdatePostSchema = CreatePostSchema.partial().extend({
+export const UpdatePostSchema = createUpdateSchema(posts, {
   id: z.string().length(36, "Invalid Post ID format.").optional(),
 });
 

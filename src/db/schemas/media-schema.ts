@@ -57,7 +57,7 @@ export const videos = mysqlTable("videos", {
   thumbnailUrl: varchar("thumbnail_url", { length: 500 }),
   bitrate: int("bitrate"),
   codec: varchar("codec", { length: 50 }),
-  frameRate: decimal("frame_rate", { precision: 5, scale: 2 }),
+  frameRate: decimal("frame_rate", { precision: 5, scale: 2, mode: "number" }),
 });
 
 export const documents = mysqlTable("documents", {
@@ -93,9 +93,24 @@ export const mediaRelations = relations(media, ({ one, many }) => ({
     references: [documents.mediaId],
   }),
   audio: one(audio, { fields: [media.id], references: [audio.mediaId] }),
-  postMedia: many(postMedia),
-  postCommentMedia: many(postCommentMedia),
-  productMedia: many(productMedia),
-  serviceMedia: many(serviceMedia),
-  advertisementAttachments: many(advertisementAttachments),
+  postMedia: one(postMedia, {
+    fields: [media.id],
+    references: [postMedia.mediaId],
+  }),
+  postCommentMedia: one(postCommentMedia, {
+    fields: [media.id],
+    references: [postCommentMedia.mediaId],
+  }),
+  productMedia: one(productMedia, {
+    fields: [media.id],
+    references: [productMedia.mediaId],
+  }),
+  serviceMedia: one(serviceMedia, {
+    fields: [media.id],
+    references: [serviceMedia.mediaId],
+  }),
+  advertisementAttachments: one(advertisementAttachments, {
+    fields: [media.id],
+    references: [advertisementAttachments.mediaId],
+  }),
 }));
