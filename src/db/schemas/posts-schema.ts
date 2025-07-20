@@ -268,16 +268,15 @@ export const postMedia = mysqlTable(
       .references(() => media.id, { onDelete: "cascade" }),
     isPrimary: boolean("is_primary").default(false),
     sortOrder: int("sort_order").default(0),
-    altText: varchar("alt_text", { length: 200 }),
-    caption: text("caption"),
+    altText: varchar("alt_text", { length: 500 }),
     createdAt,
     updatedAt,
   },
   (table) => [
     index("post_media_post_id_idx").on(table.postId),
     index("post_media_media_id_idx").on(table.mediaId),
-
-    index("post_media_primary_idx").on(table.isPrimary),
+    index("post_media_alt_text_idx").on(table.altText),
+    index("post_media_is_primary_idx").on(table.isPrimary),
     index("post_media_sort_order_idx").on(table.sortOrder),
   ]
 );
@@ -293,8 +292,7 @@ export const productMedia = mysqlTable(
       .references(() => media.id, { onDelete: "cascade" }),
     isPrimary: boolean("is_primary").default(false),
     sortOrder: int("sort_order").default(0),
-    altText: varchar("alt_text", { length: 200 }),
-    caption: text("caption"),
+    altText: varchar("alt_text", { length: 500 }),
     createdAt,
     updatedAt,
   },
@@ -302,7 +300,6 @@ export const productMedia = mysqlTable(
     index("post_media_product_id_idx").on(table.productId),
     index("post_media_media_id_idx").on(table.mediaId),
     index("post_media_alt_text_idx").on(table.altText),
-    index("post_media_caption_idx").on(table.caption),
     index("post_media_is_primary_idx").on(table.isPrimary),
     index("post_media_sort_order_idx").on(table.sortOrder),
   ]
@@ -319,8 +316,8 @@ export const serviceMedia = mysqlTable(
       .references(() => media.id, { onDelete: "cascade" }),
     isPrimary: boolean("is_primary").default(false),
     sortOrder: int("sort_order").default(0),
-    altText: varchar("alt_text", { length: 200 }),
-    caption: text("caption"),
+    altText: varchar("alt_text", { length: 500 }),
+
     createdAt,
     updatedAt,
   },
@@ -328,7 +325,6 @@ export const serviceMedia = mysqlTable(
     index("post_media_service_id_idx").on(table.serviceId),
     index("post_media_media_id_idx").on(table.mediaId),
     index("post_media_alt_text_idx").on(table.altText),
-    index("post_media_caption_idx").on(table.caption),
     index("post_media_is_primary_idx").on(table.isPrimary),
     index("post_media_sort_order_idx").on(table.sortOrder),
   ]
