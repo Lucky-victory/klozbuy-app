@@ -5,3 +5,5 @@ export * from "./notifications-schema";
 export * from "./messages-schema";
 export * from "./reviews-schema";
 export * from "./media-schema";
+export * from "./subscriptions-schema";
+export * from "./advertisements-schema";

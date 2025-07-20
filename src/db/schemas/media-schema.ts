@@ -12,10 +12,12 @@ import {
 import { users } from "./users-schema";
 import { id, createdAt, updatedAt, mediaType, userId } from "../schema-helper";
 import {
-  advertisementAttachments,
   postCommentMedia,
   postMedia,
+  productMedia,
+  serviceMedia,
 } from "./posts-schema";
+import { advertisementAttachments } from "./advertisements-schema";
 
 // Base media table with common fields
 export const media = mysqlTable("media", {
@@ -83,7 +85,7 @@ export const audio = mysqlTable("audio", {
 
 // Relations
 export const mediaRelations = relations(media, ({ one, many }) => ({
-  user: one(users, { fields: [media.userId], references: [users.id] }),
+  owner: one(users, { fields: [media.userId], references: [users.id] }),
   image: one(images, { fields: [media.id], references: [images.mediaId] }),
   video: one(videos, { fields: [media.id], references: [videos.mediaId] }),
   document: one(documents, {
@@ -93,7 +95,8 @@ export const mediaRelations = relations(media, ({ one, many }) => ({
   audio: one(audio, { fields: [media.id], references: [audio.mediaId] }),
   postMedia: many(postMedia),
   postCommentMedia: many(postCommentMedia),
-
+  productMedia: many(productMedia),
+  serviceMedia: many(serviceMedia),
   advertisementAttachments: many(advertisementAttachments),
 }));
 

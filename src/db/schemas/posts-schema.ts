@@ -22,14 +22,12 @@ import {
   userId,
   currency,
   reactionType,
+  postStatusEnum,
+  postTypeEnum,
+  postVisibilityEnum,
 } from "../schema-helper";
 import { media } from "./media-schema";
 import { locations, users } from "./users-schema";
-
-const postTypeEnum = ["general", "product", "service", "event"] as const;
-const postStatusEnum = ["draft", "published", "archived", "deleted"] as const;
-const ageGroupEnum = ["teen", "young_adult", "adult", "senior"] as const;
-const postVisibilityEnum = ["public", "followers", "nearby"] as const;
 
 // Posts table - Enhanced with better structure
 export const posts = mysqlTable(
@@ -47,7 +45,13 @@ export const posts = mysqlTable(
       () => locations.id,
       { onDelete: "set null" }
     ),
+    isPromoted: boolean("is_promoted").default(false),
     publishedAt: timestamp("published_at"),
+    likesCount: int("likes_count").default(0),
+    commentsCount: int("comments_count").default(0),
+    sharesCount: int("shares_count").default(0),
+    viewsCount: int("views_count").default(0),
+
     createdAt,
     updatedAt,
   },
@@ -57,6 +61,14 @@ export const posts = mysqlTable(
     index("posts_status_idx").on(table.status),
     index("posts_location_id_idx").on(table.locationId),
     index("posts_published_at_idx").on(table.publishedAt),
+    index("posts_visibility_idx").on(table.visibility),
+    index("posts_is_promoted_idx").on(table.isPromoted),
+    index("posts_created_at_idx").on(table.createdAt),
+    index("posts_updated_at_idx").on(table.updatedAt),
+    index("posts_likes_count_idx").on(table.likesCount),
+    index("posts_comments_count_idx").on(table.commentsCount),
+    index("posts_shares_count_idx").on(table.sharesCount),
+    index("posts_views_count_idx").on(table.viewsCount),
     sql`FULLTEXT INDEX (content) WITH PARSER MULTILINGUAL`,
   ]
 );
@@ -82,8 +94,8 @@ export const postReactions = mysqlTable(
 );
 
 // Product details - For product posts
-export const productDetails = mysqlTable(
-  "product_details",
+export const products = mysqlTable(
+  "products",
   {
     id,
     name: varchar("name", { length: 100 }).notNull(),
@@ -91,6 +103,7 @@ export const productDetails = mysqlTable(
       .notNull()
       .references(() => posts.id, { onDelete: "cascade" }),
     description: varchar("description", { length: 500 }),
+    mediaId: varchar("media_id", { length: 36 }),
     category: varchar("category", { length: 100 }),
     sku: varchar("sku", { length: 100 }),
     price: decimal("price", { precision: 10, scale: 2 }),
@@ -118,17 +131,17 @@ export const productDetails = mysqlTable(
     updatedAt,
   },
   (table) => [
-    index("product_details_post_id_idx").on(table.postId),
-    index("product_details_sku_idx").on(table.sku),
-    index("product_details_price_idx").on(table.price),
-    index("product_details_compare_price_idx").on(table.compareAtPrice),
-    index("product_details_availability_idx").on(table.availability),
+    index("products_post_id_idx").on(table.postId),
+    index("products_sku_idx").on(table.sku),
+    index("products_price_idx").on(table.price),
+    index("products_compare_price_idx").on(table.compareAtPrice),
+    index("products_availability_idx").on(table.availability),
   ]
 );
 
 // Service details - For service posts
-export const serviceDetails = mysqlTable(
-  "service_details",
+export const services = mysqlTable(
+  "services",
   {
     id,
     postId: varchar("post_id", { length: 36 })
@@ -159,27 +172,28 @@ export const serviceDetails = mysqlTable(
     updatedAt,
   },
   (table) => [
-    index("service_details_post_id_idx").on(table.postId),
-    index("service_details_type_idx").on(table.serviceType),
-    index("service_details_price_type_idx").on(table.priceType),
+    index("services_post_id_idx").on(table.postId),
+    index("services_type_idx").on(table.serviceType),
+    index("services_price_type_idx").on(table.priceType),
   ]
 );
 
 // Event details - For event posts
-export const eventDetails = mysqlTable(
-  "event_details",
+export const events = mysqlTable(
+  "events",
   {
     id,
     postId: varchar("post_id", { length: 36 })
       .notNull()
       .unique()
       .references(() => posts.id, { onDelete: "cascade" }),
-    eventTitle: varchar("event_title", { length: 100 }).notNull(),
+    title: varchar("title", { length: 100 }).notNull(),
     startDate: timestamp("start_date").notNull(),
     endDate: timestamp("end_date").notNull(),
     startTime: varchar("start_time", { length: 10 }), // HH:MM format
     endTime: varchar("end_time", { length: 10 }),
     timezone: varchar("timezone", { length: 50 }).default("Africa/Lagos"),
+    coverImageUrl: varchar("cover_image_url", { length: 500 }),
     venue: varchar("venue", { length: 200 }),
     venueLocationId: varchar("venue_location_id", { length: 36 }).references(
       () => locations.id,
@@ -200,25 +214,28 @@ export const eventDetails = mysqlTable(
     updatedAt,
   },
   (table) => [
-    index("event_details_post_id_idx").on(table.postId),
-    index("event_details_start_date_idx").on(table.startDate),
-    index("event_details_title_idx").on(table.eventTitle),
-    index("event_details_venue_idx").on(table.venue),
-    index("event_details_venue_location_id_idx").on(table.venueLocationId),
-    index("event_details_event_venue_type_idx").on(table.eventVenueType),
-    index("event_details_capacity_idx").on(table.capacity),
-    index("event_details_current_attendees_idx").on(table.currentAttendees),
-    index("event_details_ticket_price_idx").on(table.ticketPrice),
+    index("events_post_id_idx").on(table.postId),
+    index("events_start_date_idx").on(table.startDate),
+    index("events_title_idx").on(table.title),
+    index("events_venue_idx").on(table.venue),
+    index("events_venue_location_id_idx").on(table.venueLocationId),
+    index("events_event_venue_type_idx").on(table.eventVenueType),
+    index("events_capacity_idx").on(table.capacity),
+    index("events_current_attendees_idx").on(table.currentAttendees),
+    index("events_ticket_price_idx").on(table.ticketPrice),
+    index("events_registration_deadline_idx").on(table.registrationDeadline),
+    index("events_contact_info_idx").on(table.contactInfo),
+    //end date
+    index("events_end_date_idx").on(table.endDate),
   ]
 );
 export const eventAttendees = mysqlTable(
   "event_attendees",
   {
     id,
-    eventId: varchar("event_id", { length: 36 }).references(
-      () => eventDetails.id,
-      { onDelete: "cascade" }
-    ),
+    eventId: varchar("event_id", { length: 36 }).references(() => events.id, {
+      onDelete: "cascade",
+    }),
     userId: userId,
     createdAt,
     updatedAt,
@@ -251,6 +268,58 @@ export const postMedia = mysqlTable(
     index("post_media_media_id_idx").on(table.mediaId),
 
     index("post_media_primary_idx").on(table.isPrimary),
+    index("post_media_sort_order_idx").on(table.sortOrder),
+  ]
+);
+export const productMedia = mysqlTable(
+  "product_media",
+  {
+    id,
+    productId: varchar("post_id", { length: 36 })
+      .notNull()
+      .references(() => products.id, { onDelete: "cascade" }),
+    mediaId: varchar("media_id", { length: 36 })
+      .notNull()
+      .references(() => media.id, { onDelete: "cascade" }),
+    isPrimary: boolean("is_primary").default(false),
+    sortOrder: int("sort_order").default(0),
+    altText: varchar("alt_text", { length: 200 }),
+    caption: text("caption"),
+    createdAt,
+    updatedAt,
+  },
+  (table) => [
+    index("post_media_product_id_idx").on(table.productId),
+    index("post_media_media_id_idx").on(table.mediaId),
+    index("post_media_alt_text_idx").on(table.altText),
+    index("post_media_caption_idx").on(table.caption),
+    index("post_media_is_primary_idx").on(table.isPrimary),
+    index("post_media_sort_order_idx").on(table.sortOrder),
+  ]
+);
+export const serviceMedia = mysqlTable(
+  "service_media",
+  {
+    id,
+    serviceId: varchar("post_id", { length: 36 })
+      .notNull()
+      .references(() => services.id, { onDelete: "cascade" }),
+    mediaId: varchar("media_id", { length: 36 })
+      .notNull()
+      .references(() => media.id, { onDelete: "cascade" }),
+    isPrimary: boolean("is_primary").default(false),
+    sortOrder: int("sort_order").default(0),
+    altText: varchar("alt_text", { length: 200 }),
+    caption: text("caption"),
+    createdAt,
+    updatedAt,
+  },
+  (table) => [
+    index("post_media_service_id_idx").on(table.serviceId),
+    index("post_media_media_id_idx").on(table.mediaId),
+    index("post_media_alt_text_idx").on(table.altText),
+    index("post_media_caption_idx").on(table.caption),
+    index("post_media_is_primary_idx").on(table.isPrimary),
     index("post_media_sort_order_idx").on(table.sortOrder),
   ]
 );
@@ -397,84 +466,6 @@ export const postPromotions = mysqlTable(
 );
 
 // Platform ads (non-post related advertising)
-export const advertisements = mysqlTable(
-  "advertisements",
-  {
-    id,
-    title: varchar("title", { length: 200 }).notNull(),
-    content: text("content").notNull(),
-    imageUrl: varchar("image_url", { length: 500 }),
-    clickUrl: varchar("click_url", { length: 500 }),
-    userId: userId,
-    type: mysqlEnum("type", ["banner", "sidebar", "feed", "popup"]).notNull(),
-    placement: varchar("placement", { length: 100 }),
-    status: mysqlEnum("status", [
-      "active",
-      "paused",
-      "completed",
-      "cancelled",
-    ]).default("active"),
-    targetGender: mysqlEnum("target_gender", genderEnum).notNull(),
-    targetAgeStart: int("target_age_start"),
-    targetAgeEnd: int("target_age_end"),
-    targetLocationId: varchar("target_location_id", {
-      length: 36,
-    }).references(() => locations.id, { onDelete: "set null" }),
-    createdAt,
-    updatedAt,
-  },
-  (table) => [
-    index("advertisements_status_idx").on(table.status),
-    index("advertisements_type_idx").on(table.type),
-    index("advertisements_user_id_idx").on(table.userId),
-    index("advertisements_placement_idx").on(table.placement),
-    index("advertisements_target_gender_idx").on(table.targetGender),
-    index("advertisements_target_age_start_idx").on(table.targetAgeStart),
-    index("advertisements_target_age_end_idx").on(table.targetAgeEnd),
-  ]
-);
-export const advertisementTargeting = mysqlTable(
-  "advertisement_targeting",
-  {
-    id: varchar("id", { length: 36 }).primaryKey(),
-    advertisementId: varchar("advertisement_id", { length: 36 }).notNull(),
-    gender: mysqlEnum("gender", genderEnum),
-    minAge: int("min_age"),
-    maxAge: int("max_age"),
-    ageGroup: mysqlEnum("age_group", ageGroupEnum),
-    locationId: varchar("location_id", { length: 36 }),
-  },
-  (table) => [
-    index("advertisement_targeting_advertisement_id_idx").on(
-      table.advertisementId
-    ),
-    index("advertisement_targeting_gender_idx").on(table.gender),
-    index("advertisement_targeting_min_age_idx").on(table.minAge),
-    index("advertisement_targeting_max_age_idx").on(table.maxAge),
-    index("advertisement_targeting_age_group_idx").on(table.ageGroup),
-  ]
-);
-export const advertisementAttachments = mysqlTable(
-  "advertisement_attachments",
-  {
-    id,
-    advertisementId: varchar("advertisement_id", { length: 36 })
-      .notNull()
-      .references(() => advertisements.id, { onDelete: "cascade" }),
-    mediaId: varchar("media_id", { length: 36 })
-      .notNull()
-      .references(() => media.id, { onDelete: "cascade" }),
-    createdAt,
-    updatedAt,
-  },
-  (table) => [
-    index("advertisement_attachments_advertisement_id_idx").on(
-      table.advertisementId
-    ),
-    index("advertisement_attachments_media_id_idx").on(table.mediaId),
-    index("advertisement_attachments_created_at_idx").on(table.createdAt),
-  ]
-);
 
 //relations
 
@@ -490,14 +481,14 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
   comments: many(postComments),
   medias: many(postMedia),
   reactions: many(postReactions),
-  products: many(productDetails),
-  eventDetail: one(eventDetails, {
+  products: many(products),
+  eventDetail: one(events, {
     fields: [posts.id],
-    references: [eventDetails.postId],
+    references: [events.postId],
   }),
-  serviceDetail: one(serviceDetails, {
+  serviceDetail: one(services, {
     fields: [posts.id],
-    references: [serviceDetails.postId],
+    references: [services.postId],
   }),
 }));
 
@@ -548,36 +539,74 @@ export const commentReactionsRelations = relations(
   })
 );
 
-// Also update the posts and comments relations to include reactions
-
 export const postPromotionsRelations = relations(postPromotions, ({ one }) => ({
   post: one(posts, {
     fields: [postPromotions.postId],
     references: [posts.id],
   }),
 }));
-export const productDetailsRelations = relations(productDetails, ({ one }) => ({
+export const productsRelations = relations(products, ({ one, many }) => ({
   post: one(posts, {
-    fields: [productDetails.postId],
+    fields: [products.postId],
     references: [posts.id],
   }),
+  media: many(productMedia),
 }));
-export const serviceDetailsRelations = relations(serviceDetails, ({ one }) => ({
+export const servicesRelations = relations(services, ({ one, many }) => ({
   post: one(posts, {
-    fields: [serviceDetails.postId],
+    fields: [services.postId],
     references: [posts.id],
   }),
+  media: many(serviceMedia),
 }));
-export const eventDetailsRelations = relations(eventDetails, ({ one }) => ({
+
+export const eventsRelations = relations(events, ({ one, many }) => ({
   post: one(posts, {
-    fields: [eventDetails.postId],
+    fields: [events.postId],
     references: [posts.id],
   }),
+
+  attendees: many(eventAttendees),
 }));
+export const eventAttendeesRelations = relations(eventAttendees, ({ one }) => ({
+  event: one(events, {
+    fields: [eventAttendees.eventId],
+    references: [events.id],
+  }),
+  user: one(users, {
+    fields: [eventAttendees.userId],
+    references: [users.id],
+  }),
+}));
+export const productMediaRelations = relations(productMedia, ({ one }) => ({
+  product: one(products, {
+    fields: [productMedia.productId],
+    references: [products.id],
+  }),
+  media: one(media, {
+    fields: [productMedia.mediaId],
+    references: [media.id],
+  }),
+}));
+export const serviceMediaRelations = relations(serviceMedia, ({ one }) => ({
+  service: one(services, {
+    fields: [serviceMedia.serviceId],
+    references: [services.id],
+  }),
+  media: one(media, {
+    fields: [serviceMedia.mediaId],
+    references: [media.id],
+  }),
+}));
+
 export const postMediaRelations = relations(postMedia, ({ one }) => ({
   post: one(posts, {
     fields: [postMedia.postId],
     references: [posts.id],
+  }),
+  media: one(media, {
+    fields: [postMedia.mediaId],
+    references: [media.id],
   }),
 }));
 export const postCommentMediaRelations = relations(
@@ -587,46 +616,8 @@ export const postCommentMediaRelations = relations(
       fields: [postCommentMedia.commentId],
       references: [postComments.id],
     }),
-  })
-);
-
-export const advertisementsRelations = relations(
-  advertisements,
-  ({ one, many }) => ({
-    author: one(users, {
-      fields: [advertisements.userId],
-      references: [users.id],
-    }),
-    location: one(locations, {
-      fields: [advertisements.targetLocationId],
-      references: [locations.id],
-    }),
-    attachments: many(advertisementAttachments),
-    targeting: many(advertisementTargeting),
-  })
-);
-export const advertisementTargetingRelations = relations(
-  advertisementTargeting,
-  ({ one }) => ({
-    advertisement: one(advertisements, {
-      fields: [advertisementTargeting.advertisementId],
-      references: [advertisements.id],
-    }),
-    location: one(locations, {
-      fields: [advertisementTargeting.locationId],
-      references: [locations.id],
-    }),
-  })
-);
-export const advertisementAttachmentsRelations = relations(
-  advertisementAttachments,
-  ({ one }) => ({
-    advertisement: one(advertisements, {
-      fields: [advertisementAttachments.advertisementId],
-      references: [advertisements.id],
-    }),
     media: one(media, {
-      fields: [advertisementAttachments.mediaId],
+      fields: [postCommentMedia.mediaId],
       references: [media.id],
     }),
   })

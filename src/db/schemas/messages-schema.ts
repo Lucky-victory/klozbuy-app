@@ -102,6 +102,7 @@ export const messages = mysqlTable(
     ),
     isEdited: boolean("is_edited").default(false),
     isDeleted: boolean("is_deleted").default(false),
+    reactionCount: int("reaction_count").default(0),
     createdAt,
     updatedAt,
   },
@@ -148,11 +149,14 @@ export const messageReactions = mysqlTable(
       .notNull()
       .references(() => messages.id, { onDelete: "cascade" }),
     userId: userId,
+    name: varchar("name", { length: 50 }).notNull(),
+    // Emoji can be a short code or unicode character
     emoji: varchar("emoji", { length: 10 }).notNull(),
     createdAt,
   },
   (table) => [
     index("message_reactions_message_id_idx").on(table.messageId),
+
     index("message_reactions_user_id_idx").on(table.userId),
     uniqueIndex("message_reactions_unique_user_emoji_idx").on(
       table.messageId,

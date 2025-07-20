@@ -3,9 +3,21 @@ import { timestamp, varchar } from "drizzle-orm/mysql-core";
 import { users } from "./schemas";
 import { generateUniqueId } from "../lib/id-generator";
 
+export const postTypeEnum = ["general", "product", "service", "event"] as const;
+export const postStatusEnum = [
+  "draft",
+  "published",
+  "archived",
+  "deleted",
+] as const;
+export const ageGroupEnum = ["teen", "young_adult", "adult", "senior"] as const;
+export const postVisibilityEnum = ["public", "followers", "nearby"] as const;
+
 export const id = varchar("id", { length: 36 })
   .primaryKey()
-  .$defaultFn(() => generateUniqueId());
+  .$defaultFn(
+    () => generateUniqueId() // this should be bigint string e.g 17489305838459032
+  );
 export const userId = varchar("user_id", { length: 36 })
   .notNull()
   .references(() => users.id, { onDelete: "cascade" });

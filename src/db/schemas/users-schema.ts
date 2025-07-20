@@ -21,8 +21,8 @@ import {
   userId,
 } from "../schema-helper";
 import { relations, sql } from "drizzle-orm";
+import { advertisements } from "./advertisements-schema";
 import {
-  advertisements,
   commentReactions,
   postComments,
   postReactions,
@@ -102,6 +102,12 @@ export const businessProfiles = mysqlTable(
     registrationNumber: varchar("registration_number", { length: 100 }),
     taxId: varchar("tax_id", { length: 100 }),
     isVerified: boolean("is_verified").default(false),
+    reviewsCount: int("reviews_count").default(0),
+    rating: decimal("rating", {
+      precision: 3,
+      scale: 2,
+      mode: "number",
+    }).default(0.0),
     verificationStatus: mysqlEnum("verification_status", [
       "pending",
       "approved",
@@ -242,59 +248,3 @@ export const businessProfilesRelations = relations(
 // Reviews table - Enhanced
 
 // Subscription plans
-export const subscriptionPlans = mysqlTable(
-  "subscription_plans",
-  {
-    id,
-    name: varchar("name", { length: 100 }).notNull(),
-    slug: varchar("slug", { length: 100 }).notNull().unique(),
-    description: text("description"),
-    price: decimal("price", { precision: 10, scale: 2 }).notNull(),
-    currency,
-    billingInterval: mysqlEnum("billing_interval", [
-      "monthly",
-      "quarterly",
-      "yearly",
-    ]).notNull(),
-    features: json("features"), // string[]
-    limits: json("limits"), // { posts: number, promotions: number, etc }
-    isActive: boolean("is_active").default(true),
-    sortOrder: int("sort_order").default(0),
-    createdAt,
-    updatedAt,
-  },
-  (table) => [
-    index("subscription_plans_slug_idx").on(table.slug),
-    index("subscription_plans_active_idx").on(table.isActive),
-  ]
-);
-
-// User subscriptions
-export const subscriptions = mysqlTable(
-  "subscriptions",
-  {
-    id,
-    userId: userId,
-    planId: varchar("plan_id", { length: 36 })
-      .notNull()
-      .references(() => subscriptionPlans.id, { onDelete: "cascade" }),
-    status: mysqlEnum("status", [
-      "active",
-      "inactive",
-      "cancelled",
-      "expired",
-      "past_due",
-    ]).notNull(),
-    currentPeriodStart: timestamp("current_period_start").notNull(),
-    currentPeriodEnd: timestamp("current_period_end").notNull(),
-    cancelledAt: timestamp("cancelled_at"),
-    createdAt,
-    updatedAt,
-  },
-  (table) => [
-    index("subscriptions_user_id_idx").on(table.userId),
-    index("subscriptions_plan_id_idx").on(table.planId),
-    index("subscriptions_status_idx").on(table.status),
-    index("subscriptions_period_end_idx").on(table.currentPeriodEnd),
-  ]
-);
