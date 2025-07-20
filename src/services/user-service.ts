@@ -46,6 +46,18 @@ export class UserService {
   }
 
   /**
+   * Retrieves a user by their phone number.
+   * @param phoneNumber The phone number of the user.
+   * @returns The user object or null if not found.
+   */
+  static async getUserByPhoneNumber(phoneNumber: string): Promise<User | null> {
+    const user = await db.query.users.findFirst({
+      where: eq(users.phoneNumber, phoneNumber),
+    });
+    return user || null;
+  }
+
+  /**
    * Retrieves all users with optional pagination.
    * @param limit The maximum number of users to return.
    * @param offset The number of users to skip.
@@ -76,7 +88,7 @@ export class UserService {
           return eq(fields.id, returned.id);
         },
       });
-      return UserResponseSchema.parse(user);
+      return user;
     });
 
     if (!newUser) {
@@ -106,7 +118,7 @@ export class UserService {
           return eq(fields.id, id);
         },
       });
-      return UserResponseSchema.parse(user);
+      return user;
     });
 
     return updatedUser || null;
@@ -141,7 +153,7 @@ export class UserService {
           return eq(fields.id, userId);
         },
       });
-      return UserResponseSchema.parse(user);
+      return user;
     });
     return updatedUser || null;
   }
@@ -165,7 +177,7 @@ export class UserService {
           return eq(fields.id, userId);
         },
       });
-      return UserResponseSchema.parse(user);
+      return user;
     });
     return updatedUser || null;
   }
@@ -189,7 +201,7 @@ export class UserService {
           return eq(fields.id, userId);
         },
       });
-      return UserResponseSchema.parse(user);
+      return user;
     });
     return updatedUser || null;
   }
@@ -213,7 +225,7 @@ export class UserService {
           return eq(fields.id, userId);
         },
       });
-      return UserResponseSchema.parse(user);
+      return user;
     });
     return updatedUser || null;
   }
