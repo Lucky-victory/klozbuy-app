@@ -61,7 +61,6 @@ export const users = mysqlTable(
     banReason: text("ban_reason"),
     banExpires: timestamp("ban_expires"),
     displayUsername: text("display_username"),
-
     isVerified: boolean("is_verified").default(false),
     followersCount: int("followers_count").default(0),
     followingCount: int("following_count").default(0),
@@ -244,7 +243,3 @@ export const businessProfilesRelations = relations(
     }),
   })
 );
-
-// Reviews table - Enhanced
-
-// Subscription plans

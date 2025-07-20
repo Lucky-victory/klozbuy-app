@@ -17,12 +17,14 @@ const samplePosts = [
     type: "product" as const,
     content:
       "Just restocked our bestselling shea butter face cream! Perfect for the dry season. Limited quantities available.",
-    productName: "Natural Shea Butter Face Cream",
-    productImage:
-      "https://www.blacklavishessentials.com/cdn/shop/files/Raw-Shea-Butter-Organic-Unrefined-_West-African-Shea_-Black-Lavish-Essentials-1692423836308_460x@2x.jpg?v=1712078728",
+    product: {
+      name: "Natural Shea Butter Face Cream",
+      image:
+        "https://www.blacklavishessentials.com/cdn/shop/files/Raw-Shea-Butter-Organic-Unrefined-_West-African-Shea_-Black-Lavish-Essentials-1692423836308_460x@2x.jpg?v=1712078728",
+    },
     isPromoted: true,
     createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30 mins ago
-    likesCount: 24,
+    reactionsCount: 24,
     commentsCount: 3,
   },
   {
@@ -37,12 +39,14 @@ const samplePosts = [
     type: "product" as const,
     content:
       "Fresh palm oil from the village, just arrived! 100% organic and pure.",
-    productName: "Premium Palm Oil (5 Liters)",
-    productImage:
-      "https://i5.walmartimages.com/seo/Nigerian-Red-Palm-Oil-by-Shepherd-s-Natural-1-9-liter-64-fl-oz_d35b120d-62a8-4c6d-8ba0-31cb0d4943de.4171917b94c07e027ea3d75f10958c66.jpeg",
+    product: {
+      name: "Premium Palm Oil (5 Liters)",
+      image:
+        "https://i5.walmartimages.com/seo/Nigerian-Red-Palm-Oil-by-Shepherd-s-Natural-1-9-liter-64-fl-oz_d35b120d-62a8-4c6d-8ba0-31cb0d4943de.4171917b94c07e027ea3d75f10958c66.jpeg",
+    },
     isPromoted: false,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(), // 3 hours ago
-    likesCount: 15,
+    reactionsCount: 15,
     commentsCount: 7,
   },
   {
@@ -59,7 +63,7 @@ const samplePosts = [
       "We're hosting a tech meetup this weekend for all developers in Lekki and surrounding areas. Come network and learn new skills! Register on our website.",
     isPromoted: false,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(), // 8 hours ago
-    likesCount: 32,
+    reactionsCount: 32,
     commentsCount: 12,
   },
   {
@@ -74,12 +78,14 @@ const samplePosts = [
     type: "product" as const,
     content:
       "New Ankara fabrics just arrived! Premium quality, vibrant colors. Perfect for the upcoming festival season.",
-    productName: "Premium Ankara Fabric (6 yards)",
-    productImage:
-      "https://agtplaza.com/cdn/shop/files/TCK95a_0811ae44-95bf-4353-8271-4fa354be91d4.png?v=1735099648",
+    product: {
+      name: "Premium Ankara Fabric (6 yards)",
+      image:
+        "https://agtplaza.com/cdn/shop/files/TCK95a_0811ae44-95bf-4353-8271-4fa354be91d4.png?v=1735099648",
+    },
     isPromoted: true,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(), // 1 day ago
-    likesCount: 47,
+    reactionsCount: 47,
     commentsCount: 15,
   },
   {
@@ -87,18 +93,26 @@ const samplePosts = [
     owner: {
       id: "105",
       name: "Toyin Bakery",
+      username: "toyin_bakery",
       isVerified: false,
       userType: "business" as const,
       distance: 3.1,
     },
     type: "product" as const,
     content:
-      "Fresh meat pies, sausage rolls and cakes available for delivery! Order before 2pm for same-day delivery.",
-    productName: "Assorted Pastries Box",
-    productImage: "https://i.ytimg.com/vi/_Q_EZihVo-Q/maxresdefault.jpg",
+      "Fresh meat pies, sausage rolls and cakes available for delivery! Order before 2pmpm same-day delivery.",
+    product: {
+      name: "Assorted Pastries Box",
+      media: [
+        {
+          type: "image",
+          url: "https://i.ytimg.com/vi/_Q_EZihVo-Q/maxresdefault.jpg",
+        },
+      ],
+    },
     isPromoted: false,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(), // 2 days ago
-    likesCount: 19,
+    reactionsCount: 19,
     commentsCount: 5,
   },
 ];
