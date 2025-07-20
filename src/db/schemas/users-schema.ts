@@ -105,6 +105,7 @@ export const businessProfiles = mysqlTable(
     taxId: varchar("tax_id", { length: 100 }),
     isVerified: boolean("is_verified").default(false),
     reviewsCount: int("reviews_count").default(0),
+    address: varchar("address", { length: 255 }),
     averageRating: decimal("average_rating", {
       precision: 3,
       scale: 2,
@@ -139,6 +140,7 @@ export const businessProfiles = mysqlTable(
     index("business_profiles_business_category_idx").on(table.businessCategory),
     index("business_profiles_average_rating_idx").on(table.averageRating),
     index("business_profiles_reviews_count_idx").on(table.reviewsCount),
+    index("business_profiles_address_idx").on(table.address),
   ]
 );
 
