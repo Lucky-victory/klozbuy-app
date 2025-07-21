@@ -1,3 +1,4 @@
+import "server-only";
 import { db } from "@/db";
 import { postMentions } from "@/db/schemas/posts-schema"; // Adjusted path
 import {

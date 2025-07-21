@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { drizzle as drizzleMysql } from "drizzle-orm/mysql2";
-import { drizzle as drizzleTidb } from "drizzle-orm/tidb-serverless";
-import { connect } from "@tidbcloud/serverless";
+// import { drizzle as drizzleTidb } from "drizzle-orm/tidb-serverless";
+// import { connect } from "@tidbcloud/serverless";
 import mysql2 from "mysql2/promise";
 import * as schema from "./schemas";
 import isEmpty from "just-is-empty";

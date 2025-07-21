@@ -3,15 +3,14 @@ import { timestamp, varchar } from "drizzle-orm/mysql-core";
 import { users } from "./schemas";
 import { generateUniqueId } from "../lib/id-generator";
 
-export const postTypeEnum = ["general", "product", "service", "event"] as const;
-export const postStatusEnum = [
-  "draft",
-  "published",
-  "archived",
-  "deleted",
-] as const;
 export const ageGroupEnum = ["teen", "young_adult", "adult", "senior"] as const;
-export const postVisibilityEnum = ["public", "followers", "nearby"] as const;
+export const genderEnum = [
+  "male",
+  "female",
+  "other",
+  "prefer_not_to_say",
+] as const;
+export type Gender = (typeof genderEnum)[number];
 
 export const id = varchar("id", { length: 36 })
   .primaryKey()
@@ -22,8 +21,23 @@ export const userId = varchar("user_id", { length: 36 })
   .notNull()
   .references(() => users.id, { onDelete: "cascade" });
 export const createdAt = timestamp("created_at").defaultNow();
-export const currency = varchar("currency", { length: 3 }).default("NGN");
 export const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
+export const postTypeEnum = ["general", "product", "service", "event"] as const;
+export const postStatusEnum = [
+  "draft",
+  "published",
+  "archived",
+  "deleted",
+] as const;
+export const postVisibilityEnum = ["public", "followers", "nearby"] as const;
+export const currency = varchar("currency", { length: 3 }).default("NGN");
+export const reactionType = [
+  "like",
+  "love",
+  "support",
+  "interesting",
+  "want",
+] as const;
 export const messageStatus = [
   "pending",
   "sent",
@@ -52,13 +66,6 @@ export type ConversationParticipantRole =
 
 export const messageType = ["text", "image", "video", "audio", "file"] as const;
 export type MessageType = (typeof messageType)[number];
-export const reactionType = [
-  "like",
-  "love",
-  "support",
-  "interesting",
-  "want",
-] as const;
 
 export type ReactionType = (typeof reactionType)[number];
 export const mimeType = [
@@ -77,13 +84,6 @@ export const mimeType = [
 export type MimeType = (typeof mimeType)[number];
 export const mediaType = ["image", "video", "audio", "document"] as const;
 export type MediaType = (typeof mediaType)[number];
-export const genderEnum = [
-  "male",
-  "female",
-  "other",
-  "prefer_not_to_say",
-] as const;
-export type Gender = (typeof genderEnum)[number];
 export const notificationEnum = [
   "post_like",
   "post_comment",

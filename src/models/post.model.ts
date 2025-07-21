@@ -1,15 +1,6 @@
-import {
-  posts,
-  postMedia,
-  products,
-  services,
-  events,
-  postMentions,
-  postComments,
-  postReactions,
-} from "@/db/schemas/posts-schema"; // Adjusted path to your Drizzle schema file
-import { CreateUserSchema, UserResponseSchema } from "./users.model";
-import { CreateLocationSchema, SelectLocationSchema } from "./location.model";
+import { posts } from "@/db/schemas/posts-schema"; // Adjusted path to your Drizzle schema file
+import { UserResponseSchema } from "./users.model";
+import { SelectLocationSchema } from "./location.model";
 import {
   createInsertSchema,
   createSelectSchema,

@@ -20,11 +20,23 @@ import {
   createdAt,
   id,
   NotificationPreferences,
-  notificationPreferencesDefault,
-  updatedAt,
+  
   userId,
 } from "../schema-helper";
 
+
+import { generateUniqueId } from "@/lib/id-generator";
+
+export const id = varchar("id", { length: 36 })
+  .primaryKey()
+  .$defaultFn(
+    () => generateUniqueId() // this should be bigint string e.g 17489305838459032
+  );
+export const userId = varchar("user_id", { length: 36 })
+  .notNull()
+  .references(() => users.id, { onDelete: "cascade" });
+export const createdAt = timestamp("created_at").defaultNow();
+export const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
 // Main notifications table
 export const notifications = mysqlTable(
   "notifications",

@@ -4,20 +4,33 @@ import {
   mysqlEnum,
   mysqlTable,
   text,
+  timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
-import {
-  ageGroupEnum,
-  createdAt,
-  genderEnum,
-  id,
-  updatedAt,
-  userId,
-} from "../schema-helper";
+
 import { locations, users } from "./users-schema";
 import { relations } from "drizzle-orm";
 import { medias } from "./media-schema";
 
+import { generateUniqueId } from "@/lib/id-generator";
+
+export const ageGroupEnum = ["teen", "young_adult", "adult", "senior"] as const;
+export const genderEnum = [
+  "male",
+  "female",
+  "other",
+  "prefer_not_to_say",
+] as const;
+export const id = varchar("id", { length: 36 })
+  .primaryKey()
+  .$defaultFn(
+    () => generateUniqueId() // this should be bigint string e.g 17489305838459032
+  );
+export const userId = varchar("user_id", { length: 36 })
+  .notNull()
+  .references(() => users.id, { onDelete: "cascade" });
+export const createdAt = timestamp("created_at").defaultNow();
+export const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
 export const advertisements = mysqlTable(
   "advertisements",
   {

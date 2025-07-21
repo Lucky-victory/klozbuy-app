@@ -10,25 +10,40 @@ import {
   mysqlEnum,
   index,
   uniqueIndex,
-  foreignKey,
 } from "drizzle-orm/mysql-core";
 import { relations, sql } from "drizzle-orm";
-import {
-  createdAt,
-  genderEnum,
-  mimeType,
-  updatedAt,
-  id,
-  userId,
-  currency,
-  reactionType,
-  postStatusEnum,
-  postTypeEnum,
-  postVisibilityEnum,
-} from "../schema-helper";
+
 import { medias } from "./media-schema";
 import { locations, users } from "./users-schema";
+import { generateUniqueId } from "@/lib/id-generator";
 
+
+export const postTypeEnum = ["general", "product", "service", "event"] as const;
+export const postStatusEnum = [
+  "draft",
+  "published",
+  "archived",
+  "deleted",
+] as const;
+export const postVisibilityEnum = ["public", "followers", "nearby"] as const;
+export const currency = varchar("currency", { length: 3 }).default("NGN");
+export const reactionType = [
+  "like",
+  "love",
+  "support",
+  "interesting",
+  "want",
+] as const;
+export const id = varchar("id", { length: 36 })
+  .primaryKey()
+  .$defaultFn(
+    () => generateUniqueId() // this should be bigint string e.g 17489305838459032
+  );
+export const userId = varchar("user_id", { length: 36 })
+  .notNull()
+  .references(() => users.id, { onDelete: "cascade" });
+export const createdAt = timestamp("created_at").defaultNow();
+export const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
 // Posts table - Enhanced with better structure
 export const posts = mysqlTable(
   "posts",

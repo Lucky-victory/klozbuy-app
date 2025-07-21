@@ -1,3 +1,4 @@
+import "server-only";
 import { db } from "@/db";
 import { posts } from "@/db/schemas/posts-schema"; // Adjusted paths
 import { CreatePostInput, UpdatePostInput, Post } from "@/models/post.model";

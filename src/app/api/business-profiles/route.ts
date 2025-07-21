@@ -3,7 +3,18 @@ import { BusinessProfileController } from "@/controllers/businessProfile.control
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  return await BusinessProfileController.getAllBusinessProfiles(searchParams);
+  try {
+    return await BusinessProfileController.getAllBusinessProfiles(searchParams);
+  } catch (error) {
+    console.error("Failed to get all business profiles:", error);
+    return new Response(
+      JSON.stringify({ error: "Failed to get business profiles." }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {

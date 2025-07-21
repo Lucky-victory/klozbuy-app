@@ -1,3 +1,5 @@
+import "server-only";
+
 import { db } from "@/db";
 import { follows } from "@/db/schemas/users-schema"; // Need users for relations/counts
 import { CreateFollowInput, Follow } from "@/models/follow.model";

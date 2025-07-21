@@ -1,3 +1,4 @@
+import "server-only";
 import { db } from "@/db";
 import { locations } from "@/db/schemas/users-schema";
 import {

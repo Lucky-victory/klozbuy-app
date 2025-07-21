@@ -12,14 +12,6 @@ import {
   uniqueIndex,
   foreignKey,
 } from "drizzle-orm/mysql-core";
-import {
-  createdAt,
-  currency,
-  genderEnum,
-  id,
-  updatedAt,
-  userId,
-} from "../schema-helper";
 import { relations, sql } from "drizzle-orm";
 import { advertisements } from "./advertisements-schema";
 import {
@@ -35,6 +27,24 @@ import { conversations } from "./messages-schema";
 import { messageReactions } from "./messages-schema";
 import { messageReadReceipts } from "./messages-schema";
 import { messageMentions } from "./messages-schema";
+import { generateUniqueId } from "@/lib/id-generator";
+
+export const genderEnum = [
+  "male",
+  "female",
+  "other",
+  "prefer_not_to_say",
+] as const;
+export const id = varchar("id", { length: 36 })
+  .primaryKey()
+  .$defaultFn(
+    () => generateUniqueId() // this should be bigint string e.g 17489305838459032
+  );
+export const userId = varchar("user_id", { length: 36 })
+  .notNull()
+  .references(() => users.id, { onDelete: "cascade" });
+export const createdAt = timestamp("created_at").defaultNow();
+export const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
 
 export const users = mysqlTable(
   "users",
