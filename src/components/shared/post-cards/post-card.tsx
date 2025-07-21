@@ -7,7 +7,7 @@ import {
   Clock,
   Heart as HeartFilled,
 } from "lucide-react";
-import { cn, formatTimestamp } from "@/lib/utils";
+import { cn, formatTimestamp, renderHashtags } from "@/lib/utils";
 import UserAvatar from "@/components/shared/user-avatar";
 import LocationBadge from "@/components/shared/location-badge";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,7 @@ import { DividerDot } from "@/components/ui/divider-dot";
 import UserName from "../user-name";
 import { Badge2 } from "@/components/ui/badge";
 import type { SamplePostType } from "@/lib/store/posts";
+import { PostContent } from "./post-content";
 
 interface PostCardProps {
   post: SamplePostType;
@@ -42,9 +43,9 @@ const PostCard = ({ post, className }: PostCardProps) => {
   const author = post.author;
 
   // Find primary image from medias
-  const primaryImage = post.medias?.find(
-    (m) => m.isPrimary && m.media?.type === "image"
-  )?.media;
+  const primaryImage =
+    post.medias?.find((m) => m.isPrimary && m.media?.type === "image")?.media ||
+    post.medias[0]?.media;
 
   // Find primary video from medias
   const primaryVideo = post.medias?.find(
@@ -137,8 +138,8 @@ const PostCard = ({ post, className }: PostCardProps) => {
       </div>
 
       {/* Post Content */}
-      <div className="px-4 pb-3">
-        {post.content && <p className=" mb-2">{post.content}</p>}
+      <div className="px-4 pb-3 mb-2">
+        {post.content && <PostContent content={post.content} />}
       </div>
 
       {/* Post Media */}

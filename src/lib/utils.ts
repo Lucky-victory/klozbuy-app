@@ -57,3 +57,10 @@ export const formatTimestamp = (timestamp: string) => {
 
   return date.toLocaleDateString();
 };
+export function renderHashtags(content: string): string {
+  return content.replace(/#(\w+)/g, (_, tag) => {
+    const encoded = encodeURIComponent(tag.toLowerCase());
+    return `<a href="#/${encoded}" class="text-blue-500 hover:underline">#${tag}</a>`;
+    // return `<a href="/hashtags/${encoded}" class="text-blue-500 hover:underline">#${tag}</a>`;
+  });
+}

@@ -8,7 +8,7 @@ import {
   Clock,
   Heart as HeartFilled,
 } from "lucide-react";
-import { cn, formatNumber, formatTimestamp } from "@/lib/utils";
+import { cn, formatNumber, formatTimestamp, renderHashtags } from "@/lib/utils";
 import UserAvatar from "@/components/shared/user-avatar";
 import LocationBadge from "@/components/shared/location-badge";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,7 @@ import { DividerDot } from "@/components/ui/divider-dot";
 import UserName from "../user-name";
 import { Badge2 } from "@/components/ui/badge";
 import type { SamplePostType } from "@/lib/store/posts";
+import { PostContent } from "./post-content";
 
 interface PostCardProps {
   post: SamplePostType;
@@ -140,8 +141,8 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
       </div>
 
       {/* Post Content */}
-      <div className="px-4 pb-3 text-sm md:text-base">
-        {post.content && <p className="mb-2">{post.content}</p>}
+      <div className="px-4 pb-3 mb-2">
+        {post.content && <PostContent content={post.content} />}
       </div>
 
       {/* Product Media and Info */}
@@ -171,11 +172,19 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
             </p>
             {/* Price would go here */}
           </div>
-          <div className="flex items-center justify-between max-md:flex-col gap-2 w-full">
-            <span className="text-lg font-semibold text-foreground">
-              {product?.currency === "NGN" ? "₦" : product?.currency || ""}
-              {formatNumber(product?.price, "comma")}
-            </span>
+          <div className="flex md:items-center justify-between max-md:flex-col gap-2 w-full">
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-semibold text-foreground">
+                {product?.currency === "NGN" ? "₦" : product?.currency || ""}
+                {formatNumber(Number(product?.price), "comma")}
+              </span>
+              {product.compareAtPrice && (
+                <span className="text-base line-through font-semibold text-muted-foreground">
+                  {product?.currency === "NGN" ? "₦" : product?.currency || ""}
+                  {formatNumber(Number(product?.compareAtPrice), "comma")}
+                </span>
+              )}
+            </div>
             <div className="flex-1 max-w-xs w-full">
               <Button variant={"secondary"} className="w-full">
                 <ShoppingBag size={20} className="mr-1" />

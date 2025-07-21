@@ -26,7 +26,7 @@ const samplePosts = [
       email: "info@leatherartnigeria.com",
       firstName: "Amina",
       lastName: "Danjuma",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1549692520-219cdb867dd1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwxfHx8fHx8fHwxNzA4MTg5MzYxfA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Crafting exquisite leather goods with Nigerian heritage. Passionate about quality and sustainable practices.📍Lagos, Nigeria.",
@@ -43,44 +43,7 @@ const samplePosts = [
         averageRating: 4.8,
       },
     },
-    medias: [
-      {
-        id: "1794270183396393600",
-        postId: "1794270183396038400",
-        mediaId: "1794270183396748800",
-        isPrimary: true,
-        sortOrder: 0,
-        altText: "Front view of a handcrafted brown leather handbag.",
-        createdAt: "2025-07-20T15:31:00.000Z",
-        updatedAt: "2025-07-20T15:31:00.000Z",
-        media: {
-          id: "1794270183396748800",
-          userId: "1794270183390710400",
-          type: "image",
-          url: "https://images.unsplash.com/photo-1603565017124-73c242e2a74c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwxfHx8fHx8fHwxNzA4MTg5NjU4fA&ixlib=rb-4.0.3&q=80&w=800",
-          fileName: "handbag_front.jpg",
-          fileSize: 250000,
-          cdnPublicId: "leather_art/handbag_front_dfg7h8",
-          createdAt: "2025-07-20T15:30:50.000Z",
-          updatedAt: "2025-07-20T15:30:50.000Z",
-          image: {
-            id: "1794270183397104000",
-            mediaId: "1794270183396748800",
-            width: 1200,
-            height: 900,
-            altText:
-              "Elegant brown leather handbag with traditional Nigerian patterns.",
-            thumbnailUrl:
-              "https://images.unsplash.com/photo-1603565017124-73c242e2a74c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwxfHx8fHx8fHwxNzA4MTg5NjU4fA&ixlib=rb-4.0.3&q=80&w=200",
-            colorProfile: "sRGB",
-            isAnimated: false,
-          },
-          video: null,
-          document: null,
-          audio: null,
-        },
-      },
-    ],
+    medias: [],
     mentions: [],
     products: [
       {
@@ -126,7 +89,7 @@ const samplePosts = [
               id: "1794270183396748800",
               userId: "1794270183390710400",
               type: "image",
-              url: "https://images.unsplash.com/photo-1603565017124-73c242e2a74c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwxfHx8fHx8fHwxNzA4MTg5NjU4fA&ixlib=rb-4.0.3&q=80&w=800",
+              url: "https://res.cloudinary.com/dyp9giu1e/image/upload/w_1000,q_auto,f_auto/uploads/artisan-handbag.jpg",
               fileName: "handbag_front.jpg",
               fileSize: 250000,
               cdnPublicId: "leather_art/handbag_front_dfg7h8",
@@ -199,7 +162,7 @@ const samplePosts = [
           id: "1794270183399945600",
           userId: "1794270183398880000",
           type: "image",
-          url: "https://images.unsplash.com/photo-1604928135334-0370f59239c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwyfHx8fHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=800",
+          url: "https://res.cloudinary.com/dyp9giu1e/image/upload/w_1500,q_auto,f_auto/uploads/bjxkn2zbttl9wlemnocw.png",
           fileName: "eko_atlantic_sunset.jpg",
           fileSize: 320000,
           cdnPublicId: "travel/eko_atlantic_sunset_qws5x6",
@@ -213,7 +176,7 @@ const samplePosts = [
             altText:
               "The stunning skyline of Eko Atlantic City reflecting the sunset.",
             thumbnailUrl:
-              "https://images.unsplash.com/photo-1604928135334-0370f59239c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwyfHx8fHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=200",
+              "https://res.cloudinary.com/dyp9giu1e/image/upload/w_1000,q_auto,f_auto/uploads/bjxkn2zbttl9wlemnocw.png",
             colorProfile: "sRGB",
             isAnimated: false,
           },
@@ -249,7 +212,7 @@ const samplePosts = [
       email: "sales@creativetech.ng",
       firstName: "Chidi",
       lastName: "Nwosu",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1542831371-29b1f74f7139?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzMHx8YnVzaW5lc3MlMjBwcm9maWxlfHxlbnwwfHx8fHwxNzA4MTkwMzk5fA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Your go-to source for cutting-edge tech gadgets for creative professionals in Nigeria.",
@@ -349,7 +312,7 @@ const samplePosts = [
               id: "1794270183402076800",
               userId: "1794270183401011200",
               type: "image",
-              url: "https://images.unsplash.com/photo-1596541223130-ad279210b0ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzOHx8ZGlnaXRhbCUyMGQyMjNyYXdpbmclMjB0YWJsZXR8ZW58MHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=800",
+              url: "https://res.cloudinary.com/dyp9giu1e/image/upload/w_1000,q_auto,f_auto/uploads/drawing-tablet.jpg",
               fileName: "drawing_tablet.jpg",
               fileSize: 400000,
               cdnPublicId: "tech/drawing_tablet_mnh4o9",
@@ -363,7 +326,7 @@ const samplePosts = [
                 altText:
                   "Close-up of a hand drawing on a digital tablet with a stylus.",
                 thumbnailUrl:
-                  "https://images.unsplash.com/photo-1596541223130-ad279210b0ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzOHx8ZGlnaXRhbCUyMGQyMjNyYXdpbmclMjB0YWJsZXR8ZW58MHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=200",
+                  "https://res.cloudinary.com/dyp9giu1e/image/upload/w_1000,q_auto,f_auto/uploads/drawing-tablet.jpg",
                 colorProfile: "sRGB",
                 isAnimated: false,
               },
@@ -422,7 +385,7 @@ const samplePosts = [
           id: "1794270183405273600",
           userId: "1794270183404208000",
           type: "image",
-          url: "https://images.unsplash.com/photo-1627885408665-68a8f1f4b8f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzNXx8bWFya2V0fGVufDB8fHx8fDE3MDgxOTA2MjN8MA&ixlib=rb-4.0.3&q=80&w=800",
+          url: "https://res.cloudinary.com/dyp9giu1e/image/upload/w_1000,q_auto,f_auto/uploads/balogun.jpg",
           fileName: "balogun_market.jpg",
           fileSize: 280000,
           cdnPublicId: "city/balogun_market_rty9u0",
@@ -471,7 +434,7 @@ const samplePosts = [
       email: "orders@sweettreats.ng",
       firstName: "Ngozi",
       lastName: "Okoro",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1621536767702-39c4a5c6812d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHw4fHx8fHx8fHwxNzA4MTg5MzYxfA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Your daily dose of happiness, baked fresh. Specializing in healthy and delightful pastries. 🍰",
@@ -488,43 +451,7 @@ const samplePosts = [
         averageRating: 4.9,
       },
     },
-    medias: [
-      {
-        id: "1794270183407049600",
-        postId: "1794270183405984000",
-        mediaId: "1794270183407404800",
-        isPrimary: true,
-        sortOrder: 0,
-        altText: "Gluten-Free Chocolate Chip Cookies on a cooling rack.",
-        createdAt: "2025-07-16T16:35:00.000Z",
-        updatedAt: "2025-07-16T16:35:00.000Z",
-        media: {
-          id: "1794270183407404800",
-          userId: "1794270183406339200",
-          type: "image",
-          url: "https://images.unsplash.com/photo-1558961363-fa157643666d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwyOHx8Y29va2llc3xlbnwwfHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=800",
-          fileName: "cookies_gluten_free.jpg",
-          fileSize: 180000,
-          cdnPublicId: "food/cookies_gluten_free_pqr7s8",
-          createdAt: "2025-07-16T16:34:00.000Z",
-          updatedAt: "2025-07-16T16:34:00.000Z",
-          image: {
-            id: "1794270183407759900",
-            mediaId: "1794270183407404800",
-            width: 1200,
-            height: 800,
-            altText: "Delicious gluten-free chocolate chip cookies.",
-            thumbnailUrl:
-              "https://images.unsplash.com/photo-1558961363-fa157643666d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwyOHx8Y29va2llc3xlbnwwfHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=200",
-            colorProfile: "sRGB",
-            isAnimated: false,
-          },
-          video: null,
-          document: null,
-          audio: null,
-        },
-      },
-    ],
+    medias: [],
     mentions: [],
     products: [
       {
@@ -570,7 +497,7 @@ const samplePosts = [
               id: "1794270183407404800",
               userId: "1794270183406339200",
               type: "image",
-              url: "https://images.unsplash.com/photo-1558961363-fa157643666d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwyOHx8Y29va2llc3xlbnwwfHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=800",
+              url: "https://res.cloudinary.com/dyp9giu1e/image/upload/w_1000,q_auto,f_auto/uploads/cookies.jpg",
               fileName: "cookies_gluten_free.jpg",
               fileSize: 180000,
               cdnPublicId: "food/cookies_gluten_free_pqr7s8",
@@ -583,7 +510,7 @@ const samplePosts = [
                 height: 800,
                 altText: "Delicious gluten-free chocolate chip cookies.",
                 thumbnailUrl:
-                  "https://images.unsplash.com/photo-1558961363-fa157643666d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwyOHx8Y29va2llc3xlbnwwfHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=200",
+                  "https://res.cloudinary.com/dyp9giu1e/image/upload/w_1000,q_auto,f_auto/uploads/cookies.jpg",
                 colorProfile: "sRGB",
                 isAnimated: false,
               },
@@ -642,7 +569,7 @@ const samplePosts = [
           id: "1794270183410601500",
           userId: "1794270183409535900",
           type: "image",
-          url: "https://images.unsplash.com/photo-1621536767702-39c4a5c6812d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzMHx8bGVra2klMjBjb25zZXJ2YXRpb24lMjBjZW50cmV8ZW58MHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=800",
+          url: "https://blog.krent.space/wp-content/uploads/2024/11/Lekki-Conservation-CenterSarah-Toyin.jpg",
           fileName: "lekki_canopy.jpg",
           fileSize: 290000,
           cdnPublicId: "nature/lekki_canopy_bridge_xyz123",
@@ -656,7 +583,7 @@ const samplePosts = [
             altText:
               "Canopy walk bridge amidst lush greenery at Lekki Conservation Centre.",
             thumbnailUrl:
-              "https://images.unsplash.com/photo-1621536767702-39c4a5c6812d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzMHx8bGVra2klMjBjb25zZXJ2YXRpb24lMjBjZW50cmV8ZW58MHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=200",
+              "https://blog.krent.space/wp-content/uploads/2024/11/Lekki-Conservation-CenterSarah-Toyin.jpg",
             colorProfile: "sRGB",
             isAnimated: false,
           },
@@ -692,7 +619,7 @@ const samplePosts = [
       email: "contact@purenigerian.com",
       firstName: "Ifiok",
       lastName: "Effiong",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1590487988265-27a96434d28d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwyMHx8c2tpbmNhcmV8ZW58MHx8fHwxNzA4MTg5MzYxfA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Harnessing Nigeria's natural goodness for your skin. Organic, ethical, and effective skincare.",
@@ -914,7 +841,7 @@ const samplePosts = [
       email: "info@ecocomfort.ng",
       firstName: "Chioma",
       lastName: "Eze",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1542831371-29b1f74f7139?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwxMHx8c2FkZGVuc3xlbnwwfHx8fHwxNzA4MTg5MzYxfA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Bringing sustainable comfort to your home with organic and eco-friendly products. Sleep well, live green. 🍃",
@@ -945,7 +872,7 @@ const samplePosts = [
           id: "1794270183418060700",
           userId: "1794270183416995100",
           type: "image",
-          url: "https://images.unsplash.com/photo-1579621970795-87facc2f976d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwyOHx8YmVkJTIwc2hlZXRzfGVufDB8fHx8fDE3MDgxOTA2MjN8MA&ixlib=rb-4.0.3&q=80&w=800",
+          url: "https://images.pexels.com/photos/763148/pexels-photo-763148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           fileName: "organic_bedsheets.jpg",
           fileSize: 220000,
           cdnPublicId: "home/organic_bedsheets_uvw2xy",
@@ -1137,7 +1064,7 @@ const samplePosts = [
       email: "orders@claycreations.ng",
       firstName: "Segun",
       lastName: "Adewale",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1542831371-29b1f74f7139?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzNXx8YXJ0aXNhbnxlbnwwfHx8fHwxNzA4MTg5MzYxfA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Artisanal ceramics, handcrafted with passion. Bringing unique, soulful pieces to your home.",
@@ -1323,7 +1250,7 @@ const samplePosts = [
       email: "orders@tropicalsips.ng",
       firstName: "Obi",
       lastName: "Okafor",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1576016666358-1f16f3b0f27c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwxNnx8ZnJ1aXQlMjBqdGZ8ZW58MHx8fHwxNzA4MTg5MzYxfA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Bringing you the freshest taste of the tropics with our 100% natural fruit juices. Stay healthy, stay hydrated.",
@@ -1544,7 +1471,7 @@ const samplePosts = [
       email: "info@greenenergysol.ng",
       firstName: "Folake",
       lastName: "Balogun",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1542831371-29b1f74f7139?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzNXx8ZW5lcmd5JTIwc29sdXRpb258ZW58MHx8fHwxNzA4MTg5MzYxfA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Innovating sustainable energy solutions for Nigeria. Powering a greener future, one device at a time. 💡",
@@ -1765,7 +1692,7 @@ const samplePosts = [
       email: "support@studentessentials.ng",
       firstName: "Kemi",
       lastName: "Adewale",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1542831371-29b1f74f7139?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzMnx8c3R1ZGVudCUyMGVzc2VudGlhbHxlbnwwfHx8fHwxNzA4MTg5MzYxfA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Equipping Nigerian students with quality and affordable academic and lifestyle essentials.",
@@ -1985,7 +1912,7 @@ const samplePosts = [
       email: "support@fitgear.ng",
       firstName: "Emeka",
       lastName: "Ude",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1542831371-29b1f74f7139?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHw0MHx8Zml0bmVzcyUyMHRlY2h8ZW58MHx8fHwxNzA4MTg5MzYxfA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Your partner in fitness. Providing top-tier fitness equipment and wearables in Nigeria.",
@@ -2209,7 +2136,7 @@ const samplePosts = [
       email: "hello@kidscomfort.ng",
       firstName: "Adanna",
       lastName: "Ibekwe",
-      role: "business",
+      type: "business" as const,
       profilePictureUrl:
         "https://images.unsplash.com/photo-1542831371-29b1f74f7139?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHw1NXx8a2lkcyUyMGZ1cm5pdHVyZXxlbnwwfHx8fHwxNzA4MTg5MzYxfA&ixlib=rb-4.0.3&q=80&w=200",
       bio: "Creating safe, comfortable, and fun furniture solutions for Nigerian kids. Happy kids, happy homes!",

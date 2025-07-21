@@ -196,3 +196,6 @@
 .link-box.group button {
   @apply z-10;
 }
+.strike {
+  text-decoration: dashed;
+}
