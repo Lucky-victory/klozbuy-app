@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Layout from "@/components/layouts/layout";
 import ProfilePage from "@/components/profile/profile-page";
 import { getStoredPostsByUsername, getStoredUser } from "@/lib/store/posts";
+import { notFound } from "next/navigation";
 type Props = {
   params: { userId: string };
 };
@@ -32,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const userData = await fetchUserData(await params.userId);
   const posts = await fetchPosts(await params.userId);
+  if (!userData) return notFound();
   return (
     <>
       <Layout>

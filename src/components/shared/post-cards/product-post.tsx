@@ -127,7 +127,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
                 </DropdownMenu>
               </div>
             </div>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="flex items-center flex-wrap gap-2 text-xs text-muted-foreground">
               <span className="flex items-center  shrink-0 gap-1">
                 <Clock size={12} />
                 {formatTimestamp(post.createdAt)}
