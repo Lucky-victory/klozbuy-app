@@ -26,7 +26,7 @@ import {
   postTypeEnum,
   postVisibilityEnum,
 } from "../schema-helper";
-import { media } from "./media-schema";
+import { medias } from "./media-schema";
 import { locations, users } from "./users-schema";
 
 // Posts table - Enhanced with better structure
@@ -117,8 +117,12 @@ export const products = mysqlTable(
     mediaId: varchar("media_id", { length: 36 }),
     category: varchar("category", { length: 100 }),
     sku: varchar("sku", { length: 100 }),
-    price: decimal("price", { precision: 10, scale: 2 }),
-    compareAtPrice: decimal("compare_at_price", { precision: 10, scale: 2 }),
+    price: decimal("price", { precision: 10, scale: 2, mode: "number" }),
+    compareAtPrice: decimal("compare_at_price", {
+      precision: 10,
+      scale: 2,
+      mode: "number",
+    }),
     currency,
     condition: mysqlEnum("condition", ["new", "used", "refurbished"]).default(
       "new"
@@ -132,7 +136,7 @@ export const products = mysqlTable(
     stockQuantity: int("stock_quantity"),
     minOrderQuantity: int("min_order_quantity").default(1),
     maxOrderQuantity: int("max_order_quantity"),
-    weight: decimal("weight", { precision: 8, scale: 3 }), // in kg
+    weight: decimal("weight", { precision: 8, scale: 3, mode: "number" }), // in kg
     dimensions: json("dimensions"), // { length, width, height }
     brand: varchar("brand", { length: 100 }),
     model: varchar("model", { length: 100 }),
@@ -166,7 +170,7 @@ export const services = mysqlTable(
       "per_project",
       "negotiable",
     ]).notNull(),
-    price: decimal("price", { precision: 10, scale: 2 }),
+    price: decimal("price", { precision: 10, scale: 2, mode: "number" }),
     currency,
     duration: varchar("duration", { length: 100 }), // e.g., "2 hours", "1 day"
     availability: json("availability"), // Available days/hours
@@ -217,7 +221,11 @@ export const events = mysqlTable(
     meetingUrl: varchar("meeting_url", { length: 500 }),
     capacity: int("capacity"),
     currentAttendees: int("current_attendees").default(0),
-    ticketPrice: decimal("ticket_price", { precision: 10, scale: 2 }),
+    ticketPrice: decimal("ticket_price", {
+      precision: 10,
+      scale: 2,
+      mode: "number",
+    }),
     isTicketRequired: boolean("is_ticket_required").default(false),
     registrationDeadline: timestamp("registration_deadline"),
     contactInfo: json("contact_info"),
@@ -265,7 +273,7 @@ export const postMedia = mysqlTable(
       .references(() => posts.id, { onDelete: "cascade" }),
     mediaId: varchar("media_id", { length: 36 })
       .notNull()
-      .references(() => media.id, { onDelete: "cascade" }),
+      .references(() => medias.id, { onDelete: "cascade" }),
     isPrimary: boolean("is_primary").default(false),
     sortOrder: int("sort_order").default(0),
     altText: varchar("alt_text", { length: 500 }),
@@ -289,7 +297,7 @@ export const productMedia = mysqlTable(
       .references(() => products.id, { onDelete: "cascade" }),
     mediaId: varchar("media_id", { length: 36 })
       .notNull()
-      .references(() => media.id, { onDelete: "cascade" }),
+      .references(() => medias.id, { onDelete: "cascade" }),
     isPrimary: boolean("is_primary").default(false),
     sortOrder: int("sort_order").default(0),
     altText: varchar("alt_text", { length: 500 }),
@@ -313,7 +321,7 @@ export const serviceMedia = mysqlTable(
       .references(() => services.id, { onDelete: "cascade" }),
     mediaId: varchar("media_id", { length: 36 })
       .notNull()
-      .references(() => media.id, { onDelete: "cascade" }),
+      .references(() => medias.id, { onDelete: "cascade" }),
     isPrimary: boolean("is_primary").default(false),
     sortOrder: int("sort_order").default(0),
     altText: varchar("alt_text", { length: 500 }),
@@ -420,7 +428,7 @@ export const postCommentMedia = mysqlTable(
       .references(() => postComments.id, { onDelete: "cascade" }),
     mediaId: varchar("media_id", { length: 36 })
       .notNull()
-      .references(() => media.id, { onDelete: "cascade" }),
+      .references(() => medias.id, { onDelete: "cascade" }),
   },
   (table) => [
     index("post_comment_media_comment_id_idx").on(table.commentId),
@@ -459,7 +467,11 @@ export const postPromotions = mysqlTable(
     conversions: int("conversions").default(0),
     startDate: timestamp("start_date").notNull(),
     endDate: timestamp("end_date").notNull(),
-    dailyBudget: decimal("daily_budget", { precision: 10, scale: 2 }),
+    dailyBudget: decimal("daily_budget", {
+      precision: 10,
+      scale: 2,
+      mode: "number",
+    }),
     type: mysqlEnum("type", [
       "boost",
       "featured",
@@ -533,7 +545,7 @@ export const postCommentsRelations = relations(
       fields: [postComments.parentId],
       references: [postComments.id],
     }),
-    media: many(postCommentMedia),
+    medias: many(postCommentMedia),
     reactions: many(commentReactions),
     mentions: many(postCommentMentions),
   })
@@ -610,9 +622,9 @@ export const productMediaRelations = relations(productMedia, ({ one }) => ({
     fields: [productMedia.productId],
     references: [products.id],
   }),
-  media: one(media, {
+  media: one(medias, {
     fields: [productMedia.mediaId],
-    references: [media.id],
+    references: [medias.id],
   }),
 }));
 export const serviceMediaRelations = relations(serviceMedia, ({ one }) => ({
@@ -620,9 +632,9 @@ export const serviceMediaRelations = relations(serviceMedia, ({ one }) => ({
     fields: [serviceMedia.serviceId],
     references: [services.id],
   }),
-  media: one(media, {
+  media: one(medias, {
     fields: [serviceMedia.mediaId],
-    references: [media.id],
+    references: [medias.id],
   }),
 }));
 
@@ -631,9 +643,9 @@ export const postMediaRelations = relations(postMedia, ({ one }) => ({
     fields: [postMedia.postId],
     references: [posts.id],
   }),
-  media: one(media, {
+  media: one(medias, {
     fields: [postMedia.mediaId],
-    references: [media.id],
+    references: [medias.id],
   }),
 }));
 export const postCommentMediaRelations = relations(
@@ -643,9 +655,9 @@ export const postCommentMediaRelations = relations(
       fields: [postCommentMedia.commentId],
       references: [postComments.id],
     }),
-    media: one(media, {
+    media: one(medias, {
       fields: [postCommentMedia.mediaId],
-      references: [media.id],
+      references: [medias.id],
     }),
   })
 );

@@ -16,7 +16,7 @@ import {
 } from "../schema-helper";
 import { locations, users } from "./users-schema";
 import { relations } from "drizzle-orm";
-import { media } from "./media-schema";
+import { medias } from "./media-schema";
 
 export const advertisements = mysqlTable(
   "advertisements",
@@ -84,7 +84,7 @@ export const advertisementAttachments = mysqlTable(
       .references(() => advertisements.id, { onDelete: "cascade" }),
     mediaId: varchar("media_id", { length: 36 })
       .notNull()
-      .references(() => media.id, { onDelete: "cascade" }),
+      .references(() => medias.id, { onDelete: "cascade" }),
     createdAt,
     updatedAt,
   },
@@ -131,9 +131,9 @@ export const advertisementAttachmentsRelations = relations(
       fields: [advertisementAttachments.advertisementId],
       references: [advertisements.id],
     }),
-    media: one(media, {
+    media: one(medias, {
       fields: [advertisementAttachments.mediaId],
-      references: [media.id],
+      references: [medias.id],
     }),
   })
 );

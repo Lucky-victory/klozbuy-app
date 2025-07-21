@@ -20,7 +20,7 @@ import {
 import { advertisementAttachments } from "./advertisements-schema";
 
 // Base media table with common fields
-export const media = mysqlTable("media", {
+export const medias = mysqlTable("media", {
   id,
   userId: userId,
   type: mysqlEnum("type", mediaType).notNull(),
@@ -37,7 +37,7 @@ export const images = mysqlTable("images", {
   id,
   mediaId: varchar("media_id", { length: 36 })
     .notNull()
-    .references(() => media.id, { onDelete: "cascade" }),
+    .references(() => medias.id, { onDelete: "cascade" }),
   width: int("width").notNull(),
   height: int("height").notNull(),
   altText: varchar("alt_text", { length: 255 }),
@@ -50,7 +50,7 @@ export const videos = mysqlTable("videos", {
   id,
   mediaId: varchar("media_id", { length: 36 })
     .notNull()
-    .references(() => media.id, { onDelete: "cascade" }),
+    .references(() => medias.id, { onDelete: "cascade" }),
   duration: int("duration").notNull(), // seconds
   width: int("width"),
   height: int("height"),
@@ -64,18 +64,18 @@ export const documents = mysqlTable("documents", {
   id,
   mediaId: varchar("media_id", { length: 36 })
     .notNull()
-    .references(() => media.id, { onDelete: "cascade" }),
+    .references(() => medias.id, { onDelete: "cascade" }),
   mimeType: varchar("mime_type", { length: 100 }).notNull(),
   pageCount: int("page_count"),
   thumbnailUrl: varchar("thumbnail_url", { length: 500 }),
   isSearchable: boolean("is_searchable").default(false),
 });
 
-export const audio = mysqlTable("audio", {
+export const audios = mysqlTable("audios", {
   id,
   mediaId: varchar("media_id", { length: 36 })
     .notNull()
-    .references(() => media.id, { onDelete: "cascade" }),
+    .references(() => medias.id, { onDelete: "cascade" }),
   duration: int("duration").notNull(), // seconds
   bitrate: int("bitrate"),
   sampleRate: int("sample_rate"),
@@ -84,33 +84,33 @@ export const audio = mysqlTable("audio", {
 });
 
 // Relations
-export const mediaRelations = relations(media, ({ one, many }) => ({
-  owner: one(users, { fields: [media.userId], references: [users.id] }),
-  image: one(images, { fields: [media.id], references: [images.mediaId] }),
-  video: one(videos, { fields: [media.id], references: [videos.mediaId] }),
+export const mediaRelations = relations(medias, ({ one, many }) => ({
+  owner: one(users, { fields: [medias.userId], references: [users.id] }),
+  image: one(images, { fields: [medias.id], references: [images.mediaId] }),
+  video: one(videos, { fields: [medias.id], references: [videos.mediaId] }),
   document: one(documents, {
-    fields: [media.id],
+    fields: [medias.id],
     references: [documents.mediaId],
   }),
-  audio: one(audio, { fields: [media.id], references: [audio.mediaId] }),
+  audio: one(audios, { fields: [medias.id], references: [audios.mediaId] }),
   postMedia: one(postMedia, {
-    fields: [media.id],
+    fields: [medias.id],
     references: [postMedia.mediaId],
   }),
   postCommentMedia: one(postCommentMedia, {
-    fields: [media.id],
+    fields: [medias.id],
     references: [postCommentMedia.mediaId],
   }),
   productMedia: one(productMedia, {
-    fields: [media.id],
+    fields: [medias.id],
     references: [productMedia.mediaId],
   }),
   serviceMedia: one(serviceMedia, {
-    fields: [media.id],
+    fields: [medias.id],
     references: [serviceMedia.mediaId],
   }),
   advertisementAttachments: one(advertisementAttachments, {
-    fields: [media.id],
+    fields: [medias.id],
     references: [advertisementAttachments.mediaId],
   }),
 }));

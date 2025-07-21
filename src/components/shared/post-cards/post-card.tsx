@@ -3,7 +3,6 @@ import {
   Heart,
   MessageCircle,
   Share,
-  ShoppingBag,
   MoreHorizontal,
   Clock,
   Heart as HeartFilled,
@@ -20,13 +19,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import Link from "next/link";
-import { Posts } from "@/types";
 import { DividerDot } from "@/components/ui/divider-dot";
 import UserName from "../user-name";
 import { Badge2 } from "@/components/ui/badge";
+import type { SamplePostType } from "@/lib/store/posts";
 
 interface PostCardProps {
-  post: Posts;
+  post: SamplePostType;
   className?: string;
 }
 
@@ -38,6 +37,19 @@ const PostCard = ({ post, className }: PostCardProps) => {
     setIsLiked(!isLiked);
     setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
   };
+
+  // Use author instead of owner
+  const author = post.author;
+
+  // Find primary image from medias
+  const primaryImage = post.medias?.find(
+    (m) => m.isPrimary && m.media?.type === "image"
+  )?.media;
+
+  // Find primary video from medias
+  const primaryVideo = post.medias?.find(
+    (m) => m.media?.type === "video"
+  )?.media;
 
   return (
     <div
@@ -52,12 +64,12 @@ const PostCard = ({ post, className }: PostCardProps) => {
       {/* Post Header */}
       <div className="flex  justify-between p-3 md:p-4 ">
         <div className="flex items-stretch   gap-2 w-full">
-          <Link href={`/profile/${post.owner.id}`}>
+          <Link href={`/profile/${author.id}`}>
             <UserAvatar
-              name={post.owner?.name || ""}
-              src={post.owner?.profilePicture || ""}
+              name={author?.firstName || author?.username || ""}
+              src={author?.profilePictureUrl || ""}
               size="md"
-              userType={post.owner?.userType || "individual"}
+              userType={author?.type || "individual"}
             />
           </Link>
 
@@ -65,10 +77,14 @@ const PostCard = ({ post, className }: PostCardProps) => {
             <div className="flex justify-between items-start   w-full">
               <div className="flex items-center flex-wrap gap-1 sm:gap-2 ">
                 <UserName
-                  id={post.owner?.id || ""}
-                  username={post.owner?.username || ""}
-                  name={post.owner?.name || ""}
-                  isVerified={post.owner?.isVerified || false}
+                  id={author?.id || ""}
+                  username={author?.username || ""}
+                  name={
+                    author?.firstName
+                      ? `${author.firstName} ${author.lastName || ""}`
+                      : author?.username || ""
+                  }
+                  isVerified={author?.isVerified || false}
                 />
                 <DividerDot />
                 <Button
@@ -108,10 +124,11 @@ const PostCard = ({ post, className }: PostCardProps) => {
                 {formatTimestamp(post.createdAt)}
               </span>
               <DividerDot />
-              {(post.owner.distance !== undefined || post.owner.landmark) && (
+              {/* No direct distance/landmark on author, but could be in businessProfile or elsewhere */}
+              {author.businessProfile?.address && (
                 <LocationBadge
-                  distance={post.owner.distance}
-                  landmark={post.owner.landmark}
+                  distance={undefined}
+                  landmark={author.businessProfile.address}
                 />
               )}
             </div>
@@ -125,24 +142,26 @@ const PostCard = ({ post, className }: PostCardProps) => {
       </div>
 
       {/* Post Media */}
-      {/* {post.type === "product" && post.productImage && (
+      {primaryImage && (
         <div className="relative aspect-square bg-muted">
           <Image
-            src={post.productImage}
-            alt={post.productName || "Product image"}
+            src={primaryImage.url}
+            alt={primaryImage.image?.altText || "Post image"}
             fill
             className="object-cover aspect-square"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
-      )} */}
+      )}
 
-      {post.type === "video" && post.videoUrl && (
+      {primaryVideo && primaryVideo.video && (
         <div className="relative aspect-video bg-muted">
           <video
-            src={post.videoUrl}
+            src={primaryVideo.url}
             controls
             className="w-full h-full object-cover"
+            //@ts-ignore
+            poster={primaryVideo.video?.thumbnailUrl}
           />
         </div>
       )}
@@ -178,7 +197,6 @@ const PostCard = ({ post, className }: PostCardProps) => {
 
           <Button
             variant="ghost"
-            // size="sm"
             className="flex items-center gap-2 py-1 rounded-full px-2 h-auto text-sm font-normal"
           >
             <Share size={20} />

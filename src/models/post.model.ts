@@ -70,7 +70,7 @@ export const PostResponseSchema = SelectPostSchema.extend({
   // You might want to include nested schemas for comments, reactions, media, etc. here
   // comments: z.array(z.lazy(() => SelectPostCommentSchema)).optional(), // Requires PostCommentSchema
   // reactions: z.array(z.lazy(() => SelectPostReactionSchema)).optional(), // Requires PostReactionSchema
-  // media: z.array(z.lazy(() => SelectPostMediaSchema)).optional(), // Requires PostMediaSchema
+  // medias: z.array(z.lazy(() => SelectPostMediaSchema)).optional(), // Requires PostMediaSchema
 }).omit({
   // Potentially omit internal fields for API response
 });

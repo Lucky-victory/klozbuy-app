@@ -1,9 +1,9 @@
 import {
-  media,
+  medias,
   images,
   videos,
   documents,
-  audio,
+  audios,
 } from "@/db/schemas/media-schema"; // Adjusted path to your Drizzle schema file
 import {
   createInsertSchema,
@@ -15,12 +15,12 @@ import { z } from "zod/v4";
 // ----------------------------------------------------
 // Base Media Schema
 // ----------------------------------------------------
-export type Media = typeof media.$inferSelect;
-export type NewMedia = typeof media.$inferInsert;
+export type Media = typeof medias.$inferSelect;
+export type NewMedia = typeof medias.$inferInsert;
 
-export const CreateMediaSchema = createInsertSchema(media, {
+export const CreateMediaSchema = createInsertSchema(medias, {
   userId: z.string().length(36, "Invalid user ID format."),
-  type: z.enum(media.type.enumValues),
+  type: z.enum(medias.type.enumValues),
   url: z.url("Invalid URL format.").max(500, "URL is too long."),
   fileName: z.string().max(255, "File name is too long.").optional().nullable(),
   fileSize: z
@@ -40,11 +40,11 @@ export const CreateMediaSchema = createInsertSchema(media, {
   updatedAt: true,
 });
 
-export const UpdateMediaSchema = createUpdateSchema(media, {
+export const UpdateMediaSchema = createUpdateSchema(medias, {
   id: z.string().length(36, "Invalid Media ID format.").optional(),
 });
 
-export const SelectMediaSchema = createSelectSchema(media);
+export const SelectMediaSchema = createSelectSchema(medias);
 
 export type CreateMediaInput = z.infer<typeof CreateMediaSchema>;
 export type UpdateMediaInput = z.infer<typeof UpdateMediaSchema>;
@@ -165,10 +165,10 @@ export type DocumentResponse = z.infer<typeof SelectDocumentSchema>;
 // ----------------------------------------------------
 // Audio Schema
 // ----------------------------------------------------
-export type Audio = typeof audio.$inferSelect;
-export type NewAudio = typeof audio.$inferInsert;
+export type Audio = typeof audios.$inferSelect;
+export type NewAudio = typeof audios.$inferInsert;
 
-export const CreateAudioSchema = createInsertSchema(audio, {
+export const CreateAudioSchema = createInsertSchema(audios, {
   mediaId: z.string().length(36, "Invalid media ID format."),
   duration: z
     .number()
@@ -198,7 +198,7 @@ export const CreateAudioSchema = createInsertSchema(audio, {
   id: true,
 });
 
-export const SelectAudioSchema = createSelectSchema(audio);
+export const SelectAudioSchema = createSelectSchema(audios);
 
 export type CreateAudioInput = z.infer<typeof CreateAudioSchema>;
 export type AudioResponse = z.infer<typeof SelectAudioSchema>;

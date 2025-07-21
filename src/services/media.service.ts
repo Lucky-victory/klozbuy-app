@@ -1,10 +1,10 @@
 import { db } from "@/db";
 import {
-  media,
+  medias,
   images,
   videos,
   documents,
-  audio,
+  audios,
 } from "@/db/schemas/media-schema"; // Adjusted paths
 import {
   CreateMediaInput,
@@ -30,7 +30,7 @@ export class MediaService {
    */
   static async getMediaById(id: string): Promise<FullMediaResponse | null> {
     const mediaItem = await db.query.media.findFirst({
-      where: eq(media.id, id),
+      where: eq(medias.id, id),
       with: {
         image: true,
         video: true,
@@ -56,15 +56,15 @@ export class MediaService {
     type?: string
   ): Promise<FullMediaResponse[]> {
     const whereClause = and(
-      userId ? eq(media.userId, userId) : undefined,
-      type ? eq(media.type, type as any) : undefined
+      userId ? eq(medias.userId, userId) : undefined,
+      type ? eq(medias.type, type as any) : undefined
     );
 
     const allMedia = await db.query.media.findMany({
       where: whereClause,
       limit: limit,
       offset: offset,
-      orderBy: desc(media.createdAt),
+      orderBy: desc(medias.createdAt),
       with: {
         image: true,
         video: true,
@@ -91,7 +91,7 @@ export class MediaService {
   ): Promise<FullMediaResponse> {
     return await db.transaction(async (tx) => {
       const [newMedia] = await tx
-        .insert(media)
+        .insert(medias)
         .values(mediaData)
         .$returningId();
       if (!newMedia.id) {
@@ -142,7 +142,7 @@ export class MediaService {
           break;
         case "audio":
           const [newAudioReturn] = await tx
-            .insert(audio)
+            .insert(audios)
             .values({ ...(typeSpecificData as CreateAudioInput), mediaId })
             .$returningId();
           const newAudio = await tx.query.audio.findFirst({
@@ -164,7 +164,7 @@ export class MediaService {
 
       // Re-fetch the full media item with relations to ensure consistency
       const createdMediaWithRelations = await tx.query.media.findFirst({
-        where: eq(media.id, mediaId),
+        where: eq(medias.id, mediaId),
         with: {
           image: true,
           video: true,
@@ -194,9 +194,9 @@ export class MediaService {
   ): Promise<Media | null> {
     const updatedMedia = await db.transaction(async (tx) => {
       await tx
-        .update(media)
+        .update(medias)
         .set({ ...updateData, updatedAt: sql`CURRENT_TIMESTAMP` })
-        .where(eq(media.id, id));
+        .where(eq(medias.id, id));
 
       return await tx.query.media.findFirst({
         where(fields, { eq }) {
@@ -214,7 +214,7 @@ export class MediaService {
    * @returns True if deletion was successful, false otherwise.
    */
   static async deleteMedia(id: string): Promise<boolean> {
-    const result = await db.delete(media).where(eq(media.id, id));
+    const result = await db.delete(medias).where(eq(medias.id, id));
     return result[0].affectedRows > 0;
   }
 
@@ -285,9 +285,9 @@ export class MediaService {
     updateData: Partial<CreateAudioInput>
   ): Promise<Audio | null> {
     const [updatedAudio] = await db
-      .update(audio)
+      .update(audios)
       .set(updateData)
-      .where(eq(audio.mediaId, mediaId))
+      .where(eq(audios.mediaId, mediaId))
       .returning();
     return updatedAudio || null;
   }

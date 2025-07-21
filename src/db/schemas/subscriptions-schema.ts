@@ -20,7 +20,11 @@ export const subscriptionPlans = mysqlTable(
     name: varchar("name", { length: 100 }).notNull(),
     slug: varchar("slug", { length: 100 }).notNull().unique(),
     description: text("description"),
-    price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+    price: decimal("price", {
+      precision: 10,
+      scale: 2,
+      mode: "number",
+    }).notNull(),
     currency,
     billingInterval: mysqlEnum("billing_interval", [
       "monthly",

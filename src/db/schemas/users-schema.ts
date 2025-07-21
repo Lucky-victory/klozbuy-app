@@ -28,7 +28,7 @@ import {
   postReactions,
   posts,
 } from "./posts-schema";
-import { media } from "./media-schema";
+import { medias } from "./media-schema";
 import { messages } from "./messages-schema";
 import { conversationParticipants } from "./messages-schema";
 import { conversations } from "./messages-schema";
@@ -223,7 +223,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   postReactions: many(postReactions),
   commentReactions: many(commentReactions),
   advertisements: many(advertisements),
-  media: many(media),
+  media: many(medias),
   locations: many(locations),
   sentMessages: many(messages),
   conversationParticipants: many(conversationParticipants),

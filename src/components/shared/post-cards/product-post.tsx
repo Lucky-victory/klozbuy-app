@@ -8,7 +8,7 @@ import {
   Clock,
   Heart as HeartFilled,
 } from "lucide-react";
-import { cn, formatTimestamp } from "@/lib/utils";
+import { cn, formatNumber, formatTimestamp } from "@/lib/utils";
 import UserAvatar from "@/components/shared/user-avatar";
 import LocationBadge from "@/components/shared/location-badge";
 import { Button } from "@/components/ui/button";
@@ -20,14 +20,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import Link from "next/link";
-import { Posts } from "@/types";
 import { DividerDot } from "@/components/ui/divider-dot";
-
 import UserName from "../user-name";
 import { Badge2 } from "@/components/ui/badge";
+import type { SamplePostType } from "@/lib/store/posts";
 
 interface PostCardProps {
-  post: Posts;
+  post: SamplePostType;
   className?: string;
 }
 
@@ -39,6 +38,20 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
     setIsLiked(!isLiked);
     setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
   };
+
+  const author = post.author;
+
+  // Get the first product (if any)
+  const product = post.products?.[0];
+  // Get the primary product image (if any)
+  const productPrimaryMedia =
+    product?.medias?.find((m) => m.isPrimary)?.media ||
+    product?.medias?.[0]?.media;
+
+  // Find primary video from medias
+  const primaryVideo = post.medias?.find(
+    (m) => m.media?.type === "video"
+  )?.media;
 
   return (
     <div
@@ -53,12 +66,12 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
       {/* Post Header */}
       <div className="flex  justify-between p-3 md:p-4 ">
         <div className="flex items-stretch   gap-2 w-full">
-          <Link href={`/profile/${post.owner.id}`}>
+          <Link href={`/profile/${author.id}`}>
             <UserAvatar
-              name={post.owner?.name || ""}
-              src={post.owner?.profilePicture || ""}
+              name={author?.firstName || author?.username || ""}
+              src={author?.profilePictureUrl || ""}
               size="md"
-              userType={post.owner?.userType || "individual"}
+              userType={author?.type || "individual"}
             />
           </Link>
 
@@ -66,10 +79,14 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
             <div className="flex justify-between items-start   w-full">
               <div className="flex items-center flex-wrap gap-1 sm:gap-2 ">
                 <UserName
-                  id={post.owner?.id || ""}
-                  username={post.owner?.username}
-                  name={post.owner?.name || ""}
-                  isVerified={post.owner?.isVerified || false}
+                  id={author?.id || ""}
+                  username={author?.username || ""}
+                  name={
+                    author?.firstName
+                      ? `${author.firstName} ${author.lastName || ""}`
+                      : author?.username || ""
+                  }
+                  isVerified={author?.isVerified || false}
                 />
                 <DividerDot />
                 <Button
@@ -111,10 +128,10 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
                 {formatTimestamp(post.createdAt)}
               </span>
               <DividerDot />
-              {(post.owner.distance !== undefined || post.owner.landmark) && (
+              {author.businessProfile?.address && (
                 <LocationBadge
-                  distance={post.owner.distance}
-                  landmark={post.owner.landmark}
+                  distance={undefined}
+                  landmark={author.businessProfile.address}
                 />
               )}
             </div>
@@ -123,17 +140,21 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
       </div>
 
       {/* Post Content */}
-      <div className="px-4 pb-3">
+      <div className="px-4 pb-3 text-sm md:text-base">
         {post.content && <p className="mb-2">{post.content}</p>}
       </div>
 
-      {/* Post Media */}
+      {/* Product Media and Info */}
       <div className="flex flex-col">
-        {post.type === "product" && post.productImage && (
+        {productPrimaryMedia && productPrimaryMedia.type === "image" && (
           <div className="relative aspect-square bg-muted">
             <Image
-              src={post.productImage}
-              alt={post.productName || "Product image"}
+              src={productPrimaryMedia.url}
+              alt={
+                productPrimaryMedia.image?.altText ||
+                product?.name ||
+                "Product image"
+              }
               fill
               className="object-cover aspect-square"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -142,16 +163,18 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
         )}
         <div className="flex flex-col items-center justify-between gap-2 bg-muted/20 p-3">
           <div className="flex flex-col gap-2 ">
-            <h3 className="font-semibold text-lg">{post.productName}</h3>
+            <h3 className="font-semibold text-lg">{product?.name}</h3>
             <p className="text-sm text-gray-800">
-              {post.content || "No description provided."}
+              {product?.description ||
+                post.content ||
+                "No description provided."}
             </p>
-
             {/* Price would go here */}
           </div>
           <div className="flex items-center justify-between max-md:flex-col gap-2 w-full">
             <span className="text-lg font-semibold text-foreground">
-              ₦25,000
+              {product?.currency === "NGN" ? "₦" : product?.currency || ""}
+              {formatNumber(product?.price, "comma")}
             </span>
             <div className="flex-1 max-w-xs w-full">
               <Button variant={"secondary"} className="w-full">
@@ -163,12 +186,14 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
         </div>
       </div>
 
-      {post.type === "video" && post.videoUrl && (
+      {primaryVideo?.video && (
         <div className="relative aspect-video bg-muted">
           <video
-            src={post.videoUrl}
+            src={primaryVideo.url}
             controls
             className="w-full h-full object-cover"
+            //@ts-ignore
+            poster={primaryVideo?.video?.thumbnailUrl || ""}
           />
         </div>
       )}
