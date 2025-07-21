@@ -6,12 +6,14 @@ type PostOwner = {
   name: string;
   isVerified?: boolean;
   username?: string;
+  showUsername?: boolean;
 };
 export default function UserName({
   username,
   name,
   isVerified,
   id,
+  showUsername = false,
 }: PostOwner) {
   return (
     <div className="flex items-center relative">

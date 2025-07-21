@@ -57,19 +57,22 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
           <div className="flex-1 flex flex-col">
             <div className="flex flex-col gap-3 mb-4">
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                    {user?.businessProfile?.businessName
-                      ? user?.businessProfile?.businessName
-                      : user.firstName + " " + user.lastName}
-                  </h1>
-                  <div className="flex items-center gap-1">
-                    {user?.isVerified && <VerifiedCircleIcon size={22} />}
-                    {/* TODO: change this to verified not registeredDate */}
-                    {user?.businessProfile?.registeredDate && (
-                      <VerifiedShieldIcon size={22} />
-                    )}
+                <div className="flex flex-col mb-4">
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+                      {user?.businessProfile?.businessName
+                        ? user?.businessProfile?.businessName
+                        : user.firstName + " " + user.lastName}
+                    </h2>
+                    <div className="flex items-center gap-1">
+                      {user?.isVerified && <VerifiedCircleIcon size={22} />}
+                      {/* TODO: change this to verified not registeredDate */}
+                      {user?.businessProfile?.registeredDate && (
+                        <VerifiedShieldIcon size={22} />
+                      )}
+                    </div>
                   </div>
+                  <span className="text-gray-700">@{user?.username}</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">

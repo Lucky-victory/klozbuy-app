@@ -83,7 +83,7 @@ export class LocationController {
     } catch (error) {
       if (error instanceof ZodError) {
         return NextResponse.json(
-          { error: "Validation failed.", details: error.errors },
+          { error: "Validation failed.", details: error.issues },
           { status: 400 }
         );
       }
@@ -119,7 +119,7 @@ export class LocationController {
     } catch (error) {
       if (error instanceof ZodError) {
         return NextResponse.json(
-          { error: "Validation failed.", details: error.errors },
+          { error: "Validation failed.", details: error.issues },
           { status: 400 }
         );
       }

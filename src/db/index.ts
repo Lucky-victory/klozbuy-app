@@ -32,10 +32,10 @@ export const db = drizzleMysql(poolConnection, {
   mode: "planetscale",
   schema,
 });
-const client = connect({ url: connectionUri });
-// export const db = drizzle({ client, schema, logger: true });
-export const dbTidb = drizzleTidb({
-  client,
-  schema,
-  logger: process.env.NODE_ENV === "development",
-});
+// const client = connect({ url: connectionUri });
+// // export const db = drizzle({ client, schema, logger: true });
+// export const dbTidb = drizzleTidb({
+//   client,
+//   schema,
+//   logger: process.env.NODE_ENV === "development",
+// });

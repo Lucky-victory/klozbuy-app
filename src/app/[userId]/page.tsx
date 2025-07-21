@@ -16,23 +16,24 @@ async function fetchPosts(userId: string) {
   return getStoredPostsByUsername(userId);
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  // In a real app, fetch user data here
-  const userData = await fetchUserData(await params.userId);
-
+  const { userId } = await params;
+  const userData = await fetchUserData(userId);
+  if (!userData) return notFound();
   return {
     title: `${
-      userData.businessProfile?.businessName
-        ? userData.businessProfile?.businessName
-        : userData.firstName + " " + userData.lastName || ""
+      userData?.businessProfile?.businessName
+        ? userData?.businessProfile?.businessName
+        : userData?.firstName + " " + userData.lastName || ""
     } - Klozbuy Profile`,
     description:
-      userData.bio || `Check out ${userData.firstName}'s profile on Klozbuy`,
+      userData.bio || `Check out ${userData?.firstName}'s profile on Klozbuy`,
   };
 }
 
 export default async function Page({ params }: Props) {
-  const userData = await fetchUserData(await params.userId);
-  const posts = await fetchPosts(await params.userId);
+  const { userId } = await params;
+  const userData = await fetchUserData(userId);
+  const posts = await fetchPosts(userId);
   if (!userData) return notFound();
   return (
     <>
