@@ -172,7 +172,7 @@ const AuthModal = ({
                     </div>
                     <span className="font-medium">Individual</span>
                     <span className="text-xs text-muted-foreground text-center">
-                      I'm looking to discover local businesses
+                      I&apos;m looking to discover local businesses
                     </span>
                   </button>
 

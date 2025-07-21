@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 interface LocationState {
   latitude: number | null;
@@ -27,7 +27,10 @@ export function useLocation(options: UseLocationOptions = {}) {
     maximumAge: 0,
   };
 
-  const locationOptions = { ...defaultOptions, ...options };
+  const locationOptions = useMemo(
+    () => ({ ...defaultOptions, ...options }),
+    []
+  );
 
   useEffect(() => {
     if (!navigator.geolocation) {

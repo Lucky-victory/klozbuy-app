@@ -1,11 +1,10 @@
-import { users } from "@/db/schemas/users-schema"; // Corrected path to Drizzle users schema
-// NOTE: You need to install 'drizzle-zod' for this file to work: npm install drizzle-zod
+import { users } from "@/db/schemas/users-schema";
 import {
   createInsertSchema,
   createSelectSchema,
   createUpdateSchema,
 } from "drizzle-zod";
-import { z } from "zod/v4";
+import { z } from "zod";
 
 // Infer the Drizzle schema types for full user data
 export type User = typeof users.$inferSelect;
