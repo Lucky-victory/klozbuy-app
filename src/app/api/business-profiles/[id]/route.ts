@@ -11,7 +11,7 @@ export async function GET(
   request: NextRequest,
   { params }: BusinessProfileRouteParams
 ) {
-  return BusinessProfileController.getBusinessProfileById(params.id);
+  return await BusinessProfileController.getBusinessProfileById(params.id);
 }
 
 export async function PUT(
@@ -20,7 +20,10 @@ export async function PUT(
 ) {
   try {
     const body = await request.json();
-    return BusinessProfileController.updateBusinessProfile(params.id, body);
+    return await BusinessProfileController.updateBusinessProfile(
+      params.id,
+      body
+    );
   } catch (error) {
     console.error(
       `Failed to parse request body for business profile update (ID: ${params.id}):`,
@@ -37,5 +40,5 @@ export async function DELETE(
   request: NextRequest,
   { params }: BusinessProfileRouteParams
 ) {
-  return BusinessProfileController.deleteBusinessProfile(params.id);
+  return await BusinessProfileController.deleteBusinessProfile(params.id);
 }

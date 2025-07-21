@@ -18,5 +18,5 @@ export async function GET(
   { params }: UserFollowingRouteParams
 ) {
   const searchParams = request.nextUrl.searchParams;
-  return FollowController.getFollowing(params.userId, searchParams);
+  return await FollowController.getFollowing(params.userId, searchParams);
 }

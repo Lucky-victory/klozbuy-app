@@ -3,13 +3,13 @@ import { BusinessProfileController } from "@/controllers/businessProfile.control
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  return BusinessProfileController.getAllBusinessProfiles(searchParams);
+  return await BusinessProfileController.getAllBusinessProfiles(searchParams);
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    return BusinessProfileController.createBusinessProfile(body);
+    return await BusinessProfileController.createBusinessProfile(body);
   } catch (error) {
     console.error(
       "Failed to parse request body for business profile creation:",

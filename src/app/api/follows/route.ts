@@ -10,7 +10,7 @@ import { FollowController } from "@/controllers/follow.controller";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    return FollowController.createFollow(body);
+    return await FollowController.createFollow(body);
   } catch (error) {
     console.error("Failed to parse request body for follow creation:", error);
     return new Response(JSON.stringify({ error: "Invalid request body." }), {
@@ -30,7 +30,7 @@ export async function DELETE(request: NextRequest) {
   try {
     const body = await request.json(); // DELETE with body requires specific handling in Next.js, or use a custom header/query params.
     // For simplicity here, assuming body can be read. For strict REST, this is often a POST with method override or specific unfollow endpoint.
-    return FollowController.deleteFollow(body);
+    return await FollowController.deleteFollow(body);
   } catch (error) {
     console.error("Failed to parse request body for follow deletion:", error);
     return new Response(JSON.stringify({ error: "Invalid request body." }), {

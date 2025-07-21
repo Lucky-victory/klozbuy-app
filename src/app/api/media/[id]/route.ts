@@ -15,7 +15,7 @@ interface MediaRouteParams {
  * @returns A JSON response with media data or an error.
  */
 export async function GET(request: NextRequest, { params }: MediaRouteParams) {
-  return MediaController.getMediaById(params.id);
+  return await MediaController.getMediaById(params.id);
 }
 
 /**
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest, { params }: MediaRouteParams) {
  * @returns A JSON response with the updated media data or an error.
  */
 export async function PUT(request: NextRequest, { params }: MediaRouteParams) {
-  return MediaController.updateMedia(params.id, request);
+  return await MediaController.updateMedia(params.id, request);
 }
 
 /**
@@ -39,5 +39,5 @@ export async function DELETE(
   request: NextRequest,
   { params }: MediaRouteParams
 ) {
-  return MediaController.deleteMedia(params.id);
+  return await MediaController.deleteMedia(params.id);
 }

@@ -3,11 +3,10 @@ import {
   UpdateBusinessProfileInput,
   CreateBusinessProfileSchema,
   UpdateBusinessProfileSchema,
-  BusinessProfileResponse,
 } from "@/models/businessProfile.model";
 import { BusinessProfileService } from "@/services/businessProfile.service";
 import { NextResponse } from "next/server";
-import { ZodError, z } from "zod";
+import { ZodError, z } from "zod/v4";
 
 export class BusinessProfileController {
   static async getBusinessProfileById(id: string): Promise<NextResponse> {
@@ -108,7 +107,7 @@ export class BusinessProfileController {
     } catch (error) {
       if (error instanceof ZodError) {
         return NextResponse.json(
-          { error: "Validation failed.", details: error.errors },
+          { error: "Validation failed.", details: error.issues },
           { status: 400 }
         );
       }
@@ -144,7 +143,7 @@ export class BusinessProfileController {
     } catch (error) {
       if (error instanceof ZodError) {
         return NextResponse.json(
-          { error: "Validation failed.", details: error.errors },
+          { error: "Validation failed.", details: error.issues },
           { status: 400 }
         );
       }

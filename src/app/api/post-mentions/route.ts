@@ -8,7 +8,7 @@ import { PostMentionController } from "@/controllers/postMention.controller"; //
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  return PostMentionController.getMentionsByPostId(searchParams);
+  return await PostMentionController.getMentionsByPostId(searchParams);
 }
 
 /**
@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    return PostMentionController.createPostMention(body);
+    return await PostMentionController.createPostMention(body);
   } catch (error) {
     console.error(
       "Failed to parse request body for post mention creation:",

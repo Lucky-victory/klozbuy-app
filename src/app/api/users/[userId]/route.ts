@@ -15,7 +15,7 @@ interface UserRouteParams {
  * @returns A JSON response with user data or an error.
  */
 export async function GET(request: NextRequest, { params }: UserRouteParams) {
-  return UserController.getUserById(params.userId);
+  return await UserController.getUserById(params.userId);
 }
 
 /**
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest, { params }: UserRouteParams) {
 export async function PUT(request: NextRequest, { params }: UserRouteParams) {
   try {
     const body = await request.json();
-    return UserController.updateUser(params.userId, body);
+    return await UserController.updateUser(params.userId, body);
   } catch (error) {
     console.error(
       `Failed to parse request body for user update (ID: ${params.userId}):`,
@@ -50,5 +50,5 @@ export async function DELETE(
   request: NextRequest,
   { params }: UserRouteParams
 ) {
-  return UserController.deleteUser(params.userId);
+  return await UserController.deleteUser(params.userId);
 }

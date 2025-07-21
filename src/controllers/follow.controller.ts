@@ -1,7 +1,7 @@
 import { CreateFollowInput, CreateFollowSchema } from "@/models/follow.model";
 import { FollowService } from "@/services/follow.service";
 import { NextResponse } from "next/server";
-import { ZodError } from "zod";
+import { ZodError } from "zod/v4";
 
 export class FollowController {
   /**
@@ -19,7 +19,7 @@ export class FollowController {
     } catch (error) {
       if (error instanceof ZodError) {
         return NextResponse.json(
-          { error: "Validation failed.", details: error.errors },
+          { error: "Validation failed.", details: error.issues },
           { status: 400 }
         );
       }

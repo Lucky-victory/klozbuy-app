@@ -29,7 +29,7 @@ export class MediaService {
    * @returns The media object with its type-specific details or null if not found.
    */
   static async getMediaById(id: string): Promise<FullMediaResponse | null> {
-    const mediaItem = await db.query.media.findFirst({
+    const mediaItem = await db.query.medias.findFirst({
       where: eq(medias.id, id),
       with: {
         image: true,
@@ -53,14 +53,14 @@ export class MediaService {
     limit: number = 10,
     offset: number = 0,
     userId?: string,
-    type?: string
+    type?: Media["type"]
   ): Promise<FullMediaResponse[]> {
     const whereClause = and(
       userId ? eq(medias.userId, userId) : undefined,
       type ? eq(medias.type, type as any) : undefined
     );
 
-    const allMedia = await db.query.media.findMany({
+    const allMedia = await db.query.medias.findMany({
       where: whereClause,
       limit: limit,
       offset: offset,
@@ -145,7 +145,7 @@ export class MediaService {
             .insert(audios)
             .values({ ...(typeSpecificData as CreateAudioInput), mediaId })
             .$returningId();
-          const newAudio = await tx.query.audio.findFirst({
+          const newAudio = await tx.query.audios.findFirst({
             where(fields, { eq }) {
               return eq(fields.id, newAudioReturn.id);
             },
@@ -163,7 +163,7 @@ export class MediaService {
       }
 
       // Re-fetch the full media item with relations to ensure consistency
-      const createdMediaWithRelations = await tx.query.media.findFirst({
+      const createdMediaWithRelations = await tx.query.medias.findFirst({
         where: eq(medias.id, mediaId),
         with: {
           image: true,
@@ -198,7 +198,7 @@ export class MediaService {
         .set({ ...updateData, updatedAt: sql`CURRENT_TIMESTAMP` })
         .where(eq(medias.id, id));
 
-      return await tx.query.media.findFirst({
+      return await tx.query.medias.findFirst({
         where(fields, { eq }) {
           return eq(fields.id, id);
         },
@@ -230,11 +230,17 @@ export class MediaService {
     mediaId: string,
     updateData: Partial<CreateImageInput>
   ): Promise<Image | null> {
-    const [updatedImage] = await db
-      .update(images)
-      .set(updateData)
-      .where(eq(images.mediaId, mediaId))
-      .returning();
+    const updatedImage = await db.transaction(async (tx) => {
+      await tx
+        .update(images)
+        .set(updateData)
+        .where(eq(images.mediaId, mediaId));
+      return await tx.query.images.findFirst({
+        where(fields, { eq }) {
+          return eq(fields.id, mediaId);
+        },
+      });
+    });
     return updatedImage || null;
   }
 
@@ -248,11 +254,17 @@ export class MediaService {
     mediaId: string,
     updateData: Partial<CreateVideoInput>
   ): Promise<Video | null> {
-    const [updatedVideo] = await db
-      .update(videos)
-      .set(updateData)
-      .where(eq(videos.mediaId, mediaId))
-      .returning();
+    const updatedVideo = await db.transaction(async (tx) => {
+      await tx
+        .update(videos)
+        .set(updateData)
+        .where(eq(videos.mediaId, mediaId));
+      return await tx.query.videos.findFirst({
+        where(fields, { eq }) {
+          return eq(fields.id, mediaId);
+        },
+      });
+    });
     return updatedVideo || null;
   }
 
@@ -266,17 +278,23 @@ export class MediaService {
     mediaId: string,
     updateData: Partial<CreateDocumentInput>
   ): Promise<Document | null> {
-    const [updatedDocument] = await db
-      .update(documents)
-      .set(updateData)
-      .where(eq(documents.mediaId, mediaId))
-      .returning();
+    const updatedDocument = await db.transaction(async (tx) => {
+      await tx
+        .update(documents)
+        .set(updateData)
+        .where(eq(documents.mediaId, mediaId));
+      return await tx.query.documents.findFirst({
+        where(fields, { eq }) {
+          return eq(fields.id, mediaId);
+        },
+      });
+    });
     return updatedDocument || null;
   }
 
   /**
    * Updates an audio record.
-   * @param mediaId The mediaId associated with the audio.
+   * @param mediaId The mediaId associated with the audios.
    * @param updateData The data to update.
    * @returns The updated audio object or null.
    */
@@ -284,11 +302,17 @@ export class MediaService {
     mediaId: string,
     updateData: Partial<CreateAudioInput>
   ): Promise<Audio | null> {
-    const [updatedAudio] = await db
-      .update(audios)
-      .set(updateData)
-      .where(eq(audios.mediaId, mediaId))
-      .returning();
+    const updatedAudio = await db.transaction(async (tx) => {
+      await tx
+        .update(audios)
+        .set(updateData)
+        .where(eq(audios.mediaId, mediaId));
+      return await tx.query.audios.findFirst({
+        where(fields, { eq }) {
+          return eq(fields.id, mediaId);
+        },
+      });
+    });
     return updatedAudio || null;
   }
 }

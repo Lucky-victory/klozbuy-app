@@ -8,7 +8,7 @@ import { PostController } from "@/controllers/post.controller"; // Adjust path
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  return PostController.getAllPosts(searchParams);
+  return await PostController.getAllPosts(searchParams);
 }
 
 /**
@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    return PostController.createPost(body);
+    return await PostController.createPost(body);
   } catch (error) {
     console.error("Failed to parse request body for post creation:", error);
     return new Response(JSON.stringify({ error: "Invalid request body." }), {

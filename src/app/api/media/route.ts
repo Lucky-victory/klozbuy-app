@@ -8,7 +8,7 @@ import { MediaController } from "@/controllers/media.controller"; // Adjust path
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  return MediaController.getAllMedia(searchParams);
+  return await MediaController.getAllMedia(searchParams);
 }
 
 /**
@@ -22,5 +22,5 @@ export async function GET(request: NextRequest) {
  * @returns A JSON response with the created media data or an error.
  */
 export async function POST(request: NextRequest) {
-  return MediaController.createMedia(request);
+  return await MediaController.createMedia(request);
 }

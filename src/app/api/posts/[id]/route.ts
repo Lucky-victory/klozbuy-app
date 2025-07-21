@@ -15,7 +15,7 @@ interface PostRouteParams {
  * @returns A JSON response with post data or an error.
  */
 export async function GET(request: NextRequest, { params }: PostRouteParams) {
-  return PostController.getPostById(params.id);
+  return await PostController.getPostById(params.id);
 }
 
 /**
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest, { params }: PostRouteParams) {
 export async function PUT(request: NextRequest, { params }: PostRouteParams) {
   try {
     const body = await request.json();
-    return PostController.updatePost(params.id, body);
+    return await PostController.updatePost(params.id, body);
   } catch (error) {
     console.error(
       `Failed to parse request body for post update (ID: ${params.id}):`,
@@ -50,5 +50,5 @@ export async function DELETE(
   request: NextRequest,
   { params }: PostRouteParams
 ) {
-  return PostController.deletePost(params.id);
+  return await PostController.deletePost(params.id);
 }

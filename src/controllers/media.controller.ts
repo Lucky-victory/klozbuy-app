@@ -12,6 +12,7 @@ import {
   CreateVideoInput,
   CreateDocumentInput,
   CreateAudioInput,
+  Media,
 } from "@/models/media.model";
 import { MediaService } from "@/services/media.service";
 import { NextRequest, NextResponse } from "next/server";
@@ -76,7 +77,7 @@ export class MediaController {
       const limit = parseInt(searchParams.get("limit") || "10", 10);
       const offset = parseInt(searchParams.get("offset") || "0", 10);
       const userId = searchParams.get("userId") || undefined;
-      const type = searchParams.get("type") || undefined;
+      const type = (searchParams.get("type") as Media["type"]) || undefined;
 
       if (isNaN(limit) || limit <= 0 || isNaN(offset) || offset < 0) {
         return NextResponse.json(

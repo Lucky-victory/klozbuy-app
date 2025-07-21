@@ -11,7 +11,7 @@ export async function GET(
   request: NextRequest,
   { params }: LocationRouteParams
 ) {
-  return LocationController.getLocationById(params.id);
+  return await LocationController.getLocationById(params.id);
 }
 
 export async function PUT(
@@ -20,7 +20,7 @@ export async function PUT(
 ) {
   try {
     const body = await request.json();
-    return LocationController.updateLocation(params.id, body);
+    return await LocationController.updateLocation(params.id, body);
   } catch (error) {
     console.error(
       `Failed to parse request body for location update (ID: ${params.id}):`,
@@ -37,5 +37,5 @@ export async function DELETE(
   request: NextRequest,
   { params }: LocationRouteParams
 ) {
-  return LocationController.deleteLocation(params.id);
+  return await LocationController.deleteLocation(params.id);
 }

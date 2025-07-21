@@ -1,8 +1,8 @@
 import { db } from "@/db";
-import { follows, users } from "@/db/schemas/users-schema"; // Need users for relations/counts
+import { follows } from "@/db/schemas/users-schema"; // Need users for relations/counts
 import { CreateFollowInput, Follow } from "@/models/follow.model";
 import { eq, and } from "drizzle-orm";
-import { UserService } from "./user-service"; // Import UserService to update counts
+// import { UserService } from "./user-service"; // Move this import inside methods
 
 export class FollowService {
   /**
@@ -32,6 +32,7 @@ export class FollowService {
     }
 
     // Ensure both users exist
+    const { UserService } = await import("./user-service");
     const [followerUser, followingUser] = await Promise.all([
       UserService.getUserById(followerId),
       UserService.getUserById(followingId),
@@ -86,6 +87,7 @@ export class FollowService {
 
     if (result.affectedRows > 0) {
       // Update counts asynchronously
+      const { UserService } = await import("./user-service");
       UserService.decrementFollowingCount(followerId).catch(console.error);
       UserService.decrementFollowersCount(followingId).catch(console.error);
       return true;
