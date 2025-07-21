@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev --port=3300",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --port=3300",
     "lint": "next lint",
     "create-db": "tsx src/scripts/create-db.ts",
     "db:push": "drizzle-kit push",

@@ -2,7 +2,6 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User, Store } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { VerifiedCircleIcon } from "../custom-icons/badges";
 import Link from "next/link";
 
 interface UserAvatarProps {
