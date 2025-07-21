@@ -12,31 +12,38 @@ import {
 } from "drizzle-orm/mysql-core";
 import { relations, sql } from "drizzle-orm";
 import { users } from "./users-schema";
-import { posts } from "./posts-schema";
-import { postComments } from "./posts-schema";
-import { conversations, messages } from "./messages-schema";
-import { reviews } from "./reviews-schema";
-import {
-  createdAt,
-  id,
-  NotificationPreferences,
-  
-  userId,
-} from "../schema-helper";
-
-
 import { generateUniqueId } from "@/lib/id-generator";
 
-export const id = varchar("id", { length: 36 })
+type NotificationPreferences = {
+  social: {
+    likes: { in_app: boolean; email: boolean; push: boolean };
+    comments: { in_app: boolean; email: boolean; push: boolean };
+    follows: { in_app: boolean; email: boolean; push: boolean };
+    posts: { in_app: boolean; email: boolean; push: boolean };
+  };
+  business: {
+    reviews: { in_app: boolean; email: boolean; push: boolean; sms: boolean };
+    orders: { in_app: boolean; email: boolean; push: boolean; sms: boolean };
+  };
+  messages: {
+    direct: { in_app: boolean; email: boolean; push: boolean };
+    group: { in_app: boolean; email: boolean; push: boolean };
+  };
+  system: {
+    security: { in_app: boolean; email: boolean; push: boolean; sms: boolean };
+    features: { in_app: boolean; email: boolean; push: boolean };
+  };
+};
+const id = varchar("id", { length: 36 })
   .primaryKey()
   .$defaultFn(
     () => generateUniqueId() // this should be bigint string e.g 17489305838459032
   );
-export const userId = varchar("user_id", { length: 36 })
+const userId = varchar("user_id", { length: 36 })
   .notNull()
   .references(() => users.id, { onDelete: "cascade" });
-export const createdAt = timestamp("created_at").defaultNow();
-export const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
+const createdAt = timestamp("created_at").defaultNow();
+const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
 // Main notifications table
 export const notifications = mysqlTable(
   "notifications",

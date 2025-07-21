@@ -8,21 +8,38 @@ import {
   int,
   index,
   uniqueIndex,
-  foreignKey,
 } from "drizzle-orm/mysql-core";
 import { relations, sql } from "drizzle-orm";
 import { users } from "./users-schema";
-import {
-  messageType,
-  conversationType,
-  conversationParticipantRole,
-  id,
-  mimeType,
-  createdAt,
-  updatedAt,
-  userId,
-} from "../schema-helper";
-// Users table
+
+import { generateUniqueId } from "@/lib/id-generator";
+
+const conversationType = ["group", "direct", "channel"] as const;
+const conversationParticipantRole = ["member", "admin", "owner"] as const;
+const messageType = ["text", "image", "video", "audio", "file"] as const;
+const mimeType = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+  "video/mp4",
+  "video/webm",
+  "audio/mpeg",
+  "audio/mp3",
+  "audio/mp4",
+  "audio/webm",
+  "application/pdf",
+] as const;
+const id = varchar("id", { length: 36 })
+  .primaryKey()
+  .$defaultFn(
+    () => generateUniqueId() // this should be bigint string e.g 17489305838459032
+  );
+const userId = varchar("user_id", { length: 36 })
+  .notNull()
+  .references(() => users.id, { onDelete: "cascade" });
+const createdAt = timestamp("created_at").defaultNow();
+const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
 
 // Conversations table
 export const conversations = mysqlTable(

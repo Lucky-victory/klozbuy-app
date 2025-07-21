@@ -19,17 +19,17 @@ import {
 import { advertisementAttachments } from "./advertisements-schema";
 import { generateUniqueId } from "@/lib/id-generator";
 
-export const mediaType = ["image", "video", "audio", "document"] as const;
-export const id = varchar("id", { length: 36 })
+const mediaType = ["image", "video", "audio", "document"] as const;
+const id = varchar("id", { length: 36 })
   .primaryKey()
   .$defaultFn(
     () => generateUniqueId() // this should be bigint string e.g 17489305838459032
   );
-export const userId = varchar("user_id", { length: 36 })
+const userId = varchar("user_id", { length: 36 })
   .notNull()
   .references(() => users.id, { onDelete: "cascade" });
-export const createdAt = timestamp("created_at").defaultNow();
-export const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
+const createdAt = timestamp("created_at").defaultNow();
+const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
 // Base media table with common fields
 export const medias = mysqlTable("media", {
   id,

@@ -10,9 +10,21 @@ import {
   int,
   json,
 } from "drizzle-orm/mysql-core";
-import { createdAt, currency, id, updatedAt, userId } from "../schema-helper";
 import { relations } from "drizzle-orm";
 import { users } from "./users-schema";
+import { generateUniqueId } from "@/lib/id-generator";
+
+const currency = varchar("currency", { length: 3 }).default("NGN");
+const id = varchar("id", { length: 36 })
+  .primaryKey()
+  .$defaultFn(
+    () => generateUniqueId() // this should be bigint string e.g 17489305838459032
+  );
+const userId = varchar("user_id", { length: 36 })
+  .notNull()
+  .references(() => users.id, { onDelete: "cascade" });
+const createdAt = timestamp("created_at").defaultNow();
+const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
 export const subscriptionPlans = mysqlTable(
   "subscription_plans",
   {

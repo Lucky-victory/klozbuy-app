@@ -26,7 +26,7 @@ export const dbDetails = {
 
 export const connectionUri = isEmpty(DATABASE_URL)
   ? `mysql://${DB_USER_NAME}:${DB_USER_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}?ssl=${DB_SSL_CONFIG}`
-  : (`${DATABASE_URL}?ssl={"rejectUnauthorized":true}` as string);
+  : (`${DATABASE_URL}` as string);
 const poolConnection = mysql2.createPool(connectionUri);
 export const db = drizzleMysql(poolConnection, {
   mode: "planetscale",

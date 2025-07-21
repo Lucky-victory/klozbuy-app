@@ -17,33 +17,27 @@ import { medias } from "./media-schema";
 import { locations, users } from "./users-schema";
 import { generateUniqueId } from "@/lib/id-generator";
 
-
-export const postTypeEnum = ["general", "product", "service", "event"] as const;
-export const postStatusEnum = [
-  "draft",
-  "published",
-  "archived",
-  "deleted",
-] as const;
-export const postVisibilityEnum = ["public", "followers", "nearby"] as const;
-export const currency = varchar("currency", { length: 3 }).default("NGN");
-export const reactionType = [
+const postTypeEnum = ["general", "product", "service", "event"] as const;
+const postStatusEnum = ["draft", "published", "archived", "deleted"] as const;
+const postVisibilityEnum = ["public", "followers", "nearby"] as const;
+const currency = varchar("currency", { length: 3 }).default("NGN");
+const reactionType = [
   "like",
   "love",
   "support",
   "interesting",
   "want",
 ] as const;
-export const id = varchar("id", { length: 36 })
+const id = varchar("id", { length: 36 })
   .primaryKey()
   .$defaultFn(
     () => generateUniqueId() // this should be bigint string e.g 17489305838459032
   );
-export const userId = varchar("user_id", { length: 36 })
+const userId = varchar("user_id", { length: 36 })
   .notNull()
   .references(() => users.id, { onDelete: "cascade" });
-export const createdAt = timestamp("created_at").defaultNow();
-export const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
+const createdAt = timestamp("created_at").defaultNow();
+const updatedAt = timestamp("updated_at").defaultNow().onUpdateNow();
 // Posts table - Enhanced with better structure
 export const posts = mysqlTable(
   "posts",
