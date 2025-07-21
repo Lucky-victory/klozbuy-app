@@ -16,7 +16,7 @@ export default function UserName({
   return (
     <div className="flex items-center relative">
       <Link
-        href={`/profile/${username || id}`}
+        href={`/${username || id}`}
         className="font-medium hover:underline mr-1 truncate"
       >
         {name || ""}

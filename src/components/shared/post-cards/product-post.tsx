@@ -60,16 +60,20 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
         "bg-white rounded-xl shadow-sm border border-border overflow-hidden",
         "transition-all duration-300 hover:shadow-md",
         "animate-scale-in",
-        post.isPromoted && "ring-2 ring-klozui-amber-500/50",
+        post?.isPromoted && "ring-2 ring-klozui-amber-500/50",
         className
       )}
     >
       {/* Post Header */}
       <div className="flex  justify-between p-3 md:p-4 ">
         <div className="flex items-stretch   gap-2 w-full">
-          <Link href={`/profile/${author.id}`}>
+          <Link href={`/${author?.username}`}>
             <UserAvatar
-              name={author?.firstName || author?.username || ""}
+              name={
+                author?.businessProfile?.businessName
+                  ? author.businessProfile?.businessName
+                  : author?.firstName + " " + author?.lastName || ""
+              }
               src={author?.profilePictureUrl || ""}
               size="md"
               userType={author?.type || "individual"}
@@ -83,9 +87,9 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
                   id={author?.id || ""}
                   username={author?.username || ""}
                   name={
-                    author?.firstName
-                      ? `${author.firstName} ${author.lastName || ""}`
-                      : author?.username || ""
+                    author?.businessProfile?.businessName
+                      ? author.businessProfile?.businessName
+                      : author?.firstName + " " + author?.lastName || ""
                   }
                   isVerified={author?.isVerified || false}
                 />
@@ -99,7 +103,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
                 </Button>
               </div>
               <div className="flex items-center gap-1">
-                {post.isPromoted && (
+                {post?.isPromoted && (
                   <>
                     <Badge2 variant={"subtle"}>Promoted</Badge2>
                   </>
@@ -129,7 +133,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
                 {formatTimestamp(post.createdAt)}
               </span>
               <DividerDot />
-              {author.businessProfile?.address && (
+              {author?.businessProfile?.address && (
                 <LocationBadge
                   distance={undefined}
                   landmark={author.businessProfile.address}
@@ -178,7 +182,7 @@ const ProductPostCard = ({ post, className }: PostCardProps) => {
                 {product?.currency === "NGN" ? "₦" : product?.currency || ""}
                 {formatNumber(Number(product?.price), "comma")}
               </span>
-              {product.compareAtPrice && (
+              {product?.compareAtPrice && (
                 <span className="text-base line-through font-semibold text-muted-foreground">
                   {product?.currency === "NGN" ? "₦" : product?.currency || ""}
                   {formatNumber(Number(product?.compareAtPrice), "comma")}

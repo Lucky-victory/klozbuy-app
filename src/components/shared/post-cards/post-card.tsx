@@ -45,7 +45,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
   // Find primary image from medias
   const primaryImage =
     post.medias?.find((m) => m.isPrimary && m.media?.type === "image")?.media ||
-    post.medias[0]?.media;
+    post.medias?.[0]?.media;
 
   // Find primary video from medias
   const primaryVideo = post.medias?.find(
@@ -65,9 +65,13 @@ const PostCard = ({ post, className }: PostCardProps) => {
       {/* Post Header */}
       <div className="flex  justify-between p-3 md:p-4 ">
         <div className="flex items-stretch   gap-2 w-full">
-          <Link href={`/profile/${author.id}`}>
+          <Link href={`/${author?.username}`}>
             <UserAvatar
-              name={author?.firstName || author?.username || ""}
+              name={
+                author?.businessProfile?.businessName
+                  ? author.businessProfile?.businessName
+                  : author?.firstName + " " + author?.lastName || ""
+              }
               src={author?.profilePictureUrl || ""}
               size="md"
               userType={author?.type || "individual"}
@@ -81,9 +85,9 @@ const PostCard = ({ post, className }: PostCardProps) => {
                   id={author?.id || ""}
                   username={author?.username || ""}
                   name={
-                    author?.firstName
-                      ? `${author.firstName} ${author.lastName || ""}`
-                      : author?.username || ""
+                    author?.businessProfile?.businessName
+                      ? author.businessProfile?.businessName
+                      : author?.firstName + " " + author?.lastName || ""
                   }
                   isVerified={author?.isVerified || false}
                 />
@@ -97,7 +101,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
                 </Button>
               </div>
               <div className="flex items-center gap-1">
-                {post.isPromoted && (
+                {post?.isPromoted && (
                   <Badge2 variant={"subtle"}>Promoted</Badge2>
                 )}
 
@@ -126,7 +130,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
               </span>
               <DividerDot />
               {/* No direct distance/landmark on author, but could be in businessProfile or elsewhere */}
-              {author.businessProfile?.address && (
+              {author?.businessProfile?.address && (
                 <LocationBadge
                   distance={undefined}
                   landmark={author.businessProfile.address}

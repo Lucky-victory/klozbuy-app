@@ -1,3 +1,4 @@
+import "server-only";
 import { db } from "@/db";
 import { users } from "@/db/schemas/users-schema"; // Adjust path to your Drizzle schema
 import {

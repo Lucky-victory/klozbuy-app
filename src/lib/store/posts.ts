@@ -2,7 +2,17 @@ import { PostResponse } from "@/models/post.model";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-const samplePosts = [
+export function getStoredPostsByUsername(username: string) {
+  return samplePosts.filter(
+    (post) => post.author.username.toLowerCase() === username.toLowerCase()
+  );
+}
+export function getStoredUser(username: string) {
+  return samplePosts.filter(
+    (post) => post.author.username.toLowerCase() === username.toLowerCase()
+  )[0]?.author;
+}
+export const samplePosts = [
   {
     id: "1794270183396038400",
     userId: "1794270183390710400",
@@ -37,7 +47,7 @@ const samplePosts = [
         businessName: "Leather Art Nigeria",
         businessCategory: "Fashion & Accessories",
         contactPhone: "+2348012345678",
-        websiteUrl: "https://www.leatherartnigeria.com",
+        website: "https://www.leatherartnigeria.com",
         address: "Shop 7, Gbagada Market, Lagos, Nigeria",
         registeredDate: "2023-05-15T00:00:00.000Z",
         averageRating: 4.8,
@@ -223,50 +233,13 @@ const samplePosts = [
         businessName: "Creative Tech Nigeria",
         businessCategory: "Electronics & Gadgets",
         contactPhone: "+2347098765432",
-        websiteUrl: "https://www.creativetech.ng",
+        website: "https://www.creativetech.ng",
         address: "Suite 10, Computer Village, Ikeja, Lagos, Nigeria",
         registeredDate: "2023-08-15T00:00:00.000Z",
         averageRating: 4.5,
       },
     },
-    medias: [
-      {
-        id: "1794270183401721600",
-        postId: "1794270183400656000",
-        mediaId: "1794270183402076800",
-        isPrimary: true,
-        sortOrder: 0,
-        altText: "Professional Digital Drawing Tablet with stylus.",
-        createdAt: "2025-07-18T14:01:00.000Z",
-        updatedAt: "2025-07-18T14:01:00.000Z",
-        media: {
-          id: "1794270183402076800",
-          userId: "1794270183401011200",
-          type: "image",
-          url: "https://images.unsplash.com/photo-1596541223130-ad279210b0ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzOHx8ZGlnaXRhbCUyMGQyMjNyYXdpbmclMjB0YWJsZXR8ZW58MHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=800",
-          fileName: "drawing_tablet.jpg",
-          fileSize: 400000,
-          cdnPublicId: "tech/drawing_tablet_mnh4o9",
-          createdAt: "2025-07-18T14:00:45.000Z",
-          updatedAt: "2025-07-18T14:00:45.000Z",
-          image: {
-            id: "1794270183402432000",
-            mediaId: "1794270183402076800",
-            width: 1600,
-            height: 1067,
-            altText:
-              "Close-up of a hand drawing on a digital tablet with a stylus.",
-            thumbnailUrl:
-              "https://images.unsplash.com/photo-1596541223130-ad279210b0ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzOHx8ZGlnaXRhbCUyMGQyMjNyYXdpbmclMjB0YWJsZXR8ZW58MHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=200",
-            colorProfile: "sRGB",
-            isAnimated: false,
-          },
-          video: null,
-          document: null,
-          audio: null,
-        },
-      },
-    ],
+    medias: [],
     mentions: [],
     products: [
       {
@@ -445,7 +418,7 @@ const samplePosts = [
         businessName: "Sweet Treats Nigeria",
         businessCategory: "Food & Beverage",
         contactPhone: "+2349011223344",
-        websiteUrl: "https://www.sweettreats.ng",
+        website: "https://www.sweettreats.ng",
         address: "15 Cake Street, Surulere, Lagos, Nigeria",
         registeredDate: "2023-06-05T00:00:00.000Z",
         averageRating: 4.9,
@@ -630,50 +603,13 @@ const samplePosts = [
         businessName: "Pure Nigerian Naturals",
         businessCategory: "Beauty & Personal Care",
         contactPhone: "+2348123456789",
-        websiteUrl: "https://www.purenigerian.com",
+        website: "https://www.purenigerian.com",
         address: "Greenleaf Plaza, Ikoyi, Lagos, Nigeria",
         registeredDate: "2023-01-28T00:00:00.000Z",
         averageRating: 4.7,
       },
     },
-    medias: [
-      {
-        id: "1794270183412377500",
-        postId: "1794270183411311900",
-        mediaId: "1794270183412732700",
-        isPrimary: true,
-        sortOrder: 0,
-        altText:
-          "Collection of organic skincare products with natural ingredients.",
-        createdAt: "2025-07-14T12:35:00.000Z",
-        updatedAt: "2025-07-14T12:35:00.000Z",
-        media: {
-          id: "1794270183412732700",
-          userId: "1794270183411667100",
-          type: "image",
-          url: "https://images.unsplash.com/photo-1590487988265-27a96434d28d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHw1fHx8c2tpbmNhcmUlMjBwcm9kdWN0c3xlbnwwfHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=800",
-          fileName: "skincare_collection.jpg",
-          fileSize: 200000,
-          cdnPublicId: "beauty/skincare_collection_abc3d4",
-          createdAt: "2025-07-14T12:34:00.000Z",
-          updatedAt: "2025-07-14T12:34:00.000Z",
-          image: {
-            id: "1794270183413087900",
-            mediaId: "1794270183412732700",
-            width: 1000,
-            height: 750,
-            altText: "Various bottles and jars of natural skincare products.",
-            thumbnailUrl:
-              "https://images.unsplash.com/photo-1590487988265-27a96434d28d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHw1fHx8c2tpbmNhcmUlMjBwcm9kdWN0c3xlbnwwfHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=200",
-            colorProfile: "sRGB",
-            isAnimated: false,
-          },
-          video: null,
-          document: null,
-          audio: null,
-        },
-      },
-    ],
+    medias: [],
     mentions: [],
     products: [
       {
@@ -852,50 +788,13 @@ const samplePosts = [
         businessName: "EcoComfort Nigeria",
         businessCategory: "Home Goods",
         contactPhone: "+2347012345670",
-        websiteUrl: "https://www.ecocomfort.ng",
+        website: "https://www.ecocomfort.ng",
         address: "Eco-Friendly Hub, Victoria Island, Lagos, Nigeria",
         registeredDate: "2023-03-28T00:00:00.000Z",
         averageRating: 4.6,
       },
     },
-    medias: [
-      {
-        id: "1794270183417705500",
-        postId: "1794270183416639900",
-        mediaId: "1794270183418060700",
-        isPrimary: true,
-        sortOrder: 0,
-        altText: "Soft organic cotton bed sheets on a bed.",
-        createdAt: "2025-07-12T14:35:00.000Z",
-        updatedAt: "2025-07-12T14:35:00.000Z",
-        media: {
-          id: "1794270183418060700",
-          userId: "1794270183416995100",
-          type: "image",
-          url: "https://images.pexels.com/photos/763148/pexels-photo-763148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-          fileName: "organic_bedsheets.jpg",
-          fileSize: 220000,
-          cdnPublicId: "home/organic_bedsheets_uvw2xy",
-          createdAt: "2025-07-12T14:34:00.000Z",
-          updatedAt: "2025-07-12T14:34:00.000Z",
-          image: {
-            id: "1794270183418415900",
-            mediaId: "1794270183418060700",
-            width: 1400,
-            height: 933,
-            altText:
-              "Close-up of a neatly made bed with soft organic cotton sheets.",
-            thumbnailUrl:
-              "https://images.unsplash.com/photo-1579621970795-87facc2f976d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwyOHx8YmVkJTIwc2hlZXRzfGVufDB8fHx8fDE3MDgxOTA2MjN8MA&ixlib=rb-4.0.3&q=80&w=200",
-            colorProfile: "sRGB",
-            isAnimated: false,
-          },
-          video: null,
-          document: null,
-          audio: null,
-        },
-      },
-    ],
+    medias: [],
     mentions: [],
     products: [
       {
@@ -1075,50 +974,13 @@ const samplePosts = [
         businessName: "Clay Creations Nigeria",
         businessCategory: "Arts & Crafts",
         contactPhone: "+2348033445566",
-        websiteUrl: "https://www.claycreations.ng",
+        website: "https://www.claycreations.ng",
         address: "Artisans Village, Lekki, Lagos, Nigeria",
         registeredDate: "2023-08-30T00:00:00.000Z",
         averageRating: 4.8,
       },
     },
-    medias: [
-      {
-        id: "1794270183423033500",
-        postId: "1794270183421967900",
-        mediaId: "1794270183423388700",
-        isPrimary: true,
-        sortOrder: 0,
-        altText: "Handcrafted ceramic vase on a wooden table.",
-        createdAt: "2025-07-10T10:35:00.000Z",
-        updatedAt: "2025-07-10T10:35:00.000Z",
-        media: {
-          id: "1794270183423388700",
-          userId: "1794270183422323100",
-          type: "image",
-          url: "https://images.unsplash.com/photo-1599623571321-ed11a37c0410?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzN3x8Y2VyYW1pY3xlbnwwfHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=800",
-          fileName: "ceramic_vase.jpg",
-          fileSize: 210000,
-          cdnPublicId: "art/ceramic_vase_hjk4l5",
-          createdAt: "2025-07-10T10:34:00.000Z",
-          updatedAt: "2025-07-10T10:34:00.000Z",
-          image: {
-            id: "1794270183423743900",
-            mediaId: "1794270183423388700",
-            width: 1200,
-            height: 1800,
-            altText:
-              "Tall, elegant handcrafted ceramic vase with subtle patterns.",
-            thumbnailUrl:
-              "https://images.unsplash.com/photo-1599623571321-ed11a37c0410?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzN3x8Y2VyYW1pY3xlbnwwfHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=200",
-            colorProfile: "sRGB",
-            isAnimated: false,
-          },
-          video: null,
-          document: null,
-          audio: null,
-        },
-      },
-    ],
+    medias: [],
     mentions: [],
     products: [
       {
@@ -1261,49 +1123,13 @@ const samplePosts = [
         businessName: "Tropical Sips Nigeria",
         businessCategory: "Food & Beverage",
         contactPhone: "+2349077665544",
-        websiteUrl: "https://www.tropicalsips.ng",
+        website: "https://www.tropicalsips.ng",
         address: "Fresh Produce Hub, Apapa, Lagos, Nigeria",
         registeredDate: "2023-10-28T00:00:00.000Z",
         averageRating: 4.7,
       },
     },
-    medias: [
-      {
-        id: "1794270183427295900",
-        postId: "1794270183426230300",
-        mediaId: "1794270183427651100",
-        isPrimary: true,
-        sortOrder: 0,
-        altText: "Assortment of bottled natural fruit juices.",
-        createdAt: "2025-07-08T11:35:00.000Z",
-        updatedAt: "2025-07-08T11:35:00.000Z",
-        media: {
-          id: "1794270183427651100",
-          userId: "1794270183426585500",
-          type: "image",
-          url: "https://images.unsplash.com/photo-1579621970795-87facc2f976d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzOHx8ZnJ1aXQlMjBqdWljZXN8ZW58MHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=800",
-          fileName: "fruit_juices.jpg",
-          fileSize: 200000,
-          cdnPublicId: "drinks/fruit_juices_opq8r9",
-          createdAt: "2025-07-08T11:34:00.000Z",
-          updatedAt: "2025-07-08T11:34:00.000Z",
-          image: {
-            id: "1794270183428006300",
-            mediaId: "1794270183427651100",
-            width: 1200,
-            height: 800,
-            altText: "Glass bottles filled with colorful natural fruit juices.",
-            thumbnailUrl:
-              "https://images.unsplash.com/photo-1579621970795-87facc2f976d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzgyMzJ8MHwxfGFsbHwzOHx8ZnJ1aXQlMjBqdWljZXN8ZW58MHx8fHwxNzA4MTkwNjIzfA&ixlib=rb-4.0.3&q=80&w=200",
-            colorProfile: "sRGB",
-            isAnimated: false,
-          },
-          video: null,
-          document: null,
-          audio: null,
-        },
-      },
-    ],
+
     mentions: [],
     products: [
       {
@@ -1482,7 +1308,7 @@ const samplePosts = [
         businessName: "Green Energy Solutions Nigeria",
         businessCategory: "Renewable Energy",
         contactPhone: "+2348055443322",
-        websiteUrl: "https://www.greenenergysol.ng",
+        website: "https://www.greenenergysol.ng",
         address: "Solar Tech Park, Ojota, Lagos, Nigeria",
         registeredDate: "2022-12-28T00:00:00.000Z",
         averageRating: 4.9,
@@ -1703,7 +1529,7 @@ const samplePosts = [
         businessName: "Student Essentials Nigeria",
         businessCategory: "Education & Stationery",
         contactPhone: "+2348066554433",
-        websiteUrl: "https://www.studentessentials.ng",
+        website: "https://www.studentessentials.ng",
         address: "UniLagos Road, Akoka, Lagos, Nigeria",
         registeredDate: "2023-09-10T00:00:00.000Z",
         averageRating: 4.5,
@@ -1923,7 +1749,7 @@ const samplePosts = [
         businessName: "FitGear Nigeria",
         businessCategory: "Sports & Fitness",
         contactPhone: "+2349088776655",
-        websiteUrl: "https://www.fitgear.ng",
+        website: "https://www.fitgear.ng",
         address: "Fitness Hub, Surulere, Lagos, Nigeria",
         registeredDate: "2023-05-15T00:00:00.000Z",
         averageRating: 4.8,
@@ -2147,7 +1973,7 @@ const samplePosts = [
         businessName: "Kids Comfort Nigeria",
         businessCategory: "Children's Furniture",
         contactPhone: "+2348022113344",
-        websiteUrl: "https://www.kidscomfort.ng",
+        website: "https://www.kidscomfort.ng",
         address: "Kids Zone, Lekki, Lagos, Nigeria",
         registeredDate: "2023-09-28T00:00:00.000Z",
         averageRating: 4.6,
@@ -2370,7 +2196,28 @@ const samplePosts = [
     mentions: [],
     products: [],
   },
-];
+].map((post) => {
+  // Use static followingCount and followersCount for author
+  let author = {
+    ...post.author,
+    followingCount: 123,
+    followersCount: 4567,
+  };
+  // Use static reviewsCount for businessProfile if present
+  if (author.businessProfile) {
+    author = {
+      ...author,
+      businessProfile: {
+        ...author.businessProfile,
+        reviewsCount: 89,
+      } as typeof author.businessProfile & { reviewsCount?: number },
+    };
+  }
+  return {
+    ...post,
+    author,
+  };
+});
 export type SamplePostType = (typeof samplePosts)[0];
 interface PostsState {
   posts: SamplePostType[];

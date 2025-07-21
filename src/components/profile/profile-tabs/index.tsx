@@ -5,10 +5,11 @@ import { useQueryState } from "nuqs";
 import { cn } from "@/lib/utils";
 import ProfileReviews from "./reviews";
 import ProfileAbout from "./about";
-import { Posts } from "@/types";
+import { SamplePostType } from "@/lib/store/posts";
+
 interface ProfileTabsProps {
   userId: string;
-  posts: Posts[];
+  posts: SamplePostType[];
 }
 export const ProfileTabs = ({ userId, posts }: ProfileTabsProps) => {
   const [tab, setTab] = useQueryState("t", {

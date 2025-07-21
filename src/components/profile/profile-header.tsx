@@ -1,46 +1,25 @@
 import {
-  CheckCircle,
   MapPin,
   Star,
-  Heart,
   Edit,
-  Users,
   Phone,
   Mail,
   CalendarDays,
   MessageSquare,
-  DivideCircle,
   EyeIcon,
   UserCheck2,
   UserPlus2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn, formatJoinDate, formatNumber } from "@/lib/utils";
+import { formatJoinDate, formatNumber } from "@/lib/utils";
 import UserAvatar from "@/components/shared/user-avatar";
 import { useState } from "react";
-import VerifiedBadgeIcon from "../shared/verified-icon";
 import { VerifiedCircleIcon, VerifiedShieldIcon } from "../custom-icons/badges";
 import { DividerDot } from "../ui/divider-dot";
+import { SamplePostType } from "@/lib/store/posts";
 
 interface ProfileHeaderProps {
-  user: {
-    id: string;
-    name: string;
-    type: string;
-    bio: string;
-    email: string;
-    phone: string;
-    profilePicture: string;
-    businessType: string;
-    isVerified: boolean;
-    isRegistered: boolean;
-    followersCount: number;
-    rating: number;
-    reviewsCount: number;
-    joinedDate: string;
-    landmark: string;
-    address: string;
-  };
+  user: SamplePostType["author"];
 }
 export default function ProfileHeader({ user }: ProfileHeaderProps) {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -52,6 +31,8 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
     <div className="border-b border-border">
       {" "}
       <div className="h-28 md:h-64 bg-gradient-to-r from-klozui-green-600/90 to-klozui-green-600 relative">
+        {/* TODO: Implement cover image */}
+        {/* {user?.coverImageUrl} */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-20"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -61,10 +42,14 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
         <div className="flex flex-col gap-4 -mt-10 md:-mt-[70px]">
           <div className="z-10">
             <UserAvatar
-              name={user.name}
-              size="md"
+              name={
+                user?.businessProfile?.businessName
+                  ? user?.businessProfile?.businessName
+                  : user.firstName + " " + user.lastName
+              }
+              size="lg"
               userType={user.type as "individual" | "business"}
-              src={user.profilePicture}
+              src={user.profilePictureUrl}
               className="md:h-32 md:w-32 border-4 h-20 w-20"
             />
           </div>
@@ -74,11 +59,16 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                    {user.name}{" "}
+                    {user?.businessProfile?.businessName
+                      ? user?.businessProfile?.businessName
+                      : user.firstName + " " + user.lastName}
                   </h1>
                   <div className="flex items-center gap-1">
                     {user?.isVerified && <VerifiedCircleIcon size={22} />}
-                    {user.isRegistered && <VerifiedShieldIcon size={22} />}
+                    {/* TODO: change this to verified not registeredDate */}
+                    {user?.businessProfile?.registeredDate && (
+                      <VerifiedShieldIcon size={22} />
+                    )}
                   </div>
                 </div>
 
@@ -91,18 +81,19 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                           className="text-yellow-500 fill-yellow-500"
                         />
                         <span className="font-bold text-klozui-dark-900">
-                          {user.rating}
+                          {user.businessProfile?.averageRating}
                         </span>{" "}
-                        ({formatNumber(user.reviewsCount)}{" "}
-                        <span className={"hidden md:inline"}>reviews</span>)
+                        {/* TODO: Implement this */}
+                        {/* ({formatNumber(user.businessProfile?.)}{" "}
+                        <span className={"hidden md:inline"}>reviews</span>) */}
                       </div>
+                      <DividerDot />
                     </>
                   )}
-                  <DividerDot />
                   <span className="flex items-center gap-1">
                     {/* <Users size={14} /> */}
                     <span className="font-bold text-klozui-dark-900">
-                      {formatNumber(user.followersCount)}
+                      {formatNumber(user?.followingCount || 0)}
                     </span>
                     Followers
                   </span>
@@ -110,7 +101,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                   <span className="flex items-center gap-1">
                     {/* <Users size={14} /> */}
                     <span className="font-bold text-klozui-dark-900">
-                      {formatNumber(user.followersCount)}
+                      {formatNumber(user?.followersCount || 0)}
                     </span>
                     Following
                   </span>
@@ -172,16 +163,16 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-sm">
                       <MapPin size={16} className="text-muted-foreground" />
-                      <span>{user.landmark}</span>
+                      <span>{user.businessProfile?.address}</span>
                     </div>
                     <Button
                       variant="link"
                       size="sm"
                       className="text-klozui-green-600 hover:underline h-auto"
                       onClick={() => {
-                        if (user.landmark) {
+                        if (user.businessProfile?.address) {
                           window.open(
-                            `https://www.google.com/maps/search/?api=1&query=${user.landmark}`,
+                            `https://www.google.com/maps/search/?api=1&query=${user.businessProfile?.address}`,
                             "_blank"
                           );
                         }
@@ -191,10 +182,15 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                       View on Map
                     </Button>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Phone size={16} className="text-muted-foreground" />
-                    <span>{user.phone || "No phone number"}</span>
-                  </div>
+                  {user?.businessProfile?.contactPhone && (
+                    <div className="flex items-center gap-2 text-sm">
+                      <Phone size={16} className="text-muted-foreground" />
+                      <span>
+                        {user.businessProfile?.contactPhone ||
+                          "No phone number"}
+                      </span>
+                    </div>
+                  )}
 
                   <div className="flex items-center gap-2 text-sm">
                     <Mail size={16} className="text-muted-foreground" />
@@ -204,7 +200,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
               )}
               <div className="flex items-center gap-2 text-sm">
                 <CalendarDays size={16} className="text-muted-foreground" />
-                <span>Joined {formatJoinDate(user.joinedDate)}</span>
+                <span>Joined {formatJoinDate(user.createdAt)}</span>
               </div>
             </div>
           </div>
