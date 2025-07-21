@@ -9,7 +9,11 @@ interface LogoProps {
   showText?: boolean;
 }
 
-const Logo = ({ className, size = "md", showText = true }: LogoProps) => {
+export const AppLogo = ({
+  className,
+  size = "md",
+  showText = true,
+}: LogoProps) => {
   const sizeClasses = {
     sm: "text-lg",
     md: "text-xl",
@@ -55,4 +59,4 @@ const Logo = ({ className, size = "md", showText = true }: LogoProps) => {
   );
 };
 
-export default Logo;
+export default AppLogo;

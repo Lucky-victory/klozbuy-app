@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import Link from "next/link";
+
 import {
   Bell,
-  MessageSquare,
   Search,
-  Menu,
-  X,
   User,
   LogOut,
   Settings,
@@ -24,10 +21,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
-import { Input } from "../ui/input";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import Logo from "../shared/logo";
+import { Input } from "@/components/ui/input";
+import AppLogo from "@/components/shared/app-logo";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -48,7 +43,7 @@ const Navbar = ({ onMobileMenuToggle, isMobileMenuOpen }: NavbarProps) => {
   return (
     <div className="bg-white sticky top-0 z-50 w-full px-4 py-2 flex items-center justify-between border-b border-border">
       <div className="flex items-center justify-between gap-2">
-        <Logo size="sm" showText={false} className="md:hidden" />
+        <AppLogo size="sm" showText={false} className="md:hidden" />
         <Button
           variant="ghost"
           size="icon"

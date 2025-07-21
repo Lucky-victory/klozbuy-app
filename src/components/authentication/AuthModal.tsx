@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import Logo from "@/components/shared/logo";
+import AppLogo from "@/components/shared/app-logo";
 
 interface AuthModalProps {
   open: boolean;
@@ -63,7 +63,7 @@ const AuthModal = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md p-0 overflow-hidden gap-0">
         <DialogHeader className="px-6 pt-6 pb-4 relative flex flex-row items-center justify-center">
-          <Logo size="md" className="mx-auto" />
+          <AppLogo size="md" className="mx-auto" />
           <Button
             className="absolute right-4 top-4"
             variant="ghost"

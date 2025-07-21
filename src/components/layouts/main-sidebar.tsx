@@ -19,7 +19,7 @@ import {
   Mail,
   User2,
 } from "lucide-react";
-import Logo from "@/components/shared/logo";
+import AppLogo from "@/components/shared/app-logo";
 import UserAvatar from "@/components/shared/user-avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -130,7 +130,7 @@ const Sidebar = memo(({ className }: SidebarProps) => {
         )}
       >
         <div className="px-3 w-full">
-          <Logo size="lg" showText={isDesktop} className="hidden md:flex" />
+          <AppLogo size="lg" showText={isDesktop} className="hidden md:flex" />
         </div>
         <ScrollArea className={cn("flex flex-col flex-1 px-3 w-full")}>
           <nav id="Primary" className="py-2 justify-center w-full pt-4 ">
